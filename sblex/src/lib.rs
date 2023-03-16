@@ -1,3 +1,6 @@
+pub mod fm;
+pub mod trie;
+
 #[cfg(test)]
 mod tests {
     #[test]
