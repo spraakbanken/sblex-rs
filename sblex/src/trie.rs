@@ -94,12 +94,19 @@ impl TrieBuilder {
         println!("complete: st = {}, word = {}", st, word.as_str());
         for c in word {
             self.state += 1;
-            self.trie.get_mut(&st).expect("st exists").0.entry(c.to_string()).insert(self.state);
+            self.trie
+                .get_mut(&st)
+                .expect("st exists")
+                .0
+                .entry(c.to_string())
+                .insert(self.state);
             // {
             //     Some(place) => *place = self.state,
             //     None => unreachable!()
             // }
-            self.trie.entry(self.state).insert((HashMap::default(), Vec::default()));
+            self.trie
+                .entry(self.state)
+                .insert((HashMap::default(), Vec::default()));
             st = self.state;
         }
         self.trie.entry(st).and_modify(|e| e.1.push(decoration));
