@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use hashbrown::HashMap;
 
 use unicode_segmentation::{Graphemes, UnicodeSegmentation};
 
@@ -34,48 +34,75 @@ pub struct TrieBuilder {
 
 impl Default for TrieBuilder {
     fn default() -> Self {
+        let mut trie = HashMap::new();
+        trie.insert(0, (HashMap::default(), Vec::default()));
         TrieBuilder {
             count: 0,
             state: 0,
-            trie: HashMap::new(),
+            trie,
         }
     }
 }
 impl TrieBuilder {
     pub fn build(self) -> Trie {
-        let trie = HashMap::new();
+        let mut trie = HashMap::new();
+        for i in 0..=self.state {
+            println!("build: i={i}");
+            let tr_dec = self.trie.get(&i).expect("state exist");
+            let tr = tr_dec.0.clone();
+            let cont = tr.keys().map(|s| &**s).collect::<Vec<_>>().join("");
+            println!("build: cont = {cont}");
+            let ys = tr_dec.1.iter().map(|s| &**s).collect::<Vec<_>>().join(",");
+            println!("build: ys = {ys}");
+            let value = format!(r#"{{"a":[{ys}],"c":"{cont}"}}"#);
+            trie.entry(i).insert((tr, value));
+        }
+        println!("trie = {trie:?}");
         Trie { trie }
     }
 
     pub fn insert(&mut self, word: &str, decoration: String) {
+        println!("insert: {word} in self.trie = {:?}", self.trie);
         self.count += 1;
         let mut st = 0;
         let mut iter = word.graphemes(true);
         loop {
             // for c in word.graphemes(true) {
+            let curr_iter = iter.clone();
             let c = match iter.next() {
                 Some(c) => c,
                 None => break,
             };
+            println!("insert: c={c}");
+            println!("insert: st={st}");
             st = match self.trie.get(&st) {
                 Some(tuple) => match tuple.0.get(c) {
                     Some(state) => *state,
-                    None => todo!(),
+                    None => {
+                        return self.complete(st, curr_iter, decoration);
+                    }
                 },
-                None => {
-                    return self.complete(st, iter, decoration);
-                }
+
+                None => todo!(),
             };
         }
-        self.trie.get_mut(&st).unwrap().1.push(decoration);
+        self.trie.entry(st).and_modify(|e| e.1.push(decoration));
     }
 
     // create a new branch
-    fn complete(&mut self, st: usize, word: Graphemes, decoration: String) {
+    fn complete(&mut self, mut st: usize, word: Graphemes, decoration: String) {
+        println!("complete: st = {}, word = {}", st, word.as_str());
         for c in word {
             self.state += 1;
-            self.trie.get_mut(&st).expect("st exists").0.get_mut(c)
+            self.trie.get_mut(&st).expect("st exists").0.entry(c.to_string()).insert(self.state);
+            // {
+            //     Some(place) => *place = self.state,
+            //     None => unreachable!()
+            // }
+            self.trie.entry(self.state).insert((HashMap::default(), Vec::default()));
+            st = self.state;
         }
+        self.trie.entry(st).and_modify(|e| e.1.push(decoration));
     }
 }
 
