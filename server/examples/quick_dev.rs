@@ -6,6 +6,10 @@ async fn main() -> Result<()> {
 
     hc.do_get("/health").await?.print().await?;
 
-    hc.do_get("/").await?.print().await?;
+    hc.do_get("/version/json").await?.print().await?;
+
+    hc.do_get("/lid/json/dväljas..1").await?.print().await?;
+    hc.do_get("/lid/xml/dväljas..1").await?.print().await?;
+
     Ok(())
 }

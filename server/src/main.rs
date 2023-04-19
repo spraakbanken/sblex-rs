@@ -1,6 +1,5 @@
 use axum::extract::Path;
 use axum::{response::IntoResponse, routing::get, BoxError, Router};
-use axum_tracing_opentelemetry::{opentelemetry_tracing_layer, response_with_trace_layer};
 use serde_json::json;
 use std::net::SocketAddr;
 
@@ -30,12 +29,12 @@ fn app() -> Router {
             get(proxy_handler).post(proxy_handler),
         )
         .route("/", get(index)) // request processed inside span
-        // include trace context as header into the response
-        .layer(response_with_trace_layer())
-        // opentelemetry_tracing_layer setup `TraceLayer`,
-        // that is provided by tower-http so you have to add that as a dependency.
-        .layer(opentelemetry_tracing_layer())
-        // .route("/health", get(health)) // request processed without span / trace
+                                // include trace context as header into the response
+                                // .layer(response_with_trace_layer())
+                                // opentelemetry_tracing_layer setup `TraceLayer`,
+                                // that is provided by tower-http so you have to add that as a dependency.
+                                // .layer(opentelemetry_tracing_layer())
+                                // .route("/health", get(health)) // request processed without span / trace
 }
 
 async fn index() -> impl IntoResponse {
