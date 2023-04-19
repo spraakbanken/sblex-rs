@@ -9,7 +9,7 @@ async fn main() -> Result<(), BoxError> {
     // very opinionated init of tracing, look as is source to make your own
     axum_tracing_opentelemetry::tracing_subscriber_ext::init_subscribers()?;
 
-    let app = app();
+    let app = sblex_server::startup::app();
     // run it
     let addr = &"0.0.0.0:3003".parse::<SocketAddr>()?;
     tracing::warn!("listening on {}", addr);
@@ -35,11 +35,7 @@ fn app() -> Router {
         // opentelemetry_tracing_layer setup `TraceLayer`,
         // that is provided by tower-http so you have to add that as a dependency.
         .layer(opentelemetry_tracing_layer())
-        .route("/health", get(health)) // request processed without span / trace
-}
-
-async fn health() -> impl IntoResponse {
-    axum::Json(json!({ "status" : "UP" }))
+        // .route("/health", get(health)) // request processed without span / trace
 }
 
 async fn index() -> impl IntoResponse {
