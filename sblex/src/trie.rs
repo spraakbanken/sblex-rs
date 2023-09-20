@@ -1,115 +1,132 @@
-use hashbrown::HashMap;
+use std::collections::HashMap;
 
-use unicode_segmentation::{Graphemes, UnicodeSegmentation};
+use bytes::{BufMut, Bytes, BytesMut};
 
 pub struct Trie {
-    trie: HashMap<usize, (HashMap<String, usize>, String)>,
+    trie: HashMap<usize, (HashMap<char, usize>, Bytes)>,
 }
 
 impl Trie {
+    fn new(trie: HashMap<usize, (HashMap<char, usize>, Bytes)>) -> Self {
+        Self { trie }
+    }
     pub fn builder() -> TrieBuilder {
-        TrieBuilder::default()
+        TrieBuilder::new()
     }
 
-    pub fn lookup(&self, word: &str, start_state: usize) -> Option<&str> {
+    pub fn lookup(&self, word: &str) -> Option<Bytes> {
+        self.lookup_with_state(word, 0)
+    }
+    pub fn lookup_with_state(&self, word: &str, start_state: usize) -> Option<Bytes> {
         let mut st = start_state;
-        for c in word.graphemes(true) {
+        for chr in word.chars() {
             st = match self.trie.get(&st) {
-                Some(tuple) => match tuple.0.get(c) {
-                    Some(state) => *state,
+                Some(state) => match state.0.get(&chr) {
+                    Some(st) => *st,
                     None => return None,
                 },
                 None => return None,
             };
         }
-        self.trie.get(&st).map(|x| x.1.as_str())
+        Some(self.trie.get(&st).unwrap().1.clone())
     }
 }
-
 pub struct TrieBuilder {
+    trie: HashMap<usize, (HashMap<char, usize>, Vec<Bytes>)>,
     count: usize,
     state: usize,
-    trie: HashMap<usize, (HashMap<String, usize>, Vec<String>)>,
 }
 
 impl Default for TrieBuilder {
     fn default() -> Self {
         let mut trie = HashMap::new();
-        trie.insert(0, (HashMap::default(), Vec::default()));
-        TrieBuilder {
+        trie.insert(0, (HashMap::new(), Vec::new()));
+        Self {
+            trie,
             count: 0,
             state: 0,
-            trie,
         }
     }
 }
+
 impl TrieBuilder {
-    pub fn build(self) -> Trie {
-        let mut trie = HashMap::new();
-        for i in 0..=self.state {
-            println!("build: i={i}");
-            let tr_dec = self.trie.get(&i).expect("state exist");
-            let tr = tr_dec.0.clone();
-            let cont = tr.keys().map(|s| &**s).collect::<Vec<_>>().join("");
-            println!("build: cont = {cont}");
-            let ys = tr_dec.1.iter().map(|s| &**s).collect::<Vec<_>>().join(",");
-            println!("build: ys = {ys}");
-            let value = format!(r#"{{"a":[{ys}],"c":"{cont}"}}"#);
-            trie.entry(i).insert((tr, value));
-        }
-        println!("trie = {trie:?}");
-        Trie { trie }
+    pub fn new() -> Self {
+        Self::default()
     }
 
-    pub fn insert(&mut self, word: &str, decoration: String) {
-        println!("insert: {word} in self.trie = {:?}", self.trie);
+    pub fn insert<D: Into<Bytes>>(&mut self, word: &str, decoration: D) {
+        self.insert_bytes(word, decoration.into())
+    }
+    pub fn insert_bytes(&mut self, word: &str, decoration: Bytes) {
         self.count += 1;
         let mut st = 0;
-        let mut iter = word.graphemes(true);
-        loop {
-            // for c in word.graphemes(true) {
-            let curr_iter = iter.clone();
-            let c = match iter.next() {
-                Some(c) => c,
-                None => break,
-            };
-            println!("insert: c={c}");
-            println!("insert: st={st}");
+        for (i, chr) in word.char_indices() {
             st = match self.trie.get(&st) {
-                Some(tuple) => match tuple.0.get(c) {
-                    Some(state) => *state,
-                    None => {
-                        return self.complete(st, curr_iter, decoration);
+                Some(state) => {
+                    dbg!(state);
+                    match state.0.get(&chr) {
+                        Some(st) => *st,
+                        None => {
+                            self.complete(st, &word[i..], decoration);
+                            return;
+                        }
                     }
-                },
-
-                None => todo!(),
-            };
+                    // todo!("state={:?}", state)
+                }
+                None => {
+                    self.complete(st, &word[i..], decoration);
+                    return;
+                }
+            }
         }
-        self.trie.entry(st).and_modify(|e| e.1.push(decoration));
     }
 
-    // create a new branch
-    fn complete(&mut self, mut st: usize, word: Graphemes, decoration: String) {
-        println!("complete: st = {}, word = {}", st, word.as_str());
-        for c in word {
+    fn complete(&mut self, mut st: usize, word: &str, decoration: Bytes) {
+        dbg!(&self.trie);
+        for chr in word.chars() {
             self.state += 1;
-            self.trie
-                .get_mut(&st)
-                .expect("st exists")
-                .0
-                .entry(c.to_string())
-                .insert(self.state);
-            // {
-            //     Some(place) => *place = self.state,
-            //     None => unreachable!()
-            // }
-            self.trie
-                .entry(self.state)
-                .insert((HashMap::default(), Vec::default()));
+            self.trie.entry(st).and_modify(|e| {
+                e.0.insert(chr, self.state);
+            });
+            self.trie.insert(self.state, (HashMap::new(), Vec::new()));
             st = self.state;
         }
-        self.trie.entry(st).and_modify(|e| e.1.push(decoration));
+        self.trie.entry(st).and_modify(|e| {
+            e.1.push(decoration.clone());
+        });
+    }
+
+    pub fn number_of_insertions(&self) -> usize {
+        self.count
+    }
+
+    pub fn build(self) -> Trie {
+        let trie = self.precompute();
+        Trie::new(trie)
+    }
+
+    fn precompute(mut self) -> HashMap<usize, (HashMap<char, usize>, Bytes)> {
+        let mut trie_precomputed = HashMap::new();
+        for i in 0..self.state + 1 {
+            let (tr, dec) = self.trie.remove(&i).unwrap();
+            // let ys = dec.join(b","[..]);
+            let cont: String = tr.keys().collect();
+            dbg!(&cont);
+            let mut decoration = BytesMut::from(&b"{\"a\":["[..]);
+            for (i, buf) in dec.iter().enumerate() {
+                if i > 0 {
+                    decoration.put(&b","[..]);
+                }
+                decoration.put(buf.as_ref());
+            }
+            // decoration.put(ys.as_bytes());
+            decoration.put(&b"],\"c\":\""[..]);
+            decoration.put(cont.as_bytes());
+            decoration.put(&b"\"}"[..]);
+            trie_precomputed.insert(i, (tr, decoration.freeze()));
+        }
+        trie_precomputed
+        // todo!("trie_precomputed")
     }
 }
 
@@ -118,7 +135,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn can_create_trie() {
-        let _trie = Trie::builder().build();
+    fn it_works() {
+        let mut trie_builder = Trie::builder();
+        trie_builder.insert("ösja", r#"{"head":"ösja","pos":"vb"}"#.as_bytes());
+        dbg!(&trie_builder.trie);
+        assert_eq!(trie_builder.number_of_insertions(), 1);
+
+        let trie = trie_builder.build();
+        dbg!(&trie.trie);
+        let expected = r#"{"a":[{"head":"ösja","pos":"vb"}],"c":""}"#;
+        assert_eq!(trie.lookup("ösja").unwrap(), expected);
     }
 }

@@ -1,3 +1,4 @@
+use bytes::Bytes;
 use std::{fs, io};
 use std::{io::BufRead, path::Path};
 
@@ -52,8 +53,12 @@ impl Morphology {
         Ok(Self::new(trie_builder.build()))
     }
 
-    pub fn lookup(&self, fragment: &str, state: usize) -> Option<&str> {
-        self.trie.lookup(fragment, state)
+    pub fn lookup(&self, fragment: &str) -> Option<Bytes> {
+        self.trie.lookup(fragment)
+    }
+
+    pub fn lookup_with_state(&self, fragment: &str, state: usize) -> Option<Bytes> {
+        self.trie.lookup_with_state(fragment, state)
     }
 }
 #[cfg(test)]
