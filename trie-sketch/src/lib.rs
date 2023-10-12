@@ -35,6 +35,11 @@ pub struct TrieBuilder {
     state: usize,
 }
 
+impl Default for TrieBuilder {
+    fn default() -> Self {
+        Self::new()
+    }
+}
 impl TrieBuilder {
     pub fn new() -> Self {
         let mut trie = HashMap::new();

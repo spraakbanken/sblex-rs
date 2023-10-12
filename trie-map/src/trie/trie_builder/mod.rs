@@ -9,6 +9,11 @@ pub struct TrieBuilder {
     count: usize,
 }
 
+impl Default for TrieBuilder {
+    fn default() -> Self {
+        Self::new()
+    }
+}
 impl TrieBuilder {
     pub fn new() -> Self {
         Self {
@@ -28,14 +33,14 @@ impl TrieBuilder {
 
     pub fn build(&self) -> Trie {
         let trie_precomputed: HashMap<usize, (HashMap<char, usize>, Bytes)> = HashMap::new();
-        let mut max_num_transitions = 0;
-        for i in 0..self.naive_trie.num_children() {
-            let state = self.naive_trie.children()[i];
-            let mut tr = HashMap::new();
-            for child in state.children() {
-                tr.insert
-            }
-        }
+        // let mut max_num_transitions = 0;
+        // for i in 0..self.naive_trie.num_children() {
+        // let state = &self.naive_trie.children()[i];
+        // let mut tr = HashMap::new();
+        // for child in state.children() {
+        //     tr.insert
+        // }
+        // }
         dbg!(&trie_precomputed);
         todo!("impl build")
     }

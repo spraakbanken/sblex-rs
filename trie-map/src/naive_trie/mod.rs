@@ -1,3 +1,6 @@
+#![allow(unreachable_patterns)]
+#![allow(dead_code)]
+#![allow(clippy::vec_box)]
 // pub enum NaiveTrie { //<Label> {
 // Root(Box<NaiveTrieRoot<Label>>),
 // IntermOrLeaf(Box<NaiveTrieInteromOrLeaf<Label>>),
@@ -9,6 +12,7 @@ use bytes::Bytes;
 // children:
 // }
 #[derive(Debug)]
+#[non_exhaustive]
 pub enum NaiveTrie {
     Root(Box<NaiveTrieRoot>),
     IntermOrLeaf(Box<NaiveTrieInteromOrLeaf>),
@@ -90,7 +94,7 @@ impl NaiveTrie {
 
     pub fn label(&self) -> char {
         match self {
-            Self::IntermOrLeaf(node) => node.label.clone(),
+            Self::IntermOrLeaf(node) => node.label,
             _ => panic!("unexpected type"),
         }
     }

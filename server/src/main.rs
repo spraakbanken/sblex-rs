@@ -1,3 +1,4 @@
+#![allow(unused)]
 use axum::extract::Path;
 use axum::{response::IntoResponse, routing::get, BoxError, Router};
 use serde_json::json;

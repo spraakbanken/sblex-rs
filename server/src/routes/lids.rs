@@ -5,7 +5,6 @@ use axum::http::{header, HeaderValue};
 use axum::response::{Html, IntoResponse};
 use axum::{extract::Path, response::Response};
 
-use axum::http::StatusCode;
 use serde::{de, Deserialize, Serialize};
 use serde_json::json;
 
@@ -14,7 +13,7 @@ use serde_json::json;
 // #[serde]
 pub struct Lexeme(String);
 pub fn is_lexeme(s: &str) -> bool {
-    match s.rfind(".") {
+    match s.rfind('.') {
         None => false,
         Some(i) => s[(i - 1)..i] == *".",
     }
@@ -47,7 +46,7 @@ impl<'de> Deserialize<'de> for Lexeme {
 // #[serde]
 pub struct Lemma(String);
 pub fn is_lemma(s: &str) -> bool {
-    match s.rfind(".") {
+    match s.rfind('.') {
         None => false,
         Some(i) => s[(i - 1)..i] != *".",
     }
@@ -123,10 +122,10 @@ where
     }
 }
 
-pub async fn lookup_lid_xml(Path(lid): Path<LexemeLemma>) -> impl IntoResponse {
+pub async fn lookup_lid_xml(Path(_lid): Path<LexemeLemma>) -> impl IntoResponse {
     Xml("<r></r>")
 }
 
-pub async fn lookup_lid_html(Path(lid): Path<LexemeLemma>) -> impl IntoResponse {
+pub async fn lookup_lid_html(Path(_lid): Path<LexemeLemma>) -> impl IntoResponse {
     Html("<r></r>")
 }

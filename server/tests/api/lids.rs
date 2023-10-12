@@ -1,7 +1,6 @@
 use crate::conftest::spawn_app;
 use axum::http::StatusCode;
 use rstest::rstest;
-use serde_json::Value as JsonValue;
 
 #[rstest]
 #[case("json")]
