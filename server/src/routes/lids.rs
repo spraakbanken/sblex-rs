@@ -1,13 +1,13 @@
 use std::str::FromStr;
 
-use axum::body::{Full, Bytes};
-use axum::{extract::Path, response::Response};
-use axum::response::{IntoResponse, Html};
+use axum::body::{Bytes, Full};
 use axum::http::{header, HeaderValue};
+use axum::response::{Html, IntoResponse};
+use axum::{extract::Path, response::Response};
 
 use axum::http::StatusCode;
+use serde::{de, Deserialize, Serialize};
 use serde_json::json;
-use serde::{de,Deserialize, Serialize};
 
 #[derive(Clone, Debug, Serialize)]
 // #[serde(try_from="FromStr")]
@@ -16,7 +16,7 @@ pub struct Lexeme(String);
 pub fn is_lexeme(s: &str) -> bool {
     match s.rfind(".") {
         None => false,
-        Some(i) => s[(i-1)..i] == *"."
+        Some(i) => s[(i - 1)..i] == *".",
     }
 }
 impl FromStr for Lexeme {
@@ -25,18 +25,19 @@ impl FromStr for Lexeme {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match is_lexeme(s) {
             true => Ok(Self(s.into())),
-            false => Err(format!("'{}' is not a lexeme", s))
+            false => Err(format!("'{}' is not a lexeme", s)),
         }
     }
 }
 impl<'de> Deserialize<'de> for Lexeme {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-        where
-            D: serde::Deserializer<'de> {
+    where
+        D: serde::Deserializer<'de>,
+    {
         let s = String::deserialize(deserializer)?;
         match is_lexeme(s.as_str()) {
             true => Ok(Self(s)),
-            false => Err(de::Error::custom(format!("'{}' is not a lexeme", s)))
+            false => Err(de::Error::custom(format!("'{}' is not a lexeme", s))),
         }
     }
 }
@@ -48,7 +49,7 @@ pub struct Lemma(String);
 pub fn is_lemma(s: &str) -> bool {
     match s.rfind(".") {
         None => false,
-        Some(i) => s[(i-1)..i] != *"."
+        Some(i) => s[(i - 1)..i] != *".",
     }
 }
 impl FromStr for Lemma {
@@ -57,18 +58,19 @@ impl FromStr for Lemma {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match is_lemma(s) {
             true => Ok(Self(s.into())),
-            false => Err(format!("'{}' is not a lemma", s))
+            false => Err(format!("'{}' is not a lemma", s)),
         }
     }
 }
 impl<'de> Deserialize<'de> for Lemma {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-        where
-            D: serde::Deserializer<'de> {
+    where
+        D: serde::Deserializer<'de>,
+    {
         let s = String::deserialize(deserializer)?;
         match is_lemma(s.as_str()) {
             true => Ok(Self(s)),
-            false => Err(de::Error::custom(format!("'{}' is not a lemma", s)))
+            false => Err(de::Error::custom(format!("'{}' is not a lemma", s))),
         }
     }
 }
@@ -82,8 +84,9 @@ pub enum LexemeLemma {
 
 impl<'de> Deserialize<'de> for LexemeLemma {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-        where
-            D: serde::Deserializer<'de> {
+    where
+        D: serde::Deserializer<'de>,
+    {
         let s = String::deserialize(deserializer)?;
         if is_lemma(s.as_str()) {
             return Ok(Self::Lemma(Lemma(s)));
@@ -91,8 +94,10 @@ impl<'de> Deserialize<'de> for LexemeLemma {
         if is_lexeme(s.as_str()) {
             return Ok(Self::Lexeme(Lexeme(s)));
         }
-        Err(de::Error::custom(format!("'{}' is not a lexeme nor a lemma", s)))
-
+        Err(de::Error::custom(format!(
+            "'{}' is not a lexeme nor a lemma",
+            s
+        )))
     }
 }
 
