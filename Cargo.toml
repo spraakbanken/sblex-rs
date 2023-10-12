@@ -5,6 +5,7 @@ members = [
     "sblex",
     "server",
     "trie-map",
+    "trie-sketch",
 ]
 
 

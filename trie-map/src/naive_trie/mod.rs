@@ -4,7 +4,6 @@
 // }
 
 use bytes::Bytes;
-use core::num;
 
 // pub struct NaiveTrieRoot<Label> {
 // children:
@@ -41,7 +40,13 @@ impl NaiveTrie {
                     .binary_search_by_key(&chr, |child| child.label())
             };
             match res {
-                Ok(j) => todo!("ok"),
+                Ok(j) => {
+                    trie = match trie {
+                        NaiveTrie::Root(node) => &mut node.children[j],
+                        NaiveTrie::IntermOrLeaf(node) => &mut node.children[j],
+                        _ => panic!("Unexpected type"),
+                    };
+                }
                 Err(j) => {
                     let is_terminal = i == num_chars - 1;
                     let decoration_opt = if is_terminal {
@@ -114,6 +119,9 @@ mod tests {
         dbg!(&root);
         root.insert("ösja", r#"{"head":"ösja","pos":"vb"}"#);
         dbg!(&root);
+        root.insert("örliga", r#"{"head":"örliga","pos":"vb"}"#);
+        dbg!(&root);
+
         assert_eq!(root.num_children(), 0);
     }
 }
