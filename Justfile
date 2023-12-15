@@ -9,3 +9,9 @@ test:
 
 watch-trie-map-test:
     cargo watch -q -c -w trie-map -x 'test -p trie-map'
+
+serve-fm-server:
+    cargo watch -q -c -w fm-server/src/ -x 'run -p fm-server'
+
+quick-dev-fm-server:
+    cargo watch -q -c -w fm-server/examples/ -x 'run -p fm-server --example fm_server_quick_dev'

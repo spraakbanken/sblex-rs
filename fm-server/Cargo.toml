@@ -6,6 +6,25 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-axum = { workspace = true }
+aide = { version = "0.13.1", features = [
+    "axum",
+    "axum-extra",
+    "macros",
+    "redoc",
+] }
+async-trait = "0.1.57"
+axum = { workspace = true, features = ["macros"] }
+axum-extra = "0.9.0"
+axum-jsonschema = { version = "0.8.0", features = ["aide"] }
+axum-macros = "0.4.0"
 axum-tracing-opentelemetry = { workspace = true }
-tokio = { workspace = true }
+schemars = { version = "0.8.16", features = ["uuid1"] }
+serde = { version = "1.0.193", features = ["derive", "rc"] }
+serde_json = { workspace = true }
+# dropshot = { version = "0.9.0" }
+tokio = { workspace = true, features = ["net"] }
+uuid = { version = "1.6.1", features = ["serde", "v4"] }
+
+[dev-dependencies]
+eyre = { workspace = true }
+reqwest = { version = "0.11.22", features = ["json"] }
