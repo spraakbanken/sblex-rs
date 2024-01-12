@@ -126,6 +126,6 @@ mod tests {
         root.insert("örliga", r#"{"head":"örliga","pos":"vb"}"#);
         dbg!(&root);
 
-        assert_eq!(root.num_children(), 0);
+        assert_eq!(root.num_children(), 1);
     }
 }
