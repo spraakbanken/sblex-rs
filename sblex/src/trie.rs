@@ -1,3 +1,5 @@
+use std::collections::BTreeMap;
+
 use hashbrown::HashMap;
 
 use arcstr::ArcStr;
@@ -8,7 +10,7 @@ type StringIntMap = HashMap<ArcStr, usize>;
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct Trie {
     // trie: HashMap<usize, (HashMap<String, usize>, String)>,
-    trie: HashMap<usize, (HashMap<String, usize>, ArcStr)>,
+    trie: HashMap<usize, (StringIntMap, ArcStr)>,
 }
 
 impl Trie {
@@ -38,13 +40,13 @@ impl Trie {
 pub struct TrieBuilder {
     count: usize,
     state: usize,
-    trie: HashMap<usize, (HashMap<String, usize>, Vec<String>)>,
+    trie: HashMap<usize, (StringIntMap, Vec<String>)>,
 }
 
 impl Default for TrieBuilder {
     fn default() -> Self {
         let mut trie = HashMap::new();
-        trie.insert(0, (HashMap::default(), Vec::default()));
+        trie.insert(0, (StringIntMap::default(), Vec::default()));
         TrieBuilder {
             count: 0,
             state: 0,
@@ -112,15 +114,16 @@ impl TrieBuilder {
                 .get_mut(&st)
                 .expect("st exists")
                 .0
-                .entry(c.to_string())
-                .insert(self.state);
+                .insert(c.into(), self.state);
+            // .entry(c.to_string())
+            // .and_modify(|e|self.state);
             // {
             //     Some(place) => *place = self.state,
             //     None => unreachable!()
             // }
             self.trie
                 .entry(self.state)
-                .insert((HashMap::default(), Vec::default()));
+                .insert((StringIntMap::default(), Vec::default()));
             st = self.state;
         }
         self.trie.entry(st).and_modify(|e| e.1.push(decoration));
