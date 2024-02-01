@@ -5,15 +5,36 @@ use hashbrown::HashMap;
 use arcstr::ArcStr;
 use unicode_segmentation::{Graphemes, UnicodeSegmentation};
 
-type StringIntMap = HashMap<ArcStr, usize>;
+pub type State = usize;
+type StringStateMap = HashMap<ArcStr, State>;
 // type StringIntMap = BTreeMap<ArcStr, usize>;
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct Trie {
     // trie: HashMap<usize, (HashMap<String, usize>, String)>,
-    trie: HashMap<usize, (StringIntMap, ArcStr)>,
+    trie: HashMap<State, (StringStateMap, ArcStr)>,
 }
 
 impl Trie {
+    fn new(mut builder: TrieBuilder) -> Trie {
+        let mut trie = HashMap::with_capacity(builder.state);
+        for i in 0..=builder.state {
+            // println!("build: i={i}");
+            let (tr, dec) = builder.trie.remove(&i).expect("state exist");
+            // let tr = tr_dec.0.clone();
+            let mut cont_chars = tr.keys().map(|s| &**s).collect::<Vec<_>>();
+            cont_chars.sort();
+            let cont = cont_chars.join("");
+            // println!("build: cont = {cont}");
+            let ys = dec.join(",");
+            // println!("build: ys = {ys}");
+            let value = ArcStr::from(format!(r#"{{"a":[{ys}],"c":"{cont}"}}"#));
+            // let value = format!(r#"{{"a":[{ys}],"c":"{cont}"}}"#);
+            trie.entry(i).insert((tr, value));
+        }
+        // println!("trie = {trie:?}");
+        Trie { trie }
+    }
+
     pub fn builder() -> TrieBuilder {
         TrieBuilder::default()
     }
@@ -21,7 +42,7 @@ impl Trie {
     pub fn lookup(&self, word: &str) -> Option<&str> {
         self.lookup_with_state(word, 0)
     }
-    pub fn lookup_with_state(&self, word: &str, start_state: usize) -> Option<&str> {
+    pub fn lookup_with_state(&self, word: &str, start_state: State) -> Option<&str> {
         let mut st = start_state;
         for c in word.graphemes(true) {
             st = match self.trie.get(&st) {
@@ -39,14 +60,14 @@ impl Trie {
 #[derive(Debug)]
 pub struct TrieBuilder {
     count: usize,
-    state: usize,
-    trie: HashMap<usize, (StringIntMap, Vec<String>)>,
+    state: State,
+    trie: HashMap<State, (StringStateMap, Vec<String>)>,
 }
 
 impl Default for TrieBuilder {
     fn default() -> Self {
         let mut trie = HashMap::new();
-        trie.insert(0, (StringIntMap::default(), Vec::default()));
+        trie.insert(0, (StringStateMap::default(), Vec::default()));
         TrieBuilder {
             count: 0,
             state: 0,
@@ -56,23 +77,7 @@ impl Default for TrieBuilder {
 }
 impl TrieBuilder {
     pub fn build(self) -> Trie {
-        let mut trie = HashMap::new();
-        for i in 0..=self.state {
-            // println!("build: i={i}");
-            let tr_dec = self.trie.get(&i).expect("state exist");
-            let tr = tr_dec.0.clone();
-            let mut cont_chars = tr.keys().map(|s| &**s).collect::<Vec<_>>();
-            cont_chars.sort();
-            let cont = cont_chars.join("");
-            // println!("build: cont = {cont}");
-            let ys = tr_dec.1.iter().map(|s| &**s).collect::<Vec<_>>().join(",");
-            // println!("build: ys = {ys}");
-            let value = ArcStr::from(format!(r#"{{"a":[{ys}],"c":"{cont}"}}"#));
-            // let value = format!(r#"{{"a":[{ys}],"c":"{cont}"}}"#);
-            trie.entry(i).insert((tr, value));
-        }
-        // println!("trie = {trie:?}");
-        Trie { trie }
+        Trie::new(self)
     }
 
     pub fn insert<S: Into<String>>(&mut self, word: &str, decoration: S) {
@@ -106,7 +111,7 @@ impl TrieBuilder {
     }
 
     // create a new branch
-    fn complete(&mut self, mut st: usize, word: Graphemes, decoration: String) {
+    fn complete(&mut self, mut st: State, word: Graphemes, decoration: String) {
         // println!("complete: st = {}, word = {}", st, word.as_str());
         for c in word {
             self.state += 1;
@@ -123,7 +128,7 @@ impl TrieBuilder {
             // }
             self.trie
                 .entry(self.state)
-                .insert((StringIntMap::default(), Vec::default()));
+                .insert((StringStateMap::default(), Vec::default()));
             st = self.state;
         }
         self.trie.entry(st).and_modify(|e| e.1.push(decoration));
