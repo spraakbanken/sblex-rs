@@ -3,7 +3,9 @@ use hashbrown::HashMap;
 use arcstr::ArcStr;
 use unicode_segmentation::{Graphemes, UnicodeSegmentation};
 
-#[derive(Debug, Clone)]
+type StringIntMap = HashMap<ArcStr, usize>;
+// type StringIntMap = BTreeMap<ArcStr, usize>;
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct Trie {
     trie: HashMap<usize, (HashMap<String, usize>, String)>,
     // trie: HashMap<usize, (HashMap<String, usize>, ArcStr)>,

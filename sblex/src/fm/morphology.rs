@@ -41,7 +41,7 @@ impl From<serde_json::Error> for Error {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct Morphology {
     trie: Trie,
 }
