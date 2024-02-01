@@ -1,9 +1,12 @@
 use hashbrown::HashMap;
 
+use arcstr::ArcStr;
 use unicode_segmentation::{Graphemes, UnicodeSegmentation};
 
+#[derive(Debug, Clone)]
 pub struct Trie {
     trie: HashMap<usize, (HashMap<String, usize>, String)>,
+    // trie: HashMap<usize, (HashMap<String, usize>, ArcStr)>,
 }
 
 impl Trie {
@@ -51,22 +54,23 @@ impl TrieBuilder {
     pub fn build(self) -> Trie {
         let mut trie = HashMap::new();
         for i in 0..=self.state {
-            println!("build: i={i}");
+            // println!("build: i={i}");
             let tr_dec = self.trie.get(&i).expect("state exist");
             let tr = tr_dec.0.clone();
             let cont = tr.keys().map(|s| &**s).collect::<Vec<_>>().join("");
-            println!("build: cont = {cont}");
+            // println!("build: cont = {cont}");
             let ys = tr_dec.1.iter().map(|s| &**s).collect::<Vec<_>>().join(",");
-            println!("build: ys = {ys}");
+            // println!("build: ys = {ys}");
+            // let value = ArcStr::from(format!(r#"{{"a":[{ys}],"c":"{cont}"}}"#));
             let value = format!(r#"{{"a":[{ys}],"c":"{cont}"}}"#);
             trie.entry(i).insert((tr, value));
         }
-        println!("trie = {trie:?}");
+        // println!("trie = {trie:?}");
         Trie { trie }
     }
 
     pub fn insert<S: Into<String>>(&mut self, word: &str, decoration: S) {
-        println!("insert: {word} in self.trie = {:?}", self.trie);
+        // println!("insert: {word} in self.trie = {:?}", self.trie);
         self.count += 1;
         let mut st = 0;
         let mut iter = word.graphemes(true);
@@ -77,8 +81,8 @@ impl TrieBuilder {
                 Some(c) => c,
                 None => break,
             };
-            println!("insert: c={c}");
-            println!("insert: st={st}");
+            // println!("insert: c={c}");
+            // println!("insert: st={st}");
             st = match self.trie.get(&st) {
                 Some(tuple) => match tuple.0.get(c) {
                     Some(state) => *state,
@@ -97,7 +101,7 @@ impl TrieBuilder {
 
     // create a new branch
     fn complete(&mut self, mut st: usize, word: Graphemes, decoration: String) {
-        println!("complete: st = {}, word = {}", st, word.as_str());
+        // println!("complete: st = {}, word = {}", st, word.as_str());
         for c in word {
             self.state += 1;
             self.trie

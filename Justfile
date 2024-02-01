@@ -15,3 +15,9 @@ serve-fm-server:
 
 quick-dev-fm-server:
     cargo watch -q -c -w fm-server/examples/ -x 'run -p fm-server --example fm_server_quick_dev'
+
+build-load-morphology:
+    cargo build --profile profiling --example load_morphology
+
+mprof-load-morphology INPUT='': build-load-morphology
+    mprof run target/profiling/examples/load_morphology {{INPUT}}

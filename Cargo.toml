@@ -14,3 +14,7 @@ tokio = { version = "1.35", default-features = false, features = [
     "rt-multi-thread",
     "signal",
 ] }
+
+[profile.profiling]
+inherits = "release"
+debug = true
