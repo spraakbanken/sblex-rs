@@ -7,8 +7,8 @@ type StringIntMap = HashMap<ArcStr, usize>;
 // type StringIntMap = BTreeMap<ArcStr, usize>;
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct Trie {
-    trie: HashMap<usize, (HashMap<String, usize>, String)>,
-    // trie: HashMap<usize, (HashMap<String, usize>, ArcStr)>,
+    // trie: HashMap<usize, (HashMap<String, usize>, String)>,
+    trie: HashMap<usize, (HashMap<String, usize>, ArcStr)>,
 }
 
 impl Trie {
@@ -59,12 +59,14 @@ impl TrieBuilder {
             // println!("build: i={i}");
             let tr_dec = self.trie.get(&i).expect("state exist");
             let tr = tr_dec.0.clone();
-            let cont = tr.keys().map(|s| &**s).collect::<Vec<_>>().join("");
+            let mut cont_chars = tr.keys().map(|s| &**s).collect::<Vec<_>>();
+            cont_chars.sort();
+            let cont = cont_chars.join("");
             // println!("build: cont = {cont}");
             let ys = tr_dec.1.iter().map(|s| &**s).collect::<Vec<_>>().join(",");
             // println!("build: ys = {ys}");
-            // let value = ArcStr::from(format!(r#"{{"a":[{ys}],"c":"{cont}"}}"#));
-            let value = format!(r#"{{"a":[{ys}],"c":"{cont}"}}"#);
+            let value = ArcStr::from(format!(r#"{{"a":[{ys}],"c":"{cont}"}}"#));
+            // let value = format!(r#"{{"a":[{ys}],"c":"{cont}"}}"#);
             trie.entry(i).insert((tr, value));
         }
         // println!("trie = {trie:?}");
