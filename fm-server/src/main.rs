@@ -2,7 +2,7 @@ use fm_server::{server, startup, state::AppState};
 
 #[tokio::main]
 async fn main() {
-    let state = AppState::default();
+    let state = AppState::from_path("assets/saldo.lex").unwrap();
 
     let app = server::create_app(state);
 

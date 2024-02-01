@@ -12,7 +12,7 @@ impl TestApp {
         let port = listener.local_addr().unwrap().port();
         let address = format!("http://127.0.0.1:{}", port);
 
-        let state = AppState::default();
+        let state = AppState::from_path("assets/testing/saldo.lex")?;
         let app = server::create_app(state);
 
         tokio::spawn(async move { startup::run(listener, app).await });

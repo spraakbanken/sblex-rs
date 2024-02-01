@@ -12,12 +12,14 @@ aide = { version = "0.13.1", features = [
     "macros",
     "redoc",
 ] }
+arcstr = "1.1.5"
 async-trait = "0.1.57"
 axum = { workspace = true, features = ["macros"] }
 axum-extra = "0.9.0"
 axum-jsonschema = { version = "0.8.0", features = ["aide"] }
 axum-macros = "0.4.0"
 axum-tracing-opentelemetry = { workspace = true }
+sblex = { version = "0.1.0", path = "../sblex" }
 schemars = { version = "0.8.16", features = ["uuid1"] }
 serde = { version = "1.0.193", features = ["derive", "rc"] }
 serde_json = { workspace = true }
