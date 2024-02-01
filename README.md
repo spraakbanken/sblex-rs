@@ -7,6 +7,8 @@ Morphology is the beast in the room that uses a lot of memory.
 Python reference:
 ![Diagram showing memory usage of Python version](assets/images/python_baseline_memory_usage.png)
 
+*NOTE* All rust examples also serializes the trie to json.
+
 Baseline:
 
 ![Diagram showing memory usage of load_morphology](assets/images/rust_baseline_memory_usage.png)
@@ -22,5 +24,7 @@ And if also use `ArcStr` as keys in the inner map we can reduce it some more:
 ![Diagram showing memory usage of load_morphology](assets/images/rust_use_arcstr_as_key_memory_usage.png)
 
 ### Decomposing builder
+
+The builder already holds the number of states and all states, lets grab them (and reuse the memory).
 
 ![Diagram showing memory usage of load_morphology](assets/images/rust_decompose_builder_memory_usage.png)

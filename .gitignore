@@ -11,3 +11,6 @@ Cargo.lock
 
 /data/*
 
+mprofile*.dat
+output*.json
+profile.json
