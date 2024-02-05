@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["fm-server", "sblex", "server", "trie-map", "trie-sketch"]
+members = ["fm-server", "sblex", "server", "trie-map", "trie-sketch", "workspace-hack"]
 
 
 [workspace.dependencies]

@@ -12,6 +12,7 @@ im = "15.1.0"
 serde_json = { workspace = true }
 unicode-segmentation = "1.10.1"
 serde = { workspace = true, features = ["derive"] }
+workspace-hack = { version = "0.1", path = "../workspace-hack" }
 
 [dev-dependencies]
 eyre = { workspace = true }
