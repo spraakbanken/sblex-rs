@@ -1,16 +1,12 @@
 [workspace]
 resolver = "2"
-members = [
-    "fm-server",
-    "sblex",
-    "server",
-    "trie-map",
-    "trie-sketch",
-    "workspace-hack",
-]
+members = ["crates/*"]
 
 
 [workspace.dependencies]
+# local crates
+
+# extern crates
 axum = "0.7.3"
 init-tracing-opentelemetry = "0.16"
 axum-tracing-opentelemetry = "0.16"
