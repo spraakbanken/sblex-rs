@@ -5,19 +5,41 @@ members = ["crates/*"]
 
 [workspace.dependencies]
 # local crates
+fm-server = { path = "./crates/fm-server" }
+sblex = { path = "./crates/sblex" }
+sblex-server = { path = "./crates/sblex-server" }
+trie-map = { path = "./crates/trie-map" }
+trie-sketch = { path = "./crates/trie-sketch" }
+workspace-hack = { path = "./crates/workspace-hack" }
 
 # extern crates
-axum = "0.7.3"
-init-tracing-opentelemetry = "0.16"
+aide = { version = "0.13.1", features = [
+    "axum",
+    "axum-extra",
+    "macros",
+    "redoc",
+] }
+arcstr = "1.1.5"
+async-trait = "0.1.57"
+axum = { version = "0.7", features = ["macros"] }
+axum-extra = "0.9.0"
+axum-jsonschema = { version = "0.8.0", features = ["aide"] }
+axum-macros = "0.4.0"
 axum-tracing-opentelemetry = "0.16"
+bytes = "1.5"
+clap = { version = "4.4.18", features = ["derive", "cargo", "env"] }
 eyre = "0.6.11"
+init-tracing-opentelemetry = "0.16"
+reqwest = { version = "0.11.22", features = ["json"] }
+schemars = { version = "0.8.16", features = ["uuid1"] }
+serde = "1"
 serde_json = "1"
 tokio = { version = "1.35", default-features = false, features = [
     "macros",
     "rt-multi-thread",
     "signal",
 ] }
-serde = "1"
+uuid = { version = "1.6.1", features = ["serde", "v4"] }
 
 [profile.profiling]
 inherits = "release"
