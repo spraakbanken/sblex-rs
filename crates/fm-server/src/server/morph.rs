@@ -1,4 +1,3 @@
-use aide::axum::{routing::get_with, ApiRouter, IntoApiResponse};
 use axum::{
     extract::{Path, State},
     http::{header, HeaderMap, StatusCode},

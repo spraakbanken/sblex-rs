@@ -1,9 +1,5 @@
-use aide::{axum::ApiRouter, openapi::OpenApi, transform::TransformOpenApi};
-use axum::Extension;
 use axum::Router;
-use std::sync::Arc;
 
-use crate::docs::docs_routes;
 use crate::state::AppState;
 
 use self::morph::morph_routes;

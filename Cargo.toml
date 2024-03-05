@@ -25,11 +25,11 @@ axum = { version = "0.7", features = ["macros"] }
 axum-extra = "0.9.0"
 axum-jsonschema = { version = "0.8.0", features = ["aide"] }
 axum-macros = "0.4.0"
-axum-tracing-opentelemetry = "0.16"
+axum-tracing-opentelemetry = "0.17"
 bytes = "1.5"
 clap = { version = "4.4.18", features = ["derive", "cargo", "env"] }
 eyre = "0.6.11"
-init-tracing-opentelemetry = "0.16"
+init-tracing-opentelemetry = "0.17"
 reqwest = { version = "0.11.22", features = ["json"] }
 schemars = { version = "0.8.16", features = ["uuid1"] }
 serde = "1"
@@ -44,3 +44,7 @@ uuid = { version = "1.6.1", features = ["serde", "v4"] }
 [profile.profiling]
 inherits = "release"
 debug = true
+strip = false
+
+[profile.release]
+strip = true # Automatically strip symbols from the binary.
