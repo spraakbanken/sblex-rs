@@ -20,6 +20,7 @@ axum-jsonschema = { version = "0.8.0", features = ["aide"] }
 axum-macros = "0.4.0"
 axum-tracing-opentelemetry = { workspace = true }
 clap = { version = "4.4.18", features = ["derive", "cargo", "env"] }
+init-tracing-opentelemetry = { workspace = true }
 sblex = { version = "0.1.0", path = "../sblex" }
 schemars = { version = "0.8.16", features = ["uuid1"] }
 serde = { version = "1.0.193", features = ["derive", "rc"] }

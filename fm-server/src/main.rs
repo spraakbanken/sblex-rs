@@ -4,18 +4,21 @@ use clap::Parser;
 use fm_server::{server, startup, state::AppState};
 
 #[tokio::main]
-async fn main() {
+async fn main() -> eyre::Result<()> {
+    init_tracing_opentelemetry::tracing_subscriber_ext::init_subscribers()?;
     let args = Options::parse();
 
-    let state = AppState::from_path(&args.saldo_morph_path).unwrap();
+    let state = AppState::from_path(&args.saldo_morph_path)?;
 
     let app = server::create_app(state);
 
     let address = format!("{}:{}", args.host, args.port);
     eprintln!("Starting server at 'http://{}'", address);
-    let listener = tokio::net::TcpListener::bind(address).await.unwrap();
+    let listener = tokio::net::TcpListener::bind(address).await?;
 
-    startup::run(listener, app).await.unwrap();
+    startup::run(listener, app).await?;
+
+    Ok(())
 }
 
 #[derive(Debug, Clone, clap::Parser)]
