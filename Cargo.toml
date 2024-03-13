@@ -21,7 +21,7 @@ aide = { version = "0.13.1", features = [
 ] }
 arcstr = "1.1.5"
 async-trait = "0.1.57"
-axum = { version = "0.7", features = ["macros"] }
+axum = { version = "0.7.3", features = ["macros"] }
 axum-extra = "0.9.0"
 axum-jsonschema = { version = "0.8.0", features = ["aide"] }
 axum-macros = "0.4.0"

@@ -10,3 +10,4 @@
 mprofile*.dat
 output*.json
 profile.json
+.env

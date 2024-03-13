@@ -4,22 +4,22 @@ use reqwest::Url;
 async fn main() -> eyre::Result<()> {
     let test_app = TestApp::new("http://localhost:3000");
 
-    get_and_print(&test_app, "docs/openapi.json").await?;
-    get_and_print(&test_app, "/morph/lilja/0").await?;
+    // get_and_print(&test_app, "docs/openapi.json").await?;
+    get_and_print(&test_app, "/morph/dväljes/0").await?;
 
     Ok(())
 }
 
 async fn get_and_print(test_app: &TestApp<'_>, path: &str) -> eyre::Result<()> {
     println!(">>> calling '{}' >>>", path);
-    let data: serde_json::Value = test_app
+    let response = test_app
         .client
         .get(test_app.url(path)?)
         .send()
         .await?
-        .error_for_status()?
-        .json()
-        .await?;
+        .error_for_status()?;
+    println!(" headers: {:?}", response.headers());
+    let data: serde_json::Value = response.json().await?;
     println!(" {data:?}");
     println!("<<<");
     Ok(())

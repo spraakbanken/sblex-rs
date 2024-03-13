@@ -11,10 +11,10 @@ watch-trie-map-test:
     cargo watch -q -c -w trie-map -x 'test -p trie-map'
 
 serve-fm-server:
-    cargo watch -q -c -w fm-server/src/ -x 'run -p fm-server'
+    cargo watch -q -c -w crates/fm-server/src -x 'run -p fm-server'
 
 quick-dev-fm-server:
-    cargo watch -q -c -w fm-server/examples/ -x 'run -p fm-server --example fm_server_quick_dev'
+    cargo watch -q -c -w crates/fm-server/examples/ -x 'run -p fm-server --example fm_server_quick_dev'
 
 build-load-morphology:
     cargo build --profile profiling --example load_morphology

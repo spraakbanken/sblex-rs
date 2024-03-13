@@ -24,7 +24,7 @@ axum-tracing-opentelemetry.workspace = true
 axum.workspace = true
 clap.workspace = true
 eyre.workspace = true
-init-tracing-opentelemetry.workspace = true
+init-tracing-opentelemetry = { workspace = true, features = ["stdout"] }
 schemars.workspace = true
 serde_json.workspace = true
 serde = { workspace = true, features = ["derive", "rc"] }
@@ -34,6 +34,31 @@ uuid.workspace = true
 # local deps
 sblex.workspace = true
 workspace-hack.workspace = true
+tracing-opentelemetry = "0.22.0"
+opentelemetry = { version = "0.21", features = [
+    "trace",
+], default-features = false }
+tracing-subscriber = { version = "0.3.18", features = [
+    "env-filter",
+    "registry",
+] }
+tracing = { version = "0.1.40", features = ["log"] }
+opentelemetry_sdk = { version = "0.21", default-features = false, features = [
+    "rt-tokio",
+] }
+# opentelemetry-stdout = { version = "0.3.0", features = [
+#     "trace",
+#     "logs",
+#     "metrics",
+# ] }
+# opentelemetry-semantic-conventions = "0.14.0"
+# opentelemetry-otlp = { version = "0.15.0", features = ["logs", "reqwest-client", "reqwest-rustls"] }
+tower-http = { version = "0.5.2", features = ["trace", "timeout"] }
+tracing-opentelemetry-instrumentation-sdk = "0.17.1"
+opentelemetry-otlp = { version = "0.14", features = ["reqwest-client", "reqwest-rustls"] }
+dotenvy = "0.15.7"
+config = "0.14.0"
+serde_derive = "1.0.197"
 
 [dev-dependencies]
 eyre.workspace = true

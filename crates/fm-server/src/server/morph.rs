@@ -4,12 +4,19 @@ use axum::{
     response::IntoResponse,
     routing, Router,
 };
+use axum_tracing_opentelemetry::middleware::{OtelAxumLayer, OtelInResponseLayer};
+use tracing::instrument;
+use tracing_opentelemetry_instrumentation_sdk::find_current_trace_id;
 
 use crate::state::AppState;
 
 pub fn morph_routes(state: AppState) -> Router {
     Router::new()
         .route("/:fragment/:n", routing::get(get_morph))
+        // include trace context as header into the response
+        .layer(OtelInResponseLayer::default())
+        //start OpenTelemetry trace on incoming request
+        .layer(OtelAxumLayer::default())
         .with_state(state)
 }
 
@@ -18,10 +25,15 @@ struct Params {
     fragment: String,
     n: Option<usize>,
 }
+
+#[instrument(name = "get-morph", skip(state))]
 async fn get_morph(
     State(state): State<AppState>,
     Path(Params { fragment, n }): Path<Params>,
 ) -> impl IntoResponse {
+    tracing::debug!(?fragment, "get_morph called");
+    let trace_id = find_current_trace_id();
+    tracing::debug!(?trace_id, "again");
     let json_data = state
         .morphology
         .read()
