@@ -14,18 +14,10 @@ async fn can_call() -> eyre::Result<()> {
 
     // Assert
     let status_code = response.status();
+    
     let data: serde_json::Value = response.json().await?;
-    println!("{data:?}");
     assert_eq!(status_code, StatusCode::OK);
-    assert_eq!(
-        data,
-        json!({
-            "a": [
-                {"gf": "dväljas","id":"dväljas..vb.1","is":[],"msd":"pres ind s-form","p":"vb_vs_dväljas","pos":"vb"},
-                {"gf": "dväljas","id":"dväljas..vb.1","is":[],"msd":"imper","p":"vb_vs_dväljas","pos":"vb"}
-            ],
-            "c": ""
-        })
-    );
+    insta::assert_json_snapshot!(data);
+ 
     Ok(())
 }

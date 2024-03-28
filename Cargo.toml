@@ -30,6 +30,7 @@ bytes = "1.5"
 clap = { version = "4.4.18", features = ["derive", "cargo", "env"] }
 eyre = "0.6.11"
 init-tracing-opentelemetry = "0.17"
+insta = { version = "1.37.0", features = ["json", "yaml"] }
 reqwest = { version = "0.11.22", features = ["json"] }
 schemars = { version = "0.8.16", features = ["uuid1"] }
 serde = "1"
@@ -40,6 +41,10 @@ tokio = { version = "1.35", default-features = false, features = [
     "signal",
 ] }
 uuid = { version = "1.6.1", features = ["serde", "v4"] }
+
+[profile.dev.package]
+insta.opt-level = 3
+similar.opt-level = 3
 
 [profile.profiling]
 inherits = "release"

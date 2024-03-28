@@ -1,0 +1,25 @@
+---
+source: crates/fm-server/tests/api/morph.rs
+expression: data
+---
+{
+  "a": [
+    {
+      "gf": "dväljas",
+      "id": "dväljas..vb.1",
+      "is": [],
+      "msd": "pres ind s-form",
+      "p": "vb_vs_dväljas",
+      "pos": "vb"
+    },
+    {
+      "gf": "dväljas",
+      "id": "dväljas..vb.1",
+      "is": [],
+      "msd": "imper",
+      "p": "vb_vs_dväljas",
+      "pos": "vb"
+    }
+  ],
+  "c": ""
+}
