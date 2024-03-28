@@ -1,6 +1,7 @@
 use std::env;
 
 use clap::Parser;
+use eyre::Context;
 use fm_server::{cli, config, server, startup, state::AppState, telemetry};
 
 #[tokio::main]
@@ -12,13 +13,13 @@ async fn main() -> eyre::Result<()> {
     );
     let settings = config::Settings::new()?;
     dbg!(&settings);
-    todo!("start");
+    // todo!("start");
     telemetry::init_telemetry()?;
     // init_tracing_opentelemetry::tracing_subscriber_ext::init_subscribers()?;
 
     let args = cli::Options::parse();
 
-    let state = AppState::from_path(&settings.morphology_path)?;
+    let state = AppState::from_path(&settings.morphology_path).with_context(|| format!("morphology_path: {}", &settings.morphology_path))?;
 
     let app = server::create_app(state);
 

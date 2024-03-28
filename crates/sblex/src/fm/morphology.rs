@@ -3,6 +3,7 @@ use std::{fs, io};
 use std::{io::BufRead, path::Path};
 
 use serde_json::{json, Value};
+use tracing::instrument;
 
 use crate::trie::Trie;
 
@@ -51,6 +52,7 @@ impl Morphology {
         Self { trie }
     }
 
+    #[instrument(skip(path))]
     pub fn from_path<P: AsRef<Path>>(path: P) -> Result<Self, Error> {
         let file = fs::File::open(path)?;
         let reader = io::BufReader::new(file);

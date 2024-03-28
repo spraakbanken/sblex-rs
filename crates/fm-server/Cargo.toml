@@ -25,27 +25,21 @@ axum.workspace = true
 clap.workspace = true
 eyre.workspace = true
 init-tracing-opentelemetry = { workspace = true, features = ["stdout"] }
+opentelemetry.workspace = true
+opentelemetry_sdk.workspace = true
 schemars.workspace = true
 serde_json.workspace = true
 serde = { workspace = true, features = ["derive", "rc"] }
 tokio = { workspace = true, features = ["net"] }
+tracing.workspace = true
+tracing-opentelemetry.workspace = true
+tracing-subscriber.workspace = true
 uuid.workspace = true
 
 # local deps
 sblex.workspace = true
 workspace-hack.workspace = true
-tracing-opentelemetry = "0.22.0"
-opentelemetry = { version = "0.21", features = [
-    "trace",
-], default-features = false }
-tracing-subscriber = { version = "0.3.18", features = [
-    "env-filter",
-    "registry",
-] }
-tracing = { version = "0.1.40", features = ["log"] }
-opentelemetry_sdk = { version = "0.21", default-features = false, features = [
-    "rt-tokio",
-] }
+
 # opentelemetry-stdout = { version = "0.3.0", features = [
 #     "trace",
 #     "logs",
