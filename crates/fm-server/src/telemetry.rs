@@ -1,7 +1,7 @@
 // use opentelemetry::global;
 // use opentelemetry::trace::TraceError;
-use opentelemetry::trace::TraceError;
-use opentelemetry_sdk::trace as sdktrace;
+use opentelemetry::{global, trace::TraceError};
+use opentelemetry_sdk::{propagation::TraceContextPropagator, trace as sdktrace};
 use opentelemetry_sdk::trace::Tracer;
 // use opentelemetry::{trace::TracerProvider as _, Context, KeyValue};
 // use opentelemetry_sdk::propagation::TraceContextPropagator;
@@ -48,6 +48,7 @@ use tracing_subscriber::{filter::EnvFilter, layer::SubscriberExt, registry::Look
 // }
 
 pub fn init_telemetry() -> Result<(), init_tracing_opentelemetry::Error> {
+    global::set_text_map_propagator(TraceContextPropagator::new());
     init_tracing_opentelemetry::tracing_subscriber_ext::init_subscribers()
     //setup a temporary subscriber to log output during setup
     // let subscriber = tracing_subscriber::registry()
