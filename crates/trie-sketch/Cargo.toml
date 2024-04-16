@@ -8,3 +8,6 @@ edition = "2021"
 [dependencies]
 # local deps
 workspace-hack.workspace = true
+
+[package.metadata.cargo-machete]
+ignored = ["workspace-hack"]

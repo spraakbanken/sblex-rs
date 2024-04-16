@@ -14,35 +14,42 @@ publish = false
 
 ### BEGIN HAKARI SECTION
 [dependencies]
-ahash = { version = "0.8", features = ["serde"] }
-either = { version = "1", default-features = false, features = ["use_std"] }
-futures-channel = { version = "0.3", features = ["sink"] }
-futures-util = { version = "0.3", default-features = false, features = ["async-await-macro", "channel", "io", "sink"] }
-indexmap = { version = "2", features = ["serde"] }
-init-tracing-opentelemetry = { version = "0.17", default-features = false, features = ["tracing_subscriber_ext"] }
-num-traits = { version = "0.2", default-features = false, features = ["i128", "std"] }
-rand = { version = "0.8", features = ["small_rng"] }
-rand_core = { version = "0.6", default-features = false, features = ["std"] }
-regex = { version = "1" }
-regex-automata = { version = "0.4", default-features = false, features = ["dfa-onepass", "hybrid", "meta", "nfa-backtrack", "perf-inline", "perf-literal", "unicode"] }
-regex-syntax = { version = "0.8" }
-reqwest = { version = "0.11", features = ["cookies", "json"] }
-serde = { version = "1", features = ["derive", "rc"] }
-serde_json = { version = "1", features = ["raw_value"] }
-smallvec = { version = "1", default-features = false, features = ["const_new"] }
-time = { version = "0.3", features = ["formatting", "macros", "parsing"] }
-tokio = { version = "1", features = ["full"] }
-tower = { version = "0.4", features = ["balance", "buffer", "limit", "timeout", "util"] }
-tracing-subscriber = { version = "0.3", default-features = false, features = ["ansi", "env-filter", "json"] }
-unicode-bidi = { version = "0.3" }
-unicode-normalization = { version = "0.1" }
+ahash = { workspace = true, features = ["serde"] }
+either = { workspace = true, features = ["use_std"] }
+futures-channel = { workspace = true, features = ["sink"] }
+futures-util = { workspace = true, features = ["async-await-macro", "channel", "io", "sink"] }
+getrandom = { workspace = true, features = ["std"] }
+indexmap = { workspace = true, features = ["serde"] }
+init-tracing-opentelemetry = { workspace = true, features = ["stdout", "tracing_subscriber_ext"] }
+log = { workspace = true, features = ["std"] }
+num-traits = { workspace = true, features = ["i128", "std"] }
+opentelemetry-http = { workspace = true, features = ["reqwest"] }
+opentelemetry-otlp = { workspace = true, features = ["http-proto", "reqwest-client", "reqwest-rustls"] }
+opentelemetry-proto = { workspace = true, features = ["gen-tonic", "metrics", "trace"] }
+regex = { workspace = true }
+regex-automata = { workspace = true, features = ["dfa-onepass", "hybrid", "meta", "nfa-backtrack", "perf-inline", "perf-literal", "unicode"] }
+regex-syntax = { workspace = true }
+reqwest = { workspace = true, features = ["blocking", "cookies", "json", "rustls-tls-native-roots"] }
+serde = { workspace = true, features = ["derive", "rc"] }
+serde_json = { workspace = true, features = ["raw_value"] }
+smallvec = { workspace = true, features = ["const_new"] }
+time = { workspace = true, features = ["formatting", "macros", "parsing"] }
+tokio = { workspace = true, features = ["full"] }
+tower = { workspace = true, features = ["balance", "buffer", "limit", "timeout", "util"] }
+tracing = { workspace = true, features = ["log"] }
+tracing-core = { workspace = true }
+tracing-log = { workspace = true, features = ["log-tracer", "std"] }
+tracing-subscriber = { workspace = true, features = ["env-filter", "json"] }
+unicode-bidi = { workspace = true }
+unicode-normalization = { workspace = true }
 
 [build-dependencies]
-either = { version = "1", default-features = false, features = ["use_std"] }
-proc-macro2 = { version = "1" }
-quote = { version = "1" }
+either = { workspace = true, features = ["use_std"] }
+getrandom = { workspace = true, features = ["std"] }
+proc-macro2 = { workspace = true }
+quote = { workspace = true }
 syn-dff4ba8e3ae991db = { package = "syn", version = "1", features = ["extra-traits", "full", "visit", "visit-mut"] }
 syn-f595c2ba2a3f28df = { package = "syn", version = "2", features = ["extra-traits", "full", "visit-mut"] }
-time-macros = { version = "0.2", default-features = false, features = ["formatting", "parsing"] }
+time-macros = { workspace = true, features = ["formatting", "parsing"] }
 
 ### END HAKARI SECTION

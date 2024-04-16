@@ -23,17 +23,26 @@ axum-macros.workspace = true
 axum-tracing-opentelemetry.workspace = true
 axum.workspace = true
 clap.workspace = true
+config = { workspace = true }
+dotenvy = { workspace = true }
 eyre.workspace = true
 init-tracing-opentelemetry = { workspace = true, features = ["stdout"] }
-opentelemetry.workspace = true
 opentelemetry_sdk.workspace = true
+opentelemetry-otlp = { workspace = true, features = [
+    "reqwest-client",
+    "reqwest-rustls",
+] }
+opentelemetry.workspace = true
 schemars.workspace = true
-serde_json.workspace = true
 serde = { workspace = true, features = ["derive", "rc"] }
+serde_derive = { workspace = true }
+serde_json.workspace = true
 tokio = { workspace = true, features = ["net"] }
-tracing.workspace = true
+tower-http = { workspace = true, features = ["trace", "timeout"] }
+tracing-opentelemetry-instrumentation-sdk = { workspace = true }
 tracing-opentelemetry.workspace = true
 tracing-subscriber.workspace = true
+tracing.workspace = true
 uuid.workspace = true
 
 # local deps
@@ -47,17 +56,12 @@ workspace-hack.workspace = true
 # ] }
 # opentelemetry-semantic-conventions = "0.14.0"
 # opentelemetry-otlp = { version = "0.15.0", features = ["logs", "reqwest-client", "reqwest-rustls"] }
-tower-http = { version = "0.5.2", features = ["trace", "timeout"] }
-tracing-opentelemetry-instrumentation-sdk = "0.17.1"
-opentelemetry-otlp = { version = "0.14", features = [
-    "reqwest-client",
-    "reqwest-rustls",
-] }
-dotenvy = "0.15.7"
-config = "0.14.0"
-serde_derive = "1.0.197"
+
 
 [dev-dependencies]
 eyre.workspace = true
 reqwest.workspace = true
 insta.workspace = true
+
+[package.metadata.cargo-machete]
+ignored = ["workspace-hack"]

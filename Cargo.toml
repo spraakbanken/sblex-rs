@@ -13,6 +13,7 @@ trie-sketch = { path = "./crates/trie-sketch" }
 workspace-hack = { path = "./crates/workspace-hack" }
 
 # extern crates
+ahash = "0.8"
 aide = { version = "0.13.1", features = [
     "axum",
     "axum-extra",
@@ -26,33 +27,71 @@ axum-extra = "0.9.0"
 axum-jsonschema = { version = "0.8.0", features = ["aide"] }
 axum-macros = "0.4.0"
 axum-tracing-opentelemetry = "0.17"
+axum-xml = "0.2.0"
 bytes = "1.5"
 clap = { version = "4.4.18", features = ["derive", "cargo", "env"] }
+config = "0.14.0"
+dotenvy = "0.15.7"
+either = { version = "1", default-features = false }
 eyre = "0.6.11"
+futures-channel = "0.3"
+futures-util = { version = "0.3", default-features = false }
+hashbrown = "0.13.2"
+httpc-test = "0.1.1"
+indexmap = "2"
 init-tracing-opentelemetry = "0.17"
 insta = { version = "1.37.0", features = ["json", "yaml"] }
+mime = "0.3.17"
+num-traits = { version = "0.2", default-features = false }
 opentelemetry = { version = "0.21", features = [
     "trace",
 ], default-features = false }
+opentelemetry-otlp = "0.14"
 opentelemetry_sdk = { version = "0.21", default-features = false, features = [
     "rt-tokio",
 ] }
+proc-macro2 = "1"
+quote = "1"
+rand = "0.8"
+rand_core = { version = "0.6", default-features = false }
+regex = "1"
+regex-automata = { version = "0.4", default-features = false }
+regex-syntax = "0.8"
 reqwest = { version = "0.11.22", features = ["json"] }
+rstest = "0.17.0"
 schemars = { version = "0.8.16", features = ["uuid1"] }
 serde = "1"
+serde_derive = "1.0.197"
 serde_json = "1"
+smallvec = { version = "1", default-features = false }
+syn-dff4ba8e3ae991db = "1"
+syn-f595c2ba2a3f28df = "2"
+time = "0.3"
+time-macros = { version = "0.2", default-features = false }
 tokio = { version = "1.35", default-features = false, features = [
     "macros",
     "rt-multi-thread",
     "signal",
 ] }
+tower = "0.4"
+tower-http = "0.5.2"
 tracing = { version = "0.1.40", features = ["log"] }
 tracing-opentelemetry = "0.22.0"
+tracing-opentelemetry-instrumentation-sdk = "0.17.1"
 tracing-subscriber = { version = "0.3.18", features = [
     "env-filter",
     "registry",
 ] }
+unicode-bidi = "0.3"
+unicode-normalization = "0.1"
+unicode-segmentation = "1.10.1"
 uuid = { version = "1.6.1", features = ["serde", "v4"] }
+getrandom = { version = "0.2", default-features = false }
+log = { version = "0.4", default-features = false }
+opentelemetry-http = { version = "0.10", default-features = false }
+opentelemetry-proto = { version = "0.4", default-features = false }
+tracing-core = "0.1"
+tracing-log = { version = "0.2", default-features = false }
 
 [profile.dev.package]
 insta.opt-level = 3
