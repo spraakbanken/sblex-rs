@@ -7,24 +7,27 @@ edition = "2021"
 
 [dependencies]
 # local deps
+sblex-telemetry.workspace = true
 workspace-hack = { version = "0.1", path = "../workspace-hack" }
 
 # external deps
 axum = { workspace = true }
 axum-tracing-opentelemetry = { workspace = true }
 axum-xml = { workspace = true }
+dotenvy = { workspace = true }
+eyre = { workspace = true }
 init-tracing-opentelemetry = { workspace = true, features = [
     "otlp",
     "tracing_subscriber_ext",
 ] }
 mime = { workspace = true }
+opentelemetry.workspace = true
 serde = { workspace = true, features = ["derive"] }
 serde_json = { workspace = true }
 tokio = { workspace = true }
 tracing = { workspace = true }
 
 [dev-dependencies]
-eyre = { workspace = true }
 httpc-test = { workspace = true }
 reqwest = { workspace = true, features = ["json"] }
 rstest = { workspace = true }

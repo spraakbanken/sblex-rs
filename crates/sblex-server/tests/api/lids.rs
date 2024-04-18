@@ -1,5 +1,5 @@
 use crate::conftest::spawn_app;
-use axum::http::StatusCode;
+use reqwest::StatusCode;
 use rstest::rstest;
 
 #[rstest]
@@ -7,9 +7,9 @@ use rstest::rstest;
 #[case("xml")]
 #[case("html")]
 #[tokio::test]
-async fn invalid_input_returns_400(#[case] format: &str) {
+async fn invalid_input_returns_400(#[case] format: &str) -> eyre::Result<()> {
     // Arrange
-    let ctx = spawn_app().await;
+    let ctx = spawn_app().await?;
     let client = reqwest::Client::new();
 
     // Act
@@ -23,4 +23,5 @@ async fn invalid_input_returns_400(#[case] format: &str) {
     // Assert
     assert_eq!(response.status(), StatusCode::BAD_REQUEST);
     // assert_eq!(Some(15), response.content_length());
+    Ok(())
 }

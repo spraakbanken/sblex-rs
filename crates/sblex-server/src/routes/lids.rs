@@ -1,6 +1,5 @@
 use std::str::FromStr;
 
-use axum::body::{Bytes, Full};
 use axum::http::{header, HeaderValue};
 use axum::response::{Html, IntoResponse};
 use axum::{extract::Path, response::Response};
@@ -108,7 +107,7 @@ pub struct Xml<T>(pub T);
 
 impl<T> IntoResponse for Xml<T>
 where
-    T: Into<Full<Bytes>>,
+    T: IntoResponse,
 {
     fn into_response(self) -> Response {
         (
@@ -116,7 +115,7 @@ where
                 header::CONTENT_TYPE,
                 HeaderValue::from_static(mime::XML.as_ref()),
             )],
-            self.0.into(),
+            self.0.into_response(),
         )
             .into_response()
     }

@@ -1,21 +1,22 @@
-use std::net::{SocketAddr, TcpListener};
+use tokio::net::TcpListener;
+
+use sblex_server::startup;
 
 pub struct Context {
     pub address: String,
 }
 
-pub async fn spawn_app() -> Context {
-    let listener = TcpListener::bind("0.0.0.0:0".parse::<SocketAddr>().unwrap()).unwrap();
-    let addr = listener.local_addr().unwrap();
+pub async fn spawn_app() -> eyre::Result<Context> {
+    let listener = TcpListener::bind("127.0.0.1:0").await?;
+    let port = listener.local_addr().unwrap().port();
+    let address=  format!("http://127.0.0.1:{}",port);
+
+    let app = startup::app();
 
     tokio::spawn(async move {
-        axum::Server::from_tcp(listener)
-            .unwrap()
-            .serve(sblex_server::startup::app().into_make_service())
-            .await
-            .unwrap();
+        startup::run(listener, app).await
     });
-    Context {
-        address: format!("http://localhost:{}", addr.port()),
-    }
+    Ok(Context {
+        address
+    })
 }
