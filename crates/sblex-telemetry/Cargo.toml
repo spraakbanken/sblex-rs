@@ -1,0 +1,15 @@
+[package]
+name = "sblex-telemetry"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+init-tracing-opentelemetry = { workspace = true, features = ["stdout"] }
+opentelemetry.workspace = true
+opentelemetry_sdk.workspace = true
+tracing-opentelemetry-instrumentation-sdk = { workspace = true }
+tracing-opentelemetry.workspace = true
+tracing-subscriber.workspace = true
+tracing.workspace = true

@@ -6,4 +6,4 @@ pub mod extractors;
 pub mod server;
 pub mod startup;
 pub mod state;
-pub mod telemetry;
+pub use sblex_telemetry::telemetry;

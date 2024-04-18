@@ -47,6 +47,7 @@ uuid.workspace = true
 
 # local deps
 sblex.workspace = true
+sblex-telemetry.workspace = true
 workspace-hack.workspace = true
 
 # opentelemetry-stdout = { version = "0.3.0", features = [

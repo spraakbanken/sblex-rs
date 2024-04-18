@@ -8,6 +8,7 @@ members = ["crates/*"]
 fm-server = { path = "./crates/fm-server" }
 sblex = { path = "./crates/sblex" }
 sblex-server = { path = "./crates/sblex-server" }
+sblex-telemetry = { path = "./crates/sblex-telemetry" }
 trie-map = { path = "./crates/trie-map" }
 trie-sketch = { path = "./crates/trie-sketch" }
 workspace-hack = { path = "./crates/workspace-hack" }

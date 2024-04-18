@@ -850,6 +850,7 @@ dependencies = [
  "opentelemetry_sdk",
  "reqwest",
  "sblex",
+ "sblex-telemetry",
  "schemars",
  "serde",
  "serde_derive",
@@ -2392,17 +2393,33 @@ dependencies = [
  "axum 0.7.5",
  "axum-tracing-opentelemetry",
  "axum-xml",
+ "dotenvy",
  "eyre",
  "httpc-test",
  "init-tracing-opentelemetry",
  "mime",
+ "opentelemetry",
  "reqwest",
  "rstest",
+ "sblex-telemetry",
  "serde",
  "serde_json",
  "tokio",
  "tracing",
  "workspace-hack",
+]
+
+[[package]]
+name = "sblex-telemetry"
+version = "0.1.0"
+dependencies = [
+ "init-tracing-opentelemetry",
+ "opentelemetry",
+ "opentelemetry_sdk",
+ "tracing",
+ "tracing-opentelemetry",
+ "tracing-opentelemetry-instrumentation-sdk",
+ "tracing-subscriber",
 ]
 
 [[package]]
