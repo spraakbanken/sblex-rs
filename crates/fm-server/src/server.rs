@@ -1,16 +1,13 @@
 use std::time::Duration;
 
-use axum::extract::Request;
 use axum::Router;
-use axum_tracing_opentelemetry::middleware::{OtelAxumLayer, OtelInResponseLayer};
-use tracing::Span;
 
 use crate::state::AppState;
 
 use self::morph::morph_routes;
 
 use tower_http::timeout::TimeoutLayer;
-use tower_http::trace::TraceLayer;
+
 
 mod morph;
 
@@ -33,11 +30,4 @@ pub fn create_app(state: AppState) -> Router {
     ))
 }
 
-// fn api_docs(api: TransformOpenApi) -> TransformOpenApi {
-//     api.title("FM server").summary("FM server")
-// }
 
-fn make_span(request: &Request) -> Span {
-    let headers = request.headers();
-    tracing::info_span!("incoming request", ?headers)
-}

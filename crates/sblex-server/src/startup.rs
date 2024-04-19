@@ -3,7 +3,9 @@ use crate::routes::system;
 
 use axum::routing::get;
 use axum::Router;
-use axum_tracing_opentelemetry::{opentelemetry_tracing_layer, response_with_trace_layer};
+use axum_tracing_opentelemetry::middleware::OtelAxumLayer;
+use axum_tracing_opentelemetry::middleware::OtelInResponseLayer;
+
 
 pub fn app() -> Router {
     Router::new()
@@ -11,10 +13,10 @@ pub fn app() -> Router {
         .route("/lid/xml/:lid", get(lids::lookup_lid_xml)) // request processed inside span
         .route("/lid/html/:lid", get(lids::lookup_lid_html)) // request processed inside span
         // include trace context as header into the response
-        .layer(response_with_trace_layer())
+        .layer(OtelInResponseLayer)
         // opentelemetry_tracing_layer setup `TraceLayer`,
         // that is provided by tower-http so you have to add that as a dependency.
-        .layer(opentelemetry_tracing_layer())
+        .layer(OtelAxumLayer::default())
         .route("/health", get(system::health))
         .route("/version/json", get(system::version))
 }

@@ -1,5 +1,4 @@
 use reqwest::StatusCode;
-use serde_json::json;
 
 use crate::conftest::TestApp;
 
@@ -14,10 +13,10 @@ async fn can_call() -> eyre::Result<()> {
 
     // Assert
     let status_code = response.status();
-    
+
     let data: serde_json::Value = response.json().await?;
     assert_eq!(status_code, StatusCode::OK);
     insta::assert_json_snapshot!(data);
- 
+
     Ok(())
 }
