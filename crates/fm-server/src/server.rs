@@ -8,7 +8,6 @@ use self::morph::morph_routes;
 
 use tower_http::timeout::TimeoutLayer;
 
-
 mod morph;
 
 pub fn create_app(state: AppState) -> Router {
@@ -29,5 +28,3 @@ pub fn create_app(state: AppState) -> Router {
         // OtelAxumLayer::default(),
     ))
 }
-
-

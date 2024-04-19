@@ -6,7 +6,6 @@ use axum::Router;
 use axum_tracing_opentelemetry::middleware::OtelAxumLayer;
 use axum_tracing_opentelemetry::middleware::OtelInResponseLayer;
 
-
 pub fn app() -> Router {
     Router::new()
         .route("/lid/json/:lid", get(lids::lookup_lid_json)) // request processed inside span

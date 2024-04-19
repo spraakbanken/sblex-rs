@@ -1,5 +1,3 @@
-
-
 #[derive(Debug, Clone, clap::Parser)]
 #[command(author, version, about, long_about=None)]
 pub struct Options {
