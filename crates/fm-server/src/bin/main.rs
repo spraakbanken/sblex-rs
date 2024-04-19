@@ -19,7 +19,8 @@ async fn main() -> eyre::Result<()> {
 
     let args = cli::Options::parse();
 
-    let state = AppState::from_path(&settings.morphology_path).with_context(|| format!("morphology_path: {}", &settings.morphology_path))?;
+    let state = AppState::from_path(&settings.morphology_path)
+        .with_context(|| format!("morphology_path: {}", &settings.morphology_path))?;
 
     let app = server::create_app(state);
 

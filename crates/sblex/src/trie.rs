@@ -1,5 +1,3 @@
-use std::collections::BTreeMap;
-
 use hashbrown::HashMap;
 
 use arcstr::ArcStr;

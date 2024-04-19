@@ -2,7 +2,7 @@ use sblex::fm::Morphology;
 
 #[test]
 fn load_morphology_from_file() -> eyre::Result<()> {
-    let morph = Morphology::from_path("../assets/testing/dalin.lex").unwrap();
+    let morph = Morphology::from_path("../../assets/testing/dalin.lex").unwrap();
 
     let result = morph.lookup("ö").unwrap();
     let result: serde_json::Value = serde_json::from_str(result)?;

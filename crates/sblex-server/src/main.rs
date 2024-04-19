@@ -26,5 +26,3 @@ async fn main() -> eyre::Result<()> {
     startup::run(listener, app).await?;
     Ok(())
 }
-
-

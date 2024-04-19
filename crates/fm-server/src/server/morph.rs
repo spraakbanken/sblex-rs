@@ -14,7 +14,7 @@ pub fn morph_routes(state: AppState) -> Router {
     Router::new()
         .route("/:fragment/:n", routing::get(get_morph))
         // include trace context as header into the response
-        .layer(OtelInResponseLayer::default())
+        .layer(OtelInResponseLayer)
         //start OpenTelemetry trace on incoming request
         .layer(OtelAxumLayer::default())
         .with_state(state)
