@@ -1,8 +1,8 @@
 // use opentelemetry::global;
 // use opentelemetry::trace::TraceError;
 use opentelemetry::{global, trace::TraceError};
-use opentelemetry_sdk::{propagation::TraceContextPropagator, trace as sdktrace};
 use opentelemetry_sdk::trace::Tracer;
+use opentelemetry_sdk::{propagation::TraceContextPropagator, trace as sdktrace};
 // use opentelemetry::{trace::TracerProvider as _, Context, KeyValue};
 // use opentelemetry_sdk::propagation::TraceContextPropagator;
 // use opentelemetry_sdk::trace::{Span, Tracer};

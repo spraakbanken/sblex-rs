@@ -2,7 +2,7 @@ use crate::conftest::spawn_app;
 use serde_json::Value as JsonValue;
 
 #[tokio::test]
-async fn health_check_works()-> eyre::Result<()>  {
+async fn health_check_works() -> eyre::Result<()> {
     // Arrange
     let ctx = spawn_app().await?;
     let client = reqwest::Client::new();
