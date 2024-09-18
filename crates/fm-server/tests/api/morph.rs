@@ -20,3 +20,23 @@ async fn can_call() -> eyre::Result<()> {
 
     Ok(())
 }
+
+#[tokio::test]
+async fn non_existent() -> eyre::Result<()> {
+    // Arrange
+    let app = TestApp::new().await?;
+    let client = reqwest::Client::new();
+
+    // Act
+    let response = client.get(app.url("/morph/löparsko/0")?).send().await?;
+
+    // Assert
+    let status_code = response.status();
+
+    assert_eq!(status_code, StatusCode::NOT_FOUND);
+
+    // let data: serde_json::Value = response.json().await?;
+    // insta::assert_json_snapshot!(data);
+
+    Ok(())
+}
