@@ -862,7 +862,6 @@ dependencies = [
  "tracing-opentelemetry-instrumentation-sdk",
  "tracing-subscriber",
  "uuid",
- "workspace-hack",
 ]
 
 [[package]]
@@ -2383,7 +2382,6 @@ dependencies = [
  "serde_json",
  "tracing",
  "unicode-segmentation",
- "workspace-hack",
 ]
 
 [[package]]
@@ -2406,7 +2404,6 @@ dependencies = [
  "serde_json",
  "tokio",
  "tracing",
- "workspace-hack",
 ]
 
 [[package]]
@@ -3125,15 +3122,11 @@ name = "trie-map"
 version = "0.1.0"
 dependencies = [
  "bytes",
- "workspace-hack",
 ]
 
 [[package]]
 name = "trie-sketch"
 version = "0.1.0"
-dependencies = [
- "workspace-hack",
-]
 
 [[package]]
 name = "try-lock"
@@ -3518,45 +3511,6 @@ checksum = "524e57b2c537c0f9b1e69f1965311ec12182b4122e45035b1508cd24d2adadb1"
 dependencies = [
  "cfg-if",
  "windows-sys 0.48.0",
-]
-
-[[package]]
-name = "workspace-hack"
-version = "0.1.0"
-dependencies = [
- "ahash",
- "either",
- "futures-channel",
- "futures-util",
- "getrandom",
- "indexmap 2.2.6",
- "init-tracing-opentelemetry",
- "log",
- "num-traits",
- "opentelemetry-http",
- "opentelemetry-otlp",
- "opentelemetry-proto",
- "proc-macro2",
- "quote",
- "regex",
- "regex-automata 0.4.6",
- "regex-syntax 0.8.3",
- "reqwest",
- "serde",
- "serde_json",
- "smallvec",
- "syn 1.0.109",
- "syn 2.0.55",
- "time",
- "time-macros",
- "tokio",
- "tower",
- "tracing",
- "tracing-core",
- "tracing-log",
- "tracing-subscriber",
- "unicode-bidi",
- "unicode-normalization",
 ]
 
 [[package]]

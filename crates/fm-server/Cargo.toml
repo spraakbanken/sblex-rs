@@ -48,7 +48,6 @@ uuid.workspace = true
 # local deps
 sblex.workspace = true
 sblex-telemetry.workspace = true
-workspace-hack.workspace = true
 
 # opentelemetry-stdout = { version = "0.3.0", features = [
 #     "trace",
@@ -63,6 +62,3 @@ workspace-hack.workspace = true
 eyre.workspace = true
 reqwest.workspace = true
 insta.workspace = true
-
-[package.metadata.cargo-machete]
-ignored = ["workspace-hack"]

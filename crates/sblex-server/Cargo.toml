@@ -8,7 +8,6 @@ edition = "2021"
 [dependencies]
 # local deps
 sblex-telemetry.workspace = true
-workspace-hack = { version = "0.1", path = "../workspace-hack" }
 
 # external deps
 axum = { workspace = true }
@@ -31,6 +30,3 @@ tracing = { workspace = true }
 httpc-test = { workspace = true }
 reqwest = { workspace = true, features = ["json"] }
 rstest = { workspace = true }
-
-[package.metadata.cargo-machete]
-ignored = ["workspace-hack"]
