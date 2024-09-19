@@ -853,7 +853,6 @@ dependencies = [
  "sblex-telemetry",
  "schemars",
  "serde",
- "serde_derive",
  "serde_json",
  "tokio",
  "tower-http",
