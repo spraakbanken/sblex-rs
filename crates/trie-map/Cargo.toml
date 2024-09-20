@@ -9,7 +9,3 @@ edition = "2021"
 bytes.workspace = true
 
 # local deps
-workspace-hack.workspace = true
-
-[package.metadata.cargo-machete]
-ignored = ["workspace-hack"]

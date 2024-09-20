@@ -2,6 +2,7 @@
 name = "fm-server"
 version = "0.1.0"
 edition = "2021"
+rust-version.workspace = true
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [lib]
@@ -33,10 +34,12 @@ opentelemetry-otlp = { workspace = true, features = [
     "reqwest-rustls",
 ] }
 opentelemetry.workspace = true
+reqwest.workspace = true
+reqwest_cookie_store.workspace = true
 schemars.workspace = true
 serde = { workspace = true, features = ["derive", "rc"] }
-serde_derive = { workspace = true }
 serde_json.workspace = true
+time.workspace = true
 tokio = { workspace = true, features = ["net"] }
 tower-http = { workspace = true, features = ["trace", "timeout"] }
 tracing-opentelemetry-instrumentation-sdk = { workspace = true }
@@ -48,7 +51,6 @@ uuid.workspace = true
 # local deps
 sblex.workspace = true
 sblex-telemetry.workspace = true
-workspace-hack.workspace = true
 
 # opentelemetry-stdout = { version = "0.3.0", features = [
 #     "trace",
@@ -63,6 +65,3 @@ workspace-hack.workspace = true
 eyre.workspace = true
 reqwest.workspace = true
 insta.workspace = true
-
-[package.metadata.cargo-machete]
-ignored = ["workspace-hack"]

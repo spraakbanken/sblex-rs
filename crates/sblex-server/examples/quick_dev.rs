@@ -1,4 +1,3 @@
-
 #[tokio::main]
 async fn main() -> eyre::Result<()> {
     let hc = httpc_test::new_client("http://localhost:3003")?;

@@ -1,5 +1,5 @@
 use config::{Config, Environment};
-use serde_derive::Deserialize;
+use serde::Deserialize;
 #[cfg(test)]
 mod tests;
 

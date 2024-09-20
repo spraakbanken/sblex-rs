@@ -39,7 +39,7 @@ impl<'a> TestApp<'a> {
     }
 
     pub fn url<S: AsRef<str>>(&self, path: S) -> eyre::Result<String> {
-        let base = Url::parse(self.base_url.as_ref())?;
+        let base = Url::parse(self.base_url)?;
         let url = base.join(path.as_ref())?;
         Ok(url.as_str().to_string())
     }
