@@ -154,3 +154,19 @@ jobs:
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
           env_vars: OS,RUST
+
+  # https://github.com/marketplace/actions/alls-green#why used for branch protection checks
+  test-check:
+    if: always()
+    needs:
+      - required
+      - minimal
+      - os-check
+      - coverage
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - name: Decide whether the needed jobs succeeded or failed
+        uses: re-actors/alls-green@release/v1
+        with:
+          jobs: ${{ toJSON(needs) }}
