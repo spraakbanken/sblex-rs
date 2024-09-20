@@ -40,9 +40,9 @@ eyre = "0.6.11"
 futures-channel = "0.3"
 futures-util = { version = "0.3", default-features = false }
 hashbrown = "0.13.2"
-httpc-test = "0.1.1"
+httpc-test = "0.1.10"
 indexmap = "2"
-init-tracing-opentelemetry = "0.17"
+init-tracing-opentelemetry = "0.17.1"
 insta = { version = "1.37.0", features = ["json", "yaml"] }
 mime = "0.3.17"
 num-traits = { version = "0.2", default-features = false }
@@ -50,7 +50,7 @@ opentelemetry = { version = "0.21", features = [
     "trace",
 ], default-features = false }
 opentelemetry-otlp = "0.14"
-opentelemetry_sdk = { version = "0.21", default-features = false, features = [
+opentelemetry_sdk = { version = "0.21.2", default-features = false, features = [
     "rt-tokio",
 ] }
 proc-macro2 = "1"
@@ -60,11 +60,12 @@ rand_core = { version = "0.6", default-features = false }
 regex = "1"
 regex-automata = { version = "0.4", default-features = false }
 regex-syntax = "0.8"
-reqwest = { version = "0.11.22", features = ["json"] }
+reqwest = { version = "0.12.7", features = ["json"] }
+reqwest_cookie_store = { version = "0.8.0" }
 rstest = "0.17.0"
 schemars = { version = "0.8.16", features = ["uuid1"] }
-serde = "1.0.145"
-serde_json = "1.0.85"
+serde = "1.0.184"
+serde_json = "1.0.87"
 smallvec = { version = "1", default-features = false }
 syn-dff4ba8e3ae991db = "1"
 syn-f595c2ba2a3f28df = "2"

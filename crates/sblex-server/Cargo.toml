@@ -22,8 +22,11 @@ init-tracing-opentelemetry = { workspace = true, features = [
 ] }
 mime = { workspace = true }
 opentelemetry.workspace = true
+reqwest = { workspace = true, features = ["json"] }
+reqwest_cookie_store = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
 serde_json = { workspace = true }
+time.workspace = true
 tokio = { workspace = true }
 tracing = { workspace = true }
 

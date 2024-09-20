@@ -34,9 +34,12 @@ opentelemetry-otlp = { workspace = true, features = [
     "reqwest-rustls",
 ] }
 opentelemetry.workspace = true
+reqwest.workspace = true
+reqwest_cookie_store.workspace = true
 schemars.workspace = true
 serde = { workspace = true, features = ["derive", "rc"] }
 serde_json.workspace = true
+time.workspace = true
 tokio = { workspace = true, features = ["net"] }
 tower-http = { workspace = true, features = ["trace", "timeout"] }
 tracing-opentelemetry-instrumentation-sdk = { workspace = true }
