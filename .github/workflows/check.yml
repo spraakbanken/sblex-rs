@@ -56,10 +56,9 @@ jobs:
           toolchain: ${{ matrix.toolchain }}
           components: clippy
       - name: cargo clippy
-        uses: giraffate/clippy-action@v1.4.0
+        uses: auguwu/clippy-action@1.4.0
         with:
-          reporter: "github-pr-check"
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{secrets.GITHUB_TOKEN}}
   doc:
     # run docs generation on nightly rather than stable. This enables features like
     # https://doc.rust-lang.org/beta/unstable-book/language-features/doc-cfg.html which allows an
