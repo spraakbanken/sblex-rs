@@ -852,7 +852,6 @@ dependencies = [
  "opentelemetry_sdk",
  "reqwest 0.12.7",
  "reqwest_cookie_store",
- "sblex",
  "sblex-telemetry",
  "schemars",
  "serde",
@@ -864,6 +863,7 @@ dependencies = [
  "tracing-opentelemetry",
  "tracing-opentelemetry-instrumentation-sdk",
  "tracing-subscriber",
+ "trie-morphology",
  "uuid",
 ]
 
@@ -2497,19 +2497,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f3cb5ba0dc43242ce17de99c180e96db90b235b8a9fdc9543c96d2209116bd9f"
 
 [[package]]
-name = "sblex"
-version = "0.1.0"
-dependencies = [
- "arcstr",
- "eyre",
- "hashbrown 0.13.2",
- "serde",
- "serde_json",
- "tracing",
- "unicode-segmentation",
-]
-
-[[package]]
 name = "sblex-server"
 version = "0.1.0"
 dependencies = [
@@ -2532,6 +2519,10 @@ dependencies = [
  "tokio",
  "tracing",
 ]
+
+[[package]]
+name = "sblex-services"
+version = "0.1.0"
 
 [[package]]
 name = "sblex-telemetry"
@@ -3290,6 +3281,19 @@ name = "trie-map"
 version = "0.1.0"
 dependencies = [
  "bytes",
+]
+
+[[package]]
+name = "trie-morphology"
+version = "0.1.0"
+dependencies = [
+ "arcstr",
+ "eyre",
+ "hashbrown 0.13.2",
+ "serde",
+ "serde_json",
+ "tracing",
+ "unicode-segmentation",
 ]
 
 [[package]]

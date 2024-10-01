@@ -49,7 +49,7 @@ tracing.workspace = true
 uuid.workspace = true
 
 # local deps
-sblex.workspace = true
+trie-morphology.workspace = true
 sblex-telemetry.workspace = true
 
 # opentelemetry-stdout = { version = "0.3.0", features = [

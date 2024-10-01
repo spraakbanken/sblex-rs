@@ -1,8 +1,8 @@
 use std::{path::Path, sync::Arc};
 
-use sblex::fm::{self, Morphology};
 use tokio::sync::RwLock;
 use tracing::instrument;
+use trie_morphology::fm::{self, Morphology};
 
 #[derive(Debug, Clone)]
 pub struct AppState {
