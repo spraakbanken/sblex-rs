@@ -1,5 +1,9 @@
+pub mod error;
 pub mod morphology;
 pub mod trie;
+
+pub use error::Error;
+pub use morphology::Morphology;
 
 #[cfg(test)]
 mod tests {
