@@ -1,4 +1,4 @@
-pub mod fm;
+pub mod morphology;
 pub mod trie;
 
 #[cfg(test)]
