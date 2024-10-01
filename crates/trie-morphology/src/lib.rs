@@ -1,4 +1,4 @@
-pub mod fm;
+pub mod error;
 pub mod trie;
 
 #[cfg(test)]
