@@ -1,6 +1,7 @@
 use std::{fs, io};
 use std::{io::BufRead, path::Path};
 
+use sblex_services::Morphology;
 use serde_json::{json, Value};
 use tracing::instrument;
 
@@ -8,11 +9,11 @@ use crate::trie::Trie;
 use crate::Error;
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
-pub struct Morphology {
+pub struct TrieMorphology {
     trie: Trie,
 }
 
-impl Morphology {
+impl TrieMorphology {
     pub fn new(trie: Trie) -> Self {
         Self { trie }
     }
@@ -61,12 +62,23 @@ impl Morphology {
         self.trie.lookup_with_state(fragment, state)
     }
 }
+
+impl Morphology for TrieMorphology {
+    fn lookup(&self, fragment: &str) -> Option<&str> {
+        self.trie.lookup_with_state(fragment, 0)
+    }
+
+    fn lookup_with_state(&self, fragment: &str, state: usize) -> Option<&str> {
+        self.trie.lookup_with_state(fragment, state)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
     fn can_create_morphology() {
-        let _morph = Morphology::new(Trie::builder().build());
+        let _morph = TrieMorphology::new(Trie::builder().build());
     }
 }

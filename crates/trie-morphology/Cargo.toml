@@ -8,6 +8,7 @@ rust-version.workspace = true
 
 [dependencies]
 # local deps
+sblex-services = { workspace = true }
 
 # external deps
 arcstr = { workspace = true, features = ["serde"] }

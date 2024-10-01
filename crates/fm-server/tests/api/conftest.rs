@@ -1,6 +1,6 @@
-use fm_server::{server, startup, state::AppState};
+use fm_server::http::{HttpServer, HttpServerConfig};
 use reqwest::Url;
-use tokio::net::TcpListener;
+use trie_morphology::TrieMorphology;
 
 pub struct TestApp {
     pub address: String,
@@ -8,14 +8,15 @@ pub struct TestApp {
 
 impl TestApp {
     pub async fn new() -> eyre::Result<TestApp> {
-        let listener = TcpListener::bind("127.0.0.1:0").await?;
-        let port = listener.local_addr().unwrap().port();
-        let address = format!("http://127.0.0.1:{}", port);
+        let host = "127.0.0.1";
 
-        let state = AppState::from_path("assets/testing/saldo.lex")?;
-        let app = server::create_app(state);
+        let saldo_morphology = TrieMorphology::from_path("assets/testing/saldo.lex")?;
+        let http_server_config = HttpServerConfig { port: 0, host };
+        let http_server = HttpServer::new(saldo_morphology, http_server_config).await?;
+        let port = http_server.local_addr()?.port();
+        tokio::spawn(async move { http_server.run().await });
+        let address = format!("http://{}:{}", host, port);
 
-        tokio::spawn(async move { startup::run(listener, app).await });
         Ok(Self { address })
     }
 

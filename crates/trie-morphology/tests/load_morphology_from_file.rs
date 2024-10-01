@@ -1,8 +1,8 @@
-use sblex::fm::Morphology;
+use trie_morphology::TrieMorphology;
 
 #[test]
 fn load_morphology_from_file() -> eyre::Result<()> {
-    let morph = Morphology::from_path("../../assets/testing/dalin.lex").unwrap();
+    let morph = TrieMorphology::from_path("../../assets/testing/dalin.lex").unwrap();
 
     let result = morph.lookup("ö").unwrap();
     let result: serde_json::Value = serde_json::from_str(result)?;

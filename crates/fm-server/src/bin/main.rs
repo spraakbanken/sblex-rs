@@ -2,7 +2,12 @@ use std::env;
 
 use clap::Parser;
 use eyre::Context;
-use fm_server::{cli, config, server, startup, state::AppState, telemetry};
+use fm_server::{
+    cli, config,
+    http::{HttpServer, HttpServerConfig},
+    telemetry,
+};
+use trie_morphology::TrieMorphology;
 
 #[tokio::main]
 async fn main() -> eyre::Result<()> {
@@ -19,16 +24,17 @@ async fn main() -> eyre::Result<()> {
 
     let args = cli::Options::parse();
 
-    let state = AppState::from_path(&settings.morphology_path)
+    let saldo_morphology = TrieMorphology::from_path(&settings.morphology_path)
         .with_context(|| format!("morphology_path: {}", &settings.morphology_path))?;
 
-    let app = server::create_app(state);
+    let server_config = HttpServerConfig {
+        port: args.port,
+        host: &args.host,
+    };
 
-    let address = format!("{}:{}", args.host, args.port);
-    tracing::info!("Starting server at 'http://{}'", address);
-    let listener = tokio::net::TcpListener::bind(address).await?;
+    let http_server = HttpServer::new(saldo_morphology, server_config).await?;
 
-    startup::run(listener, app).await?;
+    http_server.run().await?;
 
     Ok(())
 }
