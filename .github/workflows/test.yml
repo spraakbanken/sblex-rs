@@ -111,7 +111,7 @@ jobs:
     # use llvm-cov to build and collect coverage and outputs in a format that
     # is compatible with codecov.io
     #
-    # note that codecov as of v4 requires that CODECOV_TOKEN from
+    # note that codecov as of v5 requires that CODECOV_TOKEN from
     #
     #   https://app.codecov.io/gh/<user or org>/<project>/settings
     #
@@ -149,7 +149,7 @@ jobs:
       - name: Record Rust version
         run: echo "RUST=$(rustc --version)" >> "$GITHUB_ENV"
       - name: Upload to codecov.io
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}

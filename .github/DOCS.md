@@ -2,7 +2,7 @@
 
 Copied from <https://github.com/jonhoo/rust-ci-conf/>.
 
-In this folder there is configuration for codecoverage, dependabot, and ci
+In this folder there is configuration for code coverage, dependabot, and ci
 workflows that check the library more deeply than the default configurations.
 
 This folder can be or was merged using a --allow-unrelated-histories merge
