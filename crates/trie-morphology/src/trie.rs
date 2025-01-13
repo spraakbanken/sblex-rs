@@ -4,8 +4,6 @@ use arcstr::ArcStr;
 use sblex_services::MorphologyBuilder;
 use unicode_segmentation::{Graphemes, UnicodeSegmentation};
 
-use crate::TrieMorphology;
-
 pub type State = usize;
 type StringStateMap = HashMap<ArcStr, State>;
 // type StringIntMap = BTreeMap<ArcStr, usize>;
