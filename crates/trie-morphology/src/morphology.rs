@@ -64,8 +64,8 @@ impl TrieMorphology {
 }
 
 impl Morphology for TrieMorphology {
-    fn lookup(&self, fragment: &str) -> Option<&str> {
-        self.trie.lookup_with_state(fragment, 0)
+    fn lookup(&self, fragment: &str) -> Result<Option<Vec<u8>>, sblex_services::LookupError> {
+        Ok(self.trie.lookup_with_state(fragment, 0).map(|m| m.into()))
     }
 
     fn lookup_with_state(&self, fragment: &str, state: usize) -> Option<&str> {

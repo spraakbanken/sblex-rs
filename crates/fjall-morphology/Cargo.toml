@@ -5,3 +5,6 @@ rust-version.workspace = true
 edition.workspace = true
 
 [dependencies]
+fjall = "2.5.0"
+miette = "7.4.0"
+sblex-services = { workspace = true }

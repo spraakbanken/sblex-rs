@@ -1,7 +1,10 @@
 use hashbrown::HashMap;
 
 use arcstr::ArcStr;
+use sblex_services::MorphologyBuilder;
 use unicode_segmentation::{Graphemes, UnicodeSegmentation};
+
+use crate::TrieMorphology;
 
 pub type State = usize;
 type StringStateMap = HashMap<ArcStr, State>;
@@ -133,6 +136,22 @@ impl TrieBuilder {
     }
     pub fn number_of_insertions(&self) -> usize {
         self.count
+    }
+}
+
+impl MorphologyBuilder for TrieBuilder {
+    fn insert(
+        &mut self,
+        word: &str,
+        value: String,
+    ) -> Result<(), sblex_services::MorphologyBuilderError> {
+        Ok(TrieBuilder::insert(self, word, value))
+    }
+
+    fn finish(&mut self) -> Result<(), sblex_services::MorphologyBuilderError> {
+        // let trie = TrieMorphology::new(self.build());
+        dbg!(self);
+        Ok(())
     }
 }
 

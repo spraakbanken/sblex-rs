@@ -1,3 +1,3 @@
-mod morphology;
+pub mod morphology;
 
-pub use morphology::Morphology;
+pub use morphology::{LookupError, Morphology, MorphologyBuilder, MorphologyBuilderError};
