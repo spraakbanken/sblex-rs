@@ -27,6 +27,28 @@ impl MorphologyBuilder for FjallMorphology {
         word: &str,
         value: String,
     ) -> Result<(), sblex_services::MorphologyBuilderError> {
+        let value = if let Some(data) = self
+            .saldo_morph
+            .get(word)
+            .map_err(|err| sblex_services::MorphologyBuilderError::Unknown(Box::new(err)))?
+        {
+            let mut new_value = if let Some(array_data) = data.strip_prefix(&b"]"[..]) {
+                array_data.to_vec()
+            } else {
+                let mut new_value = b"[".to_vec();
+                new_value.extend(data.iter());
+                new_value
+            };
+            new_value.push(b',');
+            new_value.extend(value.as_bytes());
+            new_value.push(b']');
+            new_value
+        } else {
+            let mut new_value = b"[".to_vec();
+            new_value.extend(value.as_bytes());
+            new_value.push(b']');
+            new_value
+        };
         self.saldo_morph
             .insert(word, value)
             .map_err(|err| sblex_services::MorphologyBuilderError::Unknown(Box::new(err)))?;
@@ -47,7 +69,29 @@ impl Morphology for FjallMorphology {
             .map_err(|err| LookupError::Unknown(Box::new(err)))?
             .map(|bytes| bytes.to_vec()))
     }
-    fn lookup_with_state(&self, fragment: &str, state: usize) -> Option<&str> {
-        todo!()
+    fn lookup_with_cont(&self, fragment: &str) -> Result<Vec<u8>, LookupError> {
+        let mut conts: String = String::new();
+        for kvpair in self.saldo_morph.prefix(fragment) {
+            let (key, _value) = kvpair.unwrap();
+            let key_str = std::str::from_utf8(&key).unwrap();
+            if let Some(cont) = key_str.strip_prefix(fragment) {
+                let c: char = cont.chars().next().unwrap();
+                conts.push(c);
+            }
+        }
+        let mut result = b"{\"a\":".to_vec();
+        if let Some(a) = self
+            .saldo_morph
+            .get(fragment)
+            .map_err(|err| LookupError::Unknown(Box::new(err)))?
+        {
+            result.extend(a.iter());
+        } else {
+            result.extend(b"null");
+        }
+        result.extend(b",\"c\":\"");
+        result.extend(conts.as_bytes());
+        result.extend(b"\"}");
+        Ok(result)
     }
 }

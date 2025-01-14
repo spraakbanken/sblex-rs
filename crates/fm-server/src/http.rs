@@ -6,7 +6,7 @@ use sblex_services::Morphology;
 use tokio::{net::TcpListener, signal, sync::RwLock};
 use tower_http::timeout::TimeoutLayer;
 
-use self::handlers::get_morph::get_saldo_morph;
+use self::handlers::get_morph::{get_saldo_morph, get_saldo_morph_w_cont};
 
 mod handlers;
 
@@ -92,7 +92,11 @@ fn create_router<SM: Morphology>(state: AppState<SM>) -> Router {
     //     .with_state(state);
 
     Router::new()
-        .route("/morph/:fragment/:n", routing::get(get_saldo_morph::<SM>))
+        .route("/morph/:fragment", routing::get(get_saldo_morph::<SM>))
+        .route(
+            "/morph-w-cont/:fragment",
+            routing::get(get_saldo_morph_w_cont::<SM>),
+        )
         // .nest("/morph", morph_routes(state))
         .layer(OtelInResponseLayer)
         .layer(OtelAxumLayer::default())

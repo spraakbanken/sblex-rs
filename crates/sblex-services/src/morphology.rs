@@ -8,7 +8,7 @@ use tracing::instrument;
 
 pub trait Morphology: Clone + Send + Sync + 'static {
     fn lookup(&self, fragment: &str) -> Result<Option<Vec<u8>>, LookupError>;
-    fn lookup_with_state(&self, fragment: &str, state: usize) -> Option<&str>;
+    fn lookup_with_cont(&self, fragment: &str) -> Result<Vec<u8>, LookupError>;
 }
 
 pub trait MorphologyBuilder {

@@ -1,7 +1,7 @@
 use std::{fs, io};
 use std::{io::BufRead, path::Path};
 
-use sblex_services::Morphology;
+use sblex_services::{LookupError, Morphology};
 use serde_json::{json, Value};
 use tracing::instrument;
 
@@ -65,11 +65,32 @@ impl TrieMorphology {
 
 impl Morphology for TrieMorphology {
     fn lookup(&self, fragment: &str) -> Result<Option<Vec<u8>>, sblex_services::LookupError> {
-        Ok(self.trie.lookup_with_state(fragment, 0).map(|m| m.into()))
+        if let Some(data) = self.trie.lookup_with_state(fragment, 0) {
+            let value: serde_json::Value =
+                serde_json::from_str(data).map_err(|err| LookupError::Unknown(Box::new(err)))?;
+            if let Some(a) = value.get("a") {
+                let a = a.as_array().unwrap();
+                if a.is_empty() {
+                    return Ok(None);
+                }
+                let data: Vec<u8> =
+                    serde_json::to_vec(a).map_err(|err| LookupError::Unknown(Box::new(err)))?;
+                Ok(Some(data))
+            } else {
+                Ok(None)
+            }
+        } else {
+            Ok(None)
+        }
     }
-
-    fn lookup_with_state(&self, fragment: &str, state: usize) -> Option<&str> {
-        self.trie.lookup_with_state(fragment, state)
+    fn lookup_with_cont(&self, fragment: &str) -> Result<Vec<u8>, sblex_services::LookupError> {
+        if let Some(data) = self.trie.lookup_with_state(fragment, 0) {
+            Ok(data.into())
+        } else {
+            Err(LookupError::Unknown(
+                format!("Found no data for '{}'", fragment).into(),
+            ))
+        }
     }
 }
 
