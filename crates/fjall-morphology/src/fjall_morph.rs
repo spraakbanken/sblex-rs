@@ -32,13 +32,7 @@ impl MorphologyBuilder for FjallMorphology {
             .get(word)
             .map_err(|err| sblex_services::MorphologyBuilderError::Unknown(Box::new(err)))?
         {
-            let mut new_value = if let Some(array_data) = data.strip_prefix(&b"]"[..]) {
-                array_data.to_vec()
-            } else {
-                let mut new_value = b"[".to_vec();
-                new_value.extend(data.iter());
-                new_value
-            };
+            let mut new_value = data[..(data.len() - 1)].to_vec();
             new_value.push(b',');
             new_value.extend(value.as_bytes());
             new_value.push(b']');
@@ -51,6 +45,9 @@ impl MorphologyBuilder for FjallMorphology {
         };
         self.saldo_morph
             .insert(word, value)
+            .map_err(|err| sblex_services::MorphologyBuilderError::Unknown(Box::new(err)))?;
+        self.keyspace
+            .persist(PersistMode::SyncAll)
             .map_err(|err| sblex_services::MorphologyBuilderError::Unknown(Box::new(err)))?;
         Ok(())
     }
@@ -76,7 +73,9 @@ impl Morphology for FjallMorphology {
             let key_str = std::str::from_utf8(&key).unwrap();
             if let Some(cont) = key_str.strip_prefix(fragment) {
                 if let Some(c) = cont.chars().next() {
-                    conts.push(c);
+                    if !conts.contains(c) {
+                        conts.push(c);
+                    }
                 }
             }
         }

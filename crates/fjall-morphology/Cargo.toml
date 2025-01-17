@@ -8,3 +8,9 @@ edition.workspace = true
 fjall = "2.5.0"
 miette = "7.4.0"
 sblex-services = { workspace = true }
+
+[dev-dependencies]
+eyre = { workspace = true }
+insta.workspace = true
+serde_json.workspace = true
+tempdir = "0.3.7"

@@ -10,12 +10,6 @@ use tracing_opentelemetry_instrumentation_sdk::find_current_trace_id;
 
 use crate::http::AppState;
 
-#[derive(serde::Deserialize)]
-pub struct Params {
-    fragment: String,
-    n: Option<usize>,
-}
-
 #[derive(Debug, Clone)]
 pub struct ApiSuccess<T: PartialEq + IntoResponse>(StatusCode, T);
 
@@ -38,14 +32,14 @@ pub struct ApiResponseBody<T: PartialEq + serde::Serialize> {
     data: T,
 }
 
-impl<T: PartialEq + serde::Serialize> ApiResponseBody<T> {
-    pub fn new(status_code: StatusCode, data: T) -> Self {
-        Self {
-            status_code: status_code.as_u16(),
-            data,
-        }
-    }
-}
+// impl<T: PartialEq + serde::Serialize> ApiResponseBody<T> {
+//     pub fn new(status_code: StatusCode, data: T) -> Self {
+//         Self {
+//             status_code: status_code.as_u16(),
+//             data,
+//         }
+//     }
+// }
 
 impl ApiResponseBody<ApiErrorData> {
     pub fn new_error(status_code: StatusCode, message: String) -> Self {
@@ -65,7 +59,7 @@ pub struct ApiErrorData {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum ApiError {
     InternalServerError(String),
-    UnprocessableEntity(String),
+    // UnprocessableEntity(String),
     NotFound(String),
 }
 
@@ -73,7 +67,7 @@ impl From<LookupError> for ApiError {
     fn from(value: LookupError) -> Self {
         match value {
             LookupError::Unknown(cause) => {
-                let source_chain = error_source_chain(&cause);
+                let source_chain = error_source_chain(cause.as_ref());
                 tracing::error!(
                     error.msg = %cause,
                     error.details = ?cause,
@@ -86,11 +80,11 @@ impl From<LookupError> for ApiError {
     }
 }
 /// The canonical representation for the value in [`ERROR_SOURCE_CHAIN`].
-pub fn error_source_chain(e: &Box<dyn std::error::Error + Send + Sync + 'static>) -> String {
+pub fn error_source_chain(e: &(dyn std::error::Error + Send + Sync + 'static)) -> String {
     _error_source_chain(e)
 }
 
-fn _error_source_chain(e: &Box<dyn std::error::Error + Send + Sync + 'static>) -> String {
+fn _error_source_chain(e: &(dyn std::error::Error + Send + Sync + 'static)) -> String {
     use std::fmt::Write as _;
 
     let mut chain = String::new();
@@ -117,14 +111,14 @@ impl IntoResponse for ApiError {
                 )
                     .into_response()
             }
-            UnprocessableEntity(message) => (
-                StatusCode::UNPROCESSABLE_ENTITY,
-                Json(ApiResponseBody::new_error(
-                    StatusCode::UNPROCESSABLE_ENTITY,
-                    message,
-                )),
-            )
-                .into_response(),
+            // UnprocessableEntity(message) => (
+            //     StatusCode::UNPROCESSABLE_ENTITY,
+            //     Json(ApiResponseBody::new_error(
+            //         StatusCode::UNPROCESSABLE_ENTITY,
+            //         message,
+            //     )),
+            // )
+            //     .into_response(),
             NotFound(message) => (
                 StatusCode::NOT_FOUND,
                 Json(ApiResponseBody::new_error(StatusCode::NOT_FOUND, message)),

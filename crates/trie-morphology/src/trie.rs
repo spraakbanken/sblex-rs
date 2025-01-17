@@ -143,7 +143,8 @@ impl MorphologyBuilder for TrieBuilder {
         word: &str,
         value: String,
     ) -> Result<(), sblex_services::MorphologyBuilderError> {
-        Ok(TrieBuilder::insert(self, word, value))
+        TrieBuilder::insert(self, word, value);
+        Ok(())
     }
 
     fn finish(&mut self) -> Result<(), sblex_services::MorphologyBuilderError> {
