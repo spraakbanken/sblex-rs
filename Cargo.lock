@@ -929,6 +929,7 @@ dependencies = [
  "config",
  "dotenvy",
  "eyre",
+ "fjall-morphology",
  "init-tracing-opentelemetry",
  "insta",
  "opentelemetry",

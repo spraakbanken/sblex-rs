@@ -2,12 +2,12 @@ use std::env;
 
 use clap::Parser;
 use eyre::Context;
+use fjall_morphology::FjallMorphology;
 use fm_server::{
     cli, config,
     http::{HttpServer, HttpServerConfig},
     telemetry,
 };
-use trie_morphology::TrieMorphology;
 
 #[tokio::main]
 async fn main() -> eyre::Result<()> {
@@ -24,7 +24,7 @@ async fn main() -> eyre::Result<()> {
 
     let args = cli::Options::parse();
 
-    let saldo_morphology = TrieMorphology::from_path(&settings.morphology_path)
+    let saldo_morphology = FjallMorphology::new(&settings.morphology_path)
         .with_context(|| format!("morphology_path: {}", &settings.morphology_path))?;
 
     let server_config = HttpServerConfig {

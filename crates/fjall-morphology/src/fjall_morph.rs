@@ -75,8 +75,9 @@ impl Morphology for FjallMorphology {
             let (key, _value) = kvpair.unwrap();
             let key_str = std::str::from_utf8(&key).unwrap();
             if let Some(cont) = key_str.strip_prefix(fragment) {
-                let c: char = cont.chars().next().unwrap();
-                conts.push(c);
+                if let Some(c) = cont.chars().next() {
+                    conts.push(c);
+                }
             }
         }
         let mut result = b"{\"a\":".to_vec();
@@ -87,7 +88,7 @@ impl Morphology for FjallMorphology {
         {
             result.extend(a.iter());
         } else {
-            result.extend(b"null");
+            result.extend(b"[]");
         }
         result.extend(b",\"c\":\"");
         result.extend(conts.as_bytes());

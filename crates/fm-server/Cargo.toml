@@ -27,6 +27,7 @@ clap.workspace = true
 config = { workspace = true }
 dotenvy = { workspace = true }
 eyre.workspace = true
+fjall-morphology = { workspace = true }
 init-tracing-opentelemetry = { workspace = true, features = ["stdout"] }
 opentelemetry_sdk.workspace = true
 opentelemetry-otlp = { workspace = true, features = [
