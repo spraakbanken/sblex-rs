@@ -27,30 +27,32 @@ clap.workspace = true
 config = { workspace = true }
 dotenvy = { workspace = true }
 eyre.workspace = true
+fjall-morphology = { workspace = true }
 init-tracing-opentelemetry = { workspace = true, features = ["stdout"] }
 opentelemetry_sdk.workspace = true
 opentelemetry-otlp = { workspace = true, features = [
     "reqwest-client",
     "reqwest-rustls",
 ] }
-opentelemetry.workspace = true
-reqwest.workspace = true
-reqwest_cookie_store.workspace = true
-schemars.workspace = true
+opentelemetry = { workspace = true }
+reqwest = { workspace = true }
+reqwest_cookie_store = { workspace = true }
+schemars = { workspace = true }
 serde = { workspace = true, features = ["derive", "rc"] }
-serde_json.workspace = true
-time.workspace = true
+serde_json = { workspace = true }
+time = { workspace = true }
 tokio = { workspace = true, features = ["net"] }
 tower-http = { workspace = true, features = ["trace", "timeout"] }
 tracing-opentelemetry-instrumentation-sdk = { workspace = true }
-tracing-opentelemetry.workspace = true
-tracing-subscriber.workspace = true
-tracing.workspace = true
-uuid.workspace = true
+tracing-opentelemetry = { workspace = true }
+tracing-subscriber = { workspace = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
 
 # local deps
-sblex.workspace = true
-sblex-telemetry.workspace = true
+trie-morphology = { workspace = true }
+sblex-telemetry = { workspace = true }
+sblex-services = { workspace = true }
 
 # opentelemetry-stdout = { version = "0.3.0", features = [
 #     "trace",

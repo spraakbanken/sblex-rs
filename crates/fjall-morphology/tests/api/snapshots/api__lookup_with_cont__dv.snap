@@ -1,0 +1,8 @@
+---
+source: crates/fjall-morphology/tests/api/main.rs
+expression: result_json
+---
+{
+  "a": [],
+  "c": "aä"
+}

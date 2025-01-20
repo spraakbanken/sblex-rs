@@ -1,6 +1,7 @@
 use std::{fs, io::BufWriter, time::SystemTime};
 
-use sblex::fm::Morphology;
+use sblex_services::morphology;
+use trie_morphology::{trie::TrieBuilder, TrieMorphology};
 
 fn main() -> eyre::Result<()> {
     let input = std::env::args()
@@ -15,7 +16,9 @@ fn main() -> eyre::Result<()> {
         format!("output.{:?}.json", time)
     });
     println!("loading from {} ...", input);
-    let morph = Morphology::from_path(&input)?;
+    let mut morph_builder = TrieBuilder::default();
+    morphology::build_from_path(&mut morph_builder, &input)?;
+    let morph = TrieMorphology::new(morph_builder.build());
     println!("{:#?}", morph.lookup("dväljes"));
     let file = fs::File::create(output)?;
     let writer = BufWriter::new(file);

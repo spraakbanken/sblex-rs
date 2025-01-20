@@ -1,0 +1,25 @@
+---
+source: crates/fjall-morphology/tests/api/main.rs
+expression: result_json
+---
+{
+  "a": [
+    {
+      "gf": "dväljas",
+      "id": "dväljas..vb.1",
+      "is": [],
+      "msd": "pres ind s-form",
+      "p": "vb_vs_dväljas",
+      "pos": "vb"
+    },
+    {
+      "gf": "dväljas",
+      "id": "dväljas..vb.1",
+      "is": [],
+      "msd": "imper",
+      "p": "vb_vs_dväljas",
+      "pos": "vb"
+    }
+  ],
+  "c": ""
+}

@@ -1,5 +1,5 @@
 [package]
-name = "sblex"
+name = "trie-morphology"
 version = "0.1.0"
 edition = "2021"
 rust-version.workspace = true
@@ -8,6 +8,7 @@ rust-version.workspace = true
 
 [dependencies]
 # local deps
+sblex-services = { workspace = true }
 
 # external deps
 arcstr = { workspace = true, features = ["serde"] }

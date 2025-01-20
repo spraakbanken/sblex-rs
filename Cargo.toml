@@ -8,11 +8,13 @@ edition = "2021"
 
 [workspace.dependencies]
 # local crates
+fjall-morphology = { path = "./crates/fjall-morphology"}
 fm-server = { path = "./crates/fm-server" }
-sblex = { path = "./crates/sblex" }
 sblex-server = { path = "./crates/sblex-server" }
+sblex-services = { path = "./crates/sblex-services" }
 sblex-telemetry = { path = "./crates/sblex-telemetry" }
 trie-map = { path = "./crates/trie-map" }
+trie-morphology = { path = "./crates/trie-morphology" }
 trie-sketch = { path = "./crates/trie-sketch" }
 
 # extern crates

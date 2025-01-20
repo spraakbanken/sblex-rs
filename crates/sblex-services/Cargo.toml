@@ -1,0 +1,11 @@
+[package]
+name = "sblex-services"
+version = "0.1.0"
+rust-version.workspace = true
+edition.workspace = true
+
+[dependencies]
+miette = "7.4.0"
+serde_json.workspace = true
+thiserror = "2.0.10"
+tracing.workspace = true

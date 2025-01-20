@@ -1,0 +1,16 @@
+[package]
+name = "fjall-morphology"
+version = "0.1.0"
+rust-version.workspace = true
+edition.workspace = true
+
+[dependencies]
+fjall = "2.5.0"
+miette = "7.4.0"
+sblex-services = { workspace = true }
+
+[dev-dependencies]
+eyre = { workspace = true }
+insta.workspace = true
+serde_json.workspace = true
+tempdir = "0.3.7"
