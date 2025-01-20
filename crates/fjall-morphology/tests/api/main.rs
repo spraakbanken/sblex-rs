@@ -1,10 +1,10 @@
 use fjall_morphology::FjallMorphology;
 use sblex_services::{morphology, Morphology, MorphologyBuilder};
-use tempdir::TempDir;
+use temp_dir::TempDir;
 
 #[test]
 fn build_and_load_morphology() -> eyre::Result<()> {
-    let tmp_dir = TempDir::new("test.db")?;
+    let tmp_dir = TempDir::with_prefix("test.db")?;
     let mut morph = FjallMorphology::new(tmp_dir.path())?;
 
     morphology::build_from_path(&mut morph, "assets/testing/saldo.lex")?;
