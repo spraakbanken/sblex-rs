@@ -1,9 +1,11 @@
-use sblex_services::Morphology;
-use trie_morphology::TrieMorphology;
+use sblex_services::{morphology, Morphology};
+use trie_morphology::{trie::TrieBuilder, TrieMorphology};
 
 #[test]
 fn load_morphology_from_file() -> eyre::Result<()> {
-    let morph = TrieMorphology::from_path("../../assets/testing/dalin.lex").unwrap();
+    let mut morph_builder = TrieBuilder::default();
+    morphology::build_from_path(&mut morph_builder, "../../assets/testing/dalin.lex")?;
+    let morph = TrieMorphology::new(morph_builder.build());
 
     let result = Morphology::lookup(&morph, "ö").unwrap();
     dbg!(&result);
