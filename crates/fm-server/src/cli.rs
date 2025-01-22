@@ -1,3 +1,3 @@
 mod options;
 
-pub use options::Options;
+pub use options::{Command, Options};
