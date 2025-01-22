@@ -19,7 +19,7 @@ async fn main() -> eyre::Result<()> {
     let settings = config::Settings::new()?;
     dbg!(&settings);
     // todo!("start");
-    telemetry::init_telemetry()?;
+    let _guard = telemetry::init_telemetry()?;
     // init_tracing_opentelemetry::tracing_subscriber_ext::init_subscribers()?;
 
     let args = cli::Options::parse();

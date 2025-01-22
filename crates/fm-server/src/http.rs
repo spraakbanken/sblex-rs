@@ -92,9 +92,9 @@ fn create_router<SM: Morphology>(state: AppState<SM>) -> Router {
     //     .with_state(state);
 
     Router::new()
-        .route("/morph/:fragment", routing::get(get_saldo_morph::<SM>))
+        .route("/morph/{fragment}", routing::get(get_saldo_morph::<SM>))
         .route(
-            "/morph-w-cont/:fragment",
+            "/morph-w-cont/{fragment}",
             routing::get(get_saldo_morph_w_cont::<SM>),
         )
         // .nest("/morph", morph_routes(state))

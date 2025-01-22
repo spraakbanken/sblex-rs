@@ -13,4 +13,4 @@ sblex-services = { workspace = true }
 eyre = { workspace = true }
 insta.workspace = true
 serde_json.workspace = true
-tempdir = "0.3.7"
+temp-dir = { workspace = true }

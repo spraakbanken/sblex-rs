@@ -13,7 +13,6 @@ sblex-telemetry.workspace = true
 # external deps
 axum = { workspace = true }
 axum-tracing-opentelemetry = { workspace = true }
-axum-xml = { workspace = true }
 dotenvy = { workspace = true }
 eyre = { workspace = true }
 init-tracing-opentelemetry = { workspace = true, features = [
@@ -31,6 +30,5 @@ tokio = { workspace = true }
 tracing = { workspace = true }
 
 [dev-dependencies]
-httpc-test = { workspace = true }
 reqwest = { workspace = true, features = ["json"] }
 rstest = { workspace = true }

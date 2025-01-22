@@ -14,7 +14,7 @@ async fn main() -> eyre::Result<()> {
         "OTEL_SERVICE_NAME",
         env::var("SALDO_WS__OTEL_SERVICE_NAME")?,
     );
-    telemetry::init_telemetry()?;
+    let _guard = telemetry::init_telemetry()?;
 
     let app = sblex_server::startup::app();
     // run it

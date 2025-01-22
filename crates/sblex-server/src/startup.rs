@@ -8,9 +8,9 @@ use axum_tracing_opentelemetry::middleware::OtelInResponseLayer;
 
 pub fn app() -> Router {
     Router::new()
-        .route("/lid/json/:lid", get(lids::lookup_lid_json)) // request processed inside span
-        .route("/lid/xml/:lid", get(lids::lookup_lid_xml)) // request processed inside span
-        .route("/lid/html/:lid", get(lids::lookup_lid_html)) // request processed inside span
+        .route("/lid/json/{lid}", get(lids::lookup_lid_json)) // request processed inside span
+        .route("/lid/xml/{lid}", get(lids::lookup_lid_xml)) // request processed inside span
+        .route("/lid/html/{lid}", get(lids::lookup_lid_html)) // request processed inside span
         // include trace context as header into the response
         .layer(OtelInResponseLayer)
         // opentelemetry_tracing_layer setup `TraceLayer`,
