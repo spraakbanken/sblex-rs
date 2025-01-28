@@ -8,6 +8,7 @@ use fm_server::{
     http::{HttpServer, HttpServerConfig},
     telemetry,
 };
+use sblex_services::{morphology, MorphologyBuilder};
 
 #[tokio::main]
 async fn main() -> eyre::Result<()> {
@@ -24,17 +25,23 @@ async fn main() -> eyre::Result<()> {
 
     let args = cli::Options::parse();
 
-    let saldo_morphology = FjallMorphology::new(&settings.morphology_path)
-        .with_context(|| format!("morphology_path: {}", &settings.morphology_path))?;
+    match args.cmd {
+        cli::Command::Serve { port, host } => {
+            let saldo_morphology = FjallMorphology::new(&settings.morphology_path)
+                .with_context(|| format!("morphology_path: {}", &settings.morphology_path))?;
 
-    let server_config = HttpServerConfig {
-        port: args.port,
-        host: &args.host,
-    };
+            let server_config = HttpServerConfig { port, host: &host };
 
-    let http_server = HttpServer::new(saldo_morphology, server_config).await?;
+            let http_server = HttpServer::new(saldo_morphology, server_config).await?;
 
-    http_server.run().await?;
-
+            http_server.run().await?;
+        }
+        cli::Command::Db { path } => {
+            let mut saldo_morphology = FjallMorphology::new(&settings.morphology_path)
+                .with_context(|| format!("morphology_path: {}", &settings.morphology_path))?;
+            morphology::build_from_path(&mut saldo_morphology, &path)?;
+            saldo_morphology.finish()?;
+        }
+    }
     Ok(())
 }
