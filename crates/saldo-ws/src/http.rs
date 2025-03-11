@@ -1,12 +1,14 @@
 use std::io;
 
-use crate::routes::lids;
-use crate::routes::system;
+use crate::http::handlers::lids;
+use crate::http::handlers::system;
 
 use axum::routing::get;
 use axum::Router;
 use axum_tracing_opentelemetry::middleware::OtelAxumLayer;
 use axum_tracing_opentelemetry::middleware::OtelInResponseLayer;
+
+mod handlers;
 
 pub fn app() -> Router {
     Router::new()
