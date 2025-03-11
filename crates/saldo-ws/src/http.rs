@@ -9,6 +9,7 @@ use axum_tracing_opentelemetry::middleware::OtelAxumLayer;
 use axum_tracing_opentelemetry::middleware::OtelInResponseLayer;
 
 mod handlers;
+mod responses;
 
 pub fn app() -> Router {
     Router::new()

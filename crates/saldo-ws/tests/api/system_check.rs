@@ -41,6 +41,6 @@ async fn version_works() -> eyre::Result<()> {
         .json::<JsonValue>()
         .await
         .expect("Failed to parse json");
-    assert_eq!(data["version"], "26005");
+    insta::assert_json_snapshot!(data);
     Ok(())
 }

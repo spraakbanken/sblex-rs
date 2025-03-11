@@ -2530,6 +2530,7 @@ dependencies = [
  "dotenvy",
  "eyre",
  "init-tracing-opentelemetry",
+ "insta",
  "mime",
  "opentelemetry",
  "reqwest",
