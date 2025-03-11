@@ -1,7 +1,7 @@
 #![allow(unused)]
 use axum::extract::Path;
 use axum::{response::IntoResponse, routing::get, BoxError, Router};
-use sblex_server::startup;
+use saldo_ws::startup;
 use sblex_telemetry::telemetry;
 use serde_json::json;
 use std::env;
@@ -16,7 +16,7 @@ async fn main() -> eyre::Result<()> {
     );
     let _guard = telemetry::init_telemetry()?;
 
-    let app = sblex_server::startup::app();
+    let app = saldo_ws::startup::app();
     // run it
     let address = &"0.0.0.0:3003".parse::<SocketAddr>()?;
     tracing::warn!("listening on {}", address);

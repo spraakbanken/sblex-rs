@@ -10,7 +10,7 @@ edition = "2021"
 # local crates
 fjall-morphology = { path = "./crates/fjall-morphology" }
 fm-server = { path = "./crates/fm-server" }
-sblex-server = { path = "./crates/sblex-server" }
+saldo-ws = { path = "./crates/saldo-ws" }
 sblex-services = { path = "./crates/sblex-services" }
 sblex-telemetry = { path = "./crates/sblex-telemetry" }
 trie-map = { path = "./crates/trie-map" }
