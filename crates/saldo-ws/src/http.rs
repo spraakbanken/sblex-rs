@@ -1,3 +1,5 @@
+use std::io;
+
 use crate::routes::lids;
 use crate::routes::system;
 
@@ -21,11 +23,35 @@ pub fn app() -> Router {
 }
 
 use tokio::{net::TcpListener, signal};
+pub struct HttpServer {
+    router: axum::Router,
+    listener: TcpListener,
+}
 
-pub async fn run(listener: TcpListener, app: Router) -> std::io::Result<()> {
-    axum::serve(listener, app)
-        .with_graceful_shutdown(shutdown_signal())
-        .await
+pub struct HttpServerConfig<'a> {
+    pub port: u16,
+    pub host: &'a str,
+}
+impl HttpServer {
+    pub async fn new(config: HttpServerConfig<'_>) -> Result<Self, io::Error> {
+        let router = app();
+        let listener = TcpListener::bind(format!("{}:{}", config.host, config.port)).await?;
+
+        Ok(Self { router, listener })
+    }
+
+    pub fn local_addr(&self) -> std::io::Result<std::net::SocketAddr> {
+        self.listener.local_addr()
+    }
+    pub async fn run(self) -> std::io::Result<()> {
+        tracing::info!(
+            "Starting server at 'http://{}'",
+            self.listener.local_addr()?
+        );
+        axum::serve(self.listener, self.router)
+            .with_graceful_shutdown(shutdown_signal())
+            .await
+    }
 }
 
 async fn shutdown_signal() {

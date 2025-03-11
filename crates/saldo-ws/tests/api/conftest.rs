@@ -1,18 +1,17 @@
-use tokio::net::TcpListener;
-
-use saldo_ws::startup;
+use saldo_ws::http::{HttpServer, HttpServerConfig};
 
 pub struct Context {
     pub address: String,
 }
 
 pub async fn spawn_app() -> eyre::Result<Context> {
-    let listener = TcpListener::bind("127.0.0.1:0").await?;
-    let port = listener.local_addr().unwrap().port();
-    let address = format!("http://127.0.0.1:{}", port);
+    let host = "127.0.0.1";
+    let http_server_config = HttpServerConfig { port: 0, host };
+    let http_server = HttpServer::new(http_server_config).await?;
 
-    let app = startup::app();
+    let port = http_server.local_addr()?.port();
+    let address = format!("http://{}:{}", host, port);
 
-    tokio::spawn(async move { startup::run(listener, app).await });
+    tokio::spawn(async move { http_server.run().await });
     Ok(Context { address })
 }

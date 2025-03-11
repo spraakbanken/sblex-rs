@@ -1,11 +1,6 @@
-#![allow(unused)]
-use axum::extract::Path;
-use axum::{response::IntoResponse, routing::get, BoxError, Router};
-use saldo_ws::startup;
+use saldo_ws::http::{HttpServer, HttpServerConfig};
 use sblex_telemetry::telemetry;
-use serde_json::json;
 use std::env;
-use std::net::SocketAddr;
 
 #[tokio::main]
 async fn main() -> eyre::Result<()> {
@@ -14,15 +9,19 @@ async fn main() -> eyre::Result<()> {
         "OTEL_SERVICE_NAME",
         env::var("SALDO_WS__OTEL_SERVICE_NAME")?,
     );
+    let server_config = HttpServerConfig {
+        port: 3003,
+        host: "3003",
+    };
+
     let _guard = telemetry::init_telemetry()?;
 
-    let app = saldo_ws::startup::app();
+    let http_server = HttpServer::new(server_config).await?;
     // run it
-    let address = &"0.0.0.0:3003".parse::<SocketAddr>()?;
+    let address = http_server.local_addr()?;
     tracing::warn!("listening on {}", address);
-    tracing::info!("try to call `curl -i http://127.0.0.1:3003/` (with trace)"); //Devskim: ignore DS137138
-    tracing::info!("try to call `curl -i http://127.0.0.1:3003/health` (with NO trace)"); //Devskim: ignore DS137138
-    let listener = tokio::net::TcpListener::bind(address).await?;
-    startup::run(listener, app).await?;
+    tracing::info!("try to call `curl -i {}` (with trace)", address); //Devskim: ignore DS137138
+    tracing::info!("try to call `curl -i {}/health` (with NO trace)", address); //Devskim: ignore DS137138
+    http_server.run().await?;
     Ok(())
 }

@@ -6,6 +6,10 @@ rust-version.workspace = true
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[[bin]]
+name = "saldo-ws"
+path = "src/bin/main.rs"
+
 [dependencies]
 # local deps
 sblex-telemetry.workspace = true
