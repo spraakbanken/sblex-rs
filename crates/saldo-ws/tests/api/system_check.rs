@@ -17,7 +17,8 @@ async fn health_check_works() -> eyre::Result<()> {
 
     // Assert
     assert!(response.status().is_success());
-    assert_eq!(Some(15), response.content_length());
+    let data: JsonValue = response.json().await?;
+    insta::assert_json_snapshot!(data);
     Ok(())
 }
 

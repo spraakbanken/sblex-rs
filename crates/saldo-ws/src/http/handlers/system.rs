@@ -1,11 +1,14 @@
 use axum::http::StatusCode;
-use axum::response::IntoResponse;
-use serde_json::json;
 
 use crate::http::responses::ApiSuccess;
 
-pub async fn health() -> impl IntoResponse {
-    axum::Json(json!({ "status" : "UP" }))
+pub async fn health() -> ApiSuccess<StatusResponseData> {
+    ApiSuccess::json(StatusCode::OK, StatusResponseData { status: "UP" })
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+pub struct StatusResponseData {
+    status: &'static str,
 }
 
 pub async fn version() -> ApiSuccess<VersionResponseData> {
