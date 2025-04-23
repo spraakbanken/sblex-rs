@@ -31,7 +31,8 @@ serde = { workspace = true, features = ["derive"] }
 serde_json = { workspace = true }
 time.workspace = true
 tokio = { workspace = true }
-tracing = { workspace = true }
+tracing.workspace = true
+sblex-services.workspace = true
 
 [dev-dependencies]
 insta = { workspace = true, features = ["json"] }
