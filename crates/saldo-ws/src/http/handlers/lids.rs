@@ -1,106 +1,50 @@
-use std::str::FromStr;
-
-use axum::http::{header, HeaderValue};
+use axum::extract::State;
+use axum::http::{header, HeaderValue, StatusCode};
 use axum::response::{Html, IntoResponse};
 use axum::{extract::Path, response::Response};
 
-use serde::{de, Deserialize, Serialize};
+use sblex_services::models::lemma::Lemma;
+use sblex_services::models::lexeme::Lexeme;
+use sblex_services::models::lookup::SaldoOrLemmaId;
+use sblex_services::ports::SblexService;
 use serde_json::json;
 
-#[derive(Clone, Debug, Serialize)]
-// #[serde(try_from="FromStr")]
-// #[serde]
-pub struct Lexeme(String);
-pub fn is_lexeme(s: &str) -> bool {
-    match s.rfind('.') {
-        None => false,
-        Some(i) => s[(i - 1)..i] == *".",
-    }
-}
-impl FromStr for Lexeme {
-    type Err = String;
+use crate::http::responses::{ApiError, ApiSuccess};
+use crate::http::AppState;
 
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match is_lexeme(s) {
-            true => Ok(Self(s.into())),
-            false => Err(format!("'{}' is not a lexeme", s)),
-        }
-    }
-}
-impl<'de> Deserialize<'de> for Lexeme {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        let s = String::deserialize(deserializer)?;
-        match is_lexeme(s.as_str()) {
-            true => Ok(Self(s)),
-            false => Err(de::Error::custom(format!("'{}' is not a lexeme", s))),
-        }
+pub async fn lookup_lid_json<S: SblexService>(
+    State(state): State<AppState<S>>,
+    Path(lid): Path<SaldoOrLemmaId>,
+) -> Result<ApiSuccess<LexemeOrLemma>, ApiError> {
+    match lid {
+        SaldoOrLemmaId::SaldoId(lid) => match state.sblex_service.lookup_lexeme(lid.as_str())? {
+            Some(lexeme) => Ok(ApiSuccess::json(
+                StatusCode::OK,
+                LexemeOrLemma::Lexeme(lexeme),
+            )),
+            None => Err(ApiError::NotFound(format!(
+                "There is no lexeme '{}'",
+                lid.as_str()
+            ))),
+        },
+        SaldoOrLemmaId::LemmaId(lid) => match state.sblex_service.lookup_lemma(lid.as_str())? {
+            Some(lemma) => Ok(ApiSuccess::json(
+                StatusCode::OK,
+                LexemeOrLemma::Lemma(lemma),
+            )),
+            None => Err(ApiError::NotFound(format!(
+                "There is no lemma '{}'",
+                lid.as_str()
+            ))),
+        },
     }
 }
 
-#[derive(Clone, Debug, Serialize)]
-// #[serde(try_from="FromStr")]
-// #[serde]
-pub struct Lemma(String);
-pub fn is_lemma(s: &str) -> bool {
-    match s.rfind('.') {
-        None => false,
-        Some(i) => s[(i - 1)..i] != *".",
-    }
-}
-impl FromStr for Lemma {
-    type Err = String;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match is_lemma(s) {
-            true => Ok(Self(s.into())),
-            false => Err(format!("'{}' is not a lemma", s)),
-        }
-    }
-}
-impl<'de> Deserialize<'de> for Lemma {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        let s = String::deserialize(deserializer)?;
-        match is_lemma(s.as_str()) {
-            true => Ok(Self(s)),
-            false => Err(de::Error::custom(format!("'{}' is not a lemma", s))),
-        }
-    }
-}
-
-#[derive(Clone, Debug, Serialize)]
-
-pub enum LexemeLemma {
+#[derive(Debug, Clone, PartialEq, serde::Serialize)]
+#[serde(untagged)]
+pub enum LexemeOrLemma {
     Lexeme(Lexeme),
     Lemma(Lemma),
-}
-
-impl<'de> Deserialize<'de> for LexemeLemma {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        let s = String::deserialize(deserializer)?;
-        if is_lemma(s.as_str()) {
-            return Ok(Self::Lemma(Lemma(s)));
-        }
-        if is_lexeme(s.as_str()) {
-            return Ok(Self::Lexeme(Lexeme(s)));
-        }
-        Err(de::Error::custom(format!(
-            "'{}' is not a lexeme nor a lemma",
-            s
-        )))
-    }
-}
-
-pub async fn lookup_lid_json(Path(lid): Path<LexemeLemma>) -> impl IntoResponse {
-    axum::Json(json!({"lid": lid}))
 }
 
 pub struct Xml<T>(pub T);
@@ -121,10 +65,10 @@ where
     }
 }
 
-pub async fn lookup_lid_xml(Path(_lid): Path<LexemeLemma>) -> impl IntoResponse {
+pub async fn lookup_lid_xml(Path(_lid): Path<SaldoOrLemmaId>) -> impl IntoResponse {
     Xml("<r></r>")
 }
 
-pub async fn lookup_lid_html(Path(_lid): Path<LexemeLemma>) -> impl IntoResponse {
+pub async fn lookup_lid_html(Path(_lid): Path<SaldoOrLemmaId>) -> impl IntoResponse {
     Html("<r></r>")
 }

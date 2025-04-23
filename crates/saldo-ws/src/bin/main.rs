@@ -1,6 +1,7 @@
 use saldo_ws::http::{HttpServer, HttpServerConfig};
+use sblex_services::{mem::MemLookupLid, service::Service};
 use sblex_telemetry::telemetry;
-use std::env;
+use std::{env, path::Path};
 
 #[tokio::main]
 async fn main() -> eyre::Result<()> {
@@ -16,7 +17,10 @@ async fn main() -> eyre::Result<()> {
 
     let _guard = telemetry::init_telemetry()?;
 
-    let http_server = HttpServer::new(server_config).await?;
+    let lookup_lid = MemLookupLid::from_tsv_path(&Path::new("data/sblex/saldo.txt"))?;
+    let sblex_service = Service::new(lookup_lid);
+
+    let http_server = HttpServer::new(sblex_service, server_config).await?;
     // run it
     let address = http_server.local_addr()?;
     tracing::warn!("listening on {}", address);

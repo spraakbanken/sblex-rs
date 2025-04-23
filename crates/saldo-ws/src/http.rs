@@ -1,4 +1,5 @@
 use std::io;
+use std::sync::Arc;
 
 use crate::http::handlers::lids;
 use crate::http::handlers::system;
@@ -7,13 +8,15 @@ use axum::routing::get;
 use axum::Router;
 use axum_tracing_opentelemetry::middleware::OtelAxumLayer;
 use axum_tracing_opentelemetry::middleware::OtelInResponseLayer;
+use sblex_services::ports::SblexService;
+use tokio::{net::TcpListener, signal};
 
 mod handlers;
 mod responses;
 
-pub fn app() -> Router {
+fn app<S: SblexService>(state: AppState<S>) -> Router {
     Router::new()
-        .route("/lid/json/{lid}", get(lids::lookup_lid_json)) // request processed inside span
+        .route("/lid/json/{lid}", get(lids::lookup_lid_json::<S>)) // request processed inside span
         .route("/lid/xml/{lid}", get(lids::lookup_lid_xml)) // request processed inside span
         .route("/lid/html/{lid}", get(lids::lookup_lid_html)) // request processed inside span
         // include trace context as header into the response
@@ -23,9 +26,15 @@ pub fn app() -> Router {
         .layer(OtelAxumLayer::default())
         .route("/health", get(system::health))
         .route("/version/json", get(system::version))
+        .with_state(state)
 }
 
-use tokio::{net::TcpListener, signal};
+#[derive(Debug, Clone)]
+/// The global application state shared between all request handlers
+struct AppState<S: SblexService> {
+    sblex_service: Arc<S>,
+}
+
 pub struct HttpServer {
     router: axum::Router,
     listener: TcpListener,
@@ -36,8 +45,14 @@ pub struct HttpServerConfig<'a> {
     pub host: &'a str,
 }
 impl HttpServer {
-    pub async fn new(config: HttpServerConfig<'_>) -> Result<Self, io::Error> {
-        let router = app();
+    pub async fn new(
+        sblex_service: impl SblexService,
+        config: HttpServerConfig<'_>,
+    ) -> Result<Self, io::Error> {
+        let state = AppState {
+            sblex_service: Arc::new(sblex_service),
+        };
+        let router = app(state);
         let listener = TcpListener::bind(format!("{}:{}", config.host, config.port)).await?;
 
         Ok(Self { router, listener })

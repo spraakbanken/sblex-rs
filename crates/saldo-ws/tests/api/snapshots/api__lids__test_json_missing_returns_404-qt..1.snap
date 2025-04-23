@@ -1,0 +1,10 @@
+---
+source: crates/saldo-ws/tests/api/lids.rs
+expression: data
+---
+{
+  "data": {
+    "message": "There is no lexeme 'qt..1'"
+  },
+  "status_code": 404
+}
