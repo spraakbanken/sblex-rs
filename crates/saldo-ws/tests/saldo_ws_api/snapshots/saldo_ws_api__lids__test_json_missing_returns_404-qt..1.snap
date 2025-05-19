@@ -1,5 +1,5 @@
 ---
-source: crates/saldo-ws/tests/api/lids.rs
+source: crates/saldo-ws/tests/saldo_ws_api/lids.rs
 expression: data
 ---
 {

@@ -1,7 +1,0 @@
----
-source: crates/saldo-ws/tests/api/system_check.rs
-expression: data
----
-{
-  "version": "26005"
-}
