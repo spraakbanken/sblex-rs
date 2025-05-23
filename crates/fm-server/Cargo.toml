@@ -1,40 +1,40 @@
 [package]
-name = "fm-server"
-version = "0.1.0"
-edition = "2021"
+edition                = "2021"
+name                   = "fm-server"
 rust-version.workspace = true
+version                = "0.1.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [lib]
 doctest = false
 
 [[bin]]
-name = "fm-server"
-path = "src/bin/main.rs"
-test = false
 doctest = false
+name    = "fm-server"
+path    = "src/bin/main.rs"
+test    = false
 
 [dependencies]
-aide.workspace = true
-arcstr.workspace = true
+aide.workspace        = true
+arcstr.workspace      = true
 async-trait.workspace = true
 # axum-extra.workspace = true
 # axum-jsonschema.workspace = true
+axum.workspace = true
 axum-macros.workspace = true
 axum-tracing-opentelemetry.workspace = true
-axum.workspace = true
 clap.workspace = true
 config = { workspace = true }
 dotenvy = { workspace = true }
 eyre.workspace = true
 fjall-morphology = { workspace = true }
 init-tracing-opentelemetry = { workspace = true, features = ["stdout"] }
-opentelemetry_sdk.workspace = true
-opentelemetry-otlp = { workspace = true, features = [
-    "reqwest-client",
-    "reqwest-rustls",
-] }
 opentelemetry = { workspace = true }
+opentelemetry-otlp = { workspace = true, features = [
+  "reqwest-client",
+  "reqwest-rustls",
+] }
+opentelemetry_sdk.workspace = true
 reqwest = { workspace = true }
 reqwest_cookie_store = { workspace = true }
 schemars = { workspace = true }
@@ -43,16 +43,16 @@ serde_json = { workspace = true }
 time = { workspace = true }
 tokio = { workspace = true, features = ["net"] }
 tower-http = { workspace = true, features = ["trace", "timeout"] }
-tracing-opentelemetry-instrumentation-sdk = { workspace = true }
-tracing-opentelemetry = { workspace = true }
-tracing-subscriber = { workspace = true }
 tracing = { workspace = true }
+tracing-opentelemetry = { workspace = true }
+tracing-opentelemetry-instrumentation-sdk = { workspace = true }
+tracing-subscriber = { workspace = true }
 uuid = { workspace = true }
 
 # local deps
-trie-morphology = { workspace = true }
+sblex-services  = { workspace = true }
 sblex-telemetry = { workspace = true }
-sblex-services = { workspace = true }
+trie-morphology = { workspace = true }
 
 # opentelemetry-stdout = { version = "0.3.0", features = [
 #     "trace",
@@ -64,6 +64,6 @@ sblex-services = { workspace = true }
 
 
 [dev-dependencies]
-eyre.workspace = true
+eyre.workspace    = true
+insta.workspace   = true
 reqwest.workspace = true
-insta.workspace = true

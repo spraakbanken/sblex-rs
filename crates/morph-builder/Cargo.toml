@@ -1,12 +1,12 @@
 [package]
-name = "morph-builder"
-version = "0.1.0"
+edition.workspace      = true
+name                   = "morph-builder"
 rust-version.workspace = true
-edition.workspace = true
+version                = "0.1.0"
 
 [dependencies]
-clap = { workspace = true, features = ["derive"] }
-fjall-morphology = {workspace = true}
-miette = { version = "7.4.0", features = ["fancy"] }
-sblex-services = { workspace = true }
-trie-morphology = {workspace = true}
+clap             = { workspace = true, features = ["derive"] }
+fjall-morphology = { workspace = true }
+miette           = { version = "7.4.0", features = ["fancy"] }
+sblex-services   = { workspace = true }
+trie-morphology  = { workspace = true }

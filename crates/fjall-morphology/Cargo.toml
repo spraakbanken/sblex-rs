@@ -1,16 +1,16 @@
 [package]
-name = "fjall-morphology"
-version = "0.1.0"
+edition.workspace      = true
+name                   = "fjall-morphology"
 rust-version.workspace = true
-edition.workspace = true
+version                = "0.1.0"
 
 [dependencies]
-fjall = "2.5.0"
-miette = "7.4.0"
+fjall          = "2.5.0"
+miette         = "7.4.0"
 sblex-services = { workspace = true }
 
 [dev-dependencies]
-eyre = { workspace = true }
-insta.workspace = true
+eyre                 = { workspace = true }
+insta.workspace      = true
 serde_json.workspace = true
-temp-dir = { workspace = true }
+temp-dir             = { workspace = true }
