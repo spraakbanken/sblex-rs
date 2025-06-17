@@ -1,9 +1,9 @@
 use axum::http::StatusCode;
 
-use crate::http::responses::ApiSuccess;
+use crate::http::responses::ApiSuccessJson;
 
-pub async fn health() -> ApiSuccess<StatusResponseData> {
-    ApiSuccess::json(StatusCode::OK, StatusResponseData { status: "UP" })
+pub async fn health() -> ApiSuccessJson<StatusResponseData> {
+    ApiSuccessJson::new(StatusCode::OK, StatusResponseData { status: "UP" })
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
@@ -11,8 +11,8 @@ pub struct StatusResponseData {
     status: &'static str,
 }
 
-pub async fn version() -> ApiSuccess<VersionResponseData> {
-    ApiSuccess::json(StatusCode::OK, VersionResponseData { version: "26005" })
+pub async fn version() -> ApiSuccessJson<VersionResponseData> {
+    ApiSuccessJson::new(StatusCode::OK, VersionResponseData { version: "26005" })
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]

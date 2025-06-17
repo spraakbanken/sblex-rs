@@ -1,24 +1,25 @@
 use axum::extract::State;
 use axum::http::{header, HeaderValue, StatusCode};
+use axum::response::Response;
 use axum::response::{Html, IntoResponse};
-use axum::{extract::Path, response::Response};
 
 use sblex_services::models::lemma::Lemma;
 use sblex_services::models::lexeme::Lexeme;
 use sblex_services::models::lookup::SaldoOrLemmaId;
 use sblex_services::ports::SblexService;
-use serde_json::json;
 
-use crate::http::responses::{ApiError, ApiSuccess};
+use crate::http::error::ApiError;
+use crate::http::extractors::Path;
+use crate::http::responses::ApiSuccessJson;
 use crate::http::AppState;
 
 pub async fn lookup_lid_json<S: SblexService>(
     State(state): State<AppState<S>>,
     Path(lid): Path<SaldoOrLemmaId>,
-) -> Result<ApiSuccess<LexemeOrLemma>, ApiError> {
+) -> Result<ApiSuccessJson<LexemeOrLemma>, ApiError> {
     match lid {
         SaldoOrLemmaId::SaldoId(lid) => match state.sblex_service.lookup_lexeme(lid.as_str())? {
-            Some(lexeme) => Ok(ApiSuccess::json(
+            Some(lexeme) => Ok(ApiSuccessJson::new(
                 StatusCode::OK,
                 LexemeOrLemma::Lexeme(lexeme),
             )),
@@ -28,7 +29,7 @@ pub async fn lookup_lid_json<S: SblexService>(
             ))),
         },
         SaldoOrLemmaId::LemmaId(lid) => match state.sblex_service.lookup_lemma(lid.as_str())? {
-            Some(lemma) => Ok(ApiSuccess::json(
+            Some(lemma) => Ok(ApiSuccessJson::new(
                 StatusCode::OK,
                 LexemeOrLemma::Lemma(lemma),
             )),

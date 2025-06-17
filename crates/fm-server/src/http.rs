@@ -79,7 +79,7 @@ async fn shutdown_signal() {
     }
 
     tracing::warn!("signal received, starting graceful shutdown");
-    opentelemetry::global::shutdown_tracer_provider();
+    // opentelemetry::global::shutdown_tracer_provider();
 }
 
 fn create_router<SM: Morphology>(state: AppState<SM>) -> Router {

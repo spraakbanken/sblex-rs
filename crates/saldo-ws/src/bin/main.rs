@@ -12,10 +12,10 @@ async fn main() -> eyre::Result<()> {
     );
     let server_config = HttpServerConfig {
         port: 3003,
-        host: "3003",
+        host: "127.0.0.1",
     };
 
-    let _guard = telemetry::init_telemetry()?;
+    // let _guard = telemetry::init_telemetry()?;
 
     let lookup_lid = MemLookupLid::from_tsv_path(&Path::new("data/sblex/saldo.txt"))?;
     let sblex_service = Service::new(lookup_lid);

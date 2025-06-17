@@ -8,7 +8,7 @@ use serde_json::Value as JsonValue;
 #[case("xml")]
 #[case("html")]
 #[tokio::test]
-async fn test_invalid_input_returns_400(#[case] format: &str) -> eyre::Result<()> {
+async fn test_invalid_input_returns_422(#[case] format: &str) -> eyre::Result<()> {
     // Arrange
     let app = TestApp::spawn_app().await?;
     let client = reqwest::Client::new();
@@ -16,13 +16,16 @@ async fn test_invalid_input_returns_400(#[case] format: &str) -> eyre::Result<()
     // Act
     let response = client
         // Use the returned application address
-        .get(&app.lid(format, "bad-input"))
+        .get(app.lid(format, "bad-input"))
         .send()
         .await
         .expect("Failed to execute request.");
 
     // Assert
-    assert_eq!(response.status(), StatusCode::BAD_REQUEST);
+    assert_eq!(response.status(), StatusCode::UNPROCESSABLE_ENTITY);
+    let data: JsonValue = response.json().await?;
+    // assert_eq!(response.status(), StatusCode::INTERNAL_SERVER_ERROR);
+    insta::assert_json_snapshot!(format!("test_invalid_input_returns_422-{format}"), data);
     // assert_eq!(Some(15), response.content_length());
     Ok(())
 }
@@ -38,7 +41,7 @@ async fn test_json_valid_input_returns_200(#[case] lid: &str) -> eyre::Result<()
     // Act
     let response = client
         // Use the returned application address
-        .get(&app.lid("json", lid))
+        .get(app.lid("json", lid))
         .send()
         .await?;
 
@@ -60,7 +63,7 @@ async fn test_json_missing_returns_404(#[case] lid: &str) -> eyre::Result<()> {
     // Act
     let response = client
         // Use the returned application address
-        .get(&app.lid("json", lid))
+        .get(app.lid("json", lid))
         .send()
         .await?;
 

@@ -1,0 +1,8 @@
+---
+source: crates/saldo-ws/tests/saldo_ws_api/lids.rs
+expression: data
+---
+{
+  "location": null,
+  "message": "'bad-input' is not a lexeme nor a lemma"
+}

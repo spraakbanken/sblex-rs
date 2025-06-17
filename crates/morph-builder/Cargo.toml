@@ -7,6 +7,6 @@ version                = "0.1.0"
 [dependencies]
 clap             = { workspace = true, features = ["derive"] }
 fjall-morphology = { workspace = true }
-miette           = { version = "7.4.0", features = ["fancy"] }
+miette           = { workspace = true, features = ["fancy"] }
 sblex-services   = { workspace = true }
 trie-morphology  = { workspace = true }

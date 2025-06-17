@@ -11,6 +11,8 @@ use axum_tracing_opentelemetry::middleware::OtelInResponseLayer;
 use sblex_services::ports::SblexService;
 use tokio::{net::TcpListener, signal};
 
+mod error;
+mod extractors;
 mod handlers;
 mod responses;
 
@@ -20,7 +22,7 @@ fn app<S: SblexService>(state: AppState<S>) -> Router {
         .route("/lid/xml/{lid}", get(lids::lookup_lid_xml)) // request processed inside span
         .route("/lid/html/{lid}", get(lids::lookup_lid_html)) // request processed inside span
         // include trace context as header into the response
-        .layer(OtelInResponseLayer)
+        .layer(OtelInResponseLayer::default())
         // opentelemetry_tracing_layer setup `TraceLayer`,
         // that is provided by tower-http so you have to add that as a dependency.
         .layer(OtelAxumLayer::default())
@@ -96,5 +98,5 @@ async fn shutdown_signal() {
     }
 
     tracing::warn!("signal received, starting graceful shutdown");
-    opentelemetry::global::shutdown_tracer_provider();
+    // opentelemetry::global::shutdown_tracer_provider();
 }
