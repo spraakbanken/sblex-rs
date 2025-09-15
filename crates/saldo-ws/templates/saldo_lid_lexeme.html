@@ -1,0 +1,105 @@
+{% extends "saldo_document.html" %}
+{% import "saldo_util.html" as saldo_util %}
+
+{% macro lexeme_ref(lids) -%}
+{% if lids == "*" %}
+*
+{%else%}
+{%- for lid in lids -%}
+<a href="{{ url_for('lids:lid-html', lid=lid)}}">{{ saldo_util.prlex(lid) }}</a>
+{%- endfor -%}
+{% endif %}
+{%- endmacro -%}
+
+{% macro lexeme_ref_str(lid) -%}
+{%- if lid == "*" -%}
+*
+{%- else -%}
+<a href="{{ url_for('lids:lid-html', lid=lid)}}">{{ saldo_util.prlex(lid) }}</a>
+{%- endif -%}
+{%- endmacro -%}
+
+{%- macro lemma_href(lid) -%}
+{%- if lids == "" -%}
+*
+{%- else -%}
+<a href="{{ url_for('lids:lid-html', lid=lid) }}">{{ saldo_util.lemma_ref(lid) }}</a>
+{%- endif -%}
+{%- endmacro -%}
+
+{% macro lemma_refs(lids) -%}
+{% if lids == "" %}
+
+{%else%}
+{%- for lid in lids -%}
+{%- if not loop.first -%}, {%- endif -%}{{ lemma_href(lid) }}
+{%- endfor -%}
+{% endif %}
+{%- endmacro -%}
+
+{%- macro graph_href(lid) -%}
+<a href="{{ url_for('lids:lid-graph', lid=lid) }}"><img
+        src="https://svn.spraakdata.gu.se/repos/sblex/pub/images/prim_graph.png" /></a>
+{%- endmacro -%}
+
+{%- macro display_count(count) -%}
+{%- if count != 0 -%}
+<br />{{ count }}
+{%- endif -%}
+{%- endmacro -%}
+
+{%- macro sort_children(lexemes, mp) -%}
+{%- if lexemes|length -%}
+TODO: fill
+{%- else -%}
+*
+{%- endif -%}
+{%- endmacro -%}
+
+{%- macro display_children(xss) -%}
+{%- if xss == "*" -%}
+*
+{%- else -%}
+<center>
+    <table>
+        {%- for p, xs in xss -%}
+        <tr>
+            <td style="vertical-align:middle;">{{ saldo_util.prlex(p) }}</td>
+            <td style="vertical-align:middle;">
+                {%- for x in xs -%}
+                {%- if not loop.first %} {% endif -%}{{ lexeme_ref_str(x)}}
+                {%- endfor -%}
+            </td>
+        </tr>
+        {%- endfor -%}
+    </table>
+</center>
+{%- endif -%}
+{%- endmacro -%}
+
+{% block content -%}
+<center>
+    <h1>{{ data["h1"]|safe }}</h1>
+</center>
+<center>
+    <table border="1">
+        <tr>
+            <td style="text-align:center;">⇧[{{ data["depth"] }}]</td>
+            <td>{{ lexeme_ref(data["fm"]) }}</td>
+            <td style="text-align:center;">↑</td>
+            <td>{{ lexeme_ref(data["fp"]) }}</td>
+        </tr>
+    </table>
+    <p>{{ lemma_refs(data["lem"]) }}<br /> {{ graph_href(data["lex"]) }} <br /> {{ saldo_util.korpus_href(data["l"],
+        "[korpus]") }}</p>
+    <table border="1">
+        <tr>
+            <td style="vertical-align:top;text-align:center;">⇩{{ display_count(data["mf"]|length) }}</td>
+            <td style="vertical-align:top;">{{ display_children(data["sorted_mf"]) }}</td>
+            <td style="vertical-align:top;text-align:center;">↓{{ display_count(data["pf"]|length) }}</td>
+            <td style="vertical-align:top;">{{ display_children(data["sorted_pf"]) }}</td>
+        </tr>
+    </table>
+</center>
+
+{%- endblock %}

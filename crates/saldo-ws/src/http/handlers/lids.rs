@@ -1,3 +1,4 @@
+use askama::Template;
 use axum::extract::State;
 use axum::http::{header, HeaderValue, StatusCode};
 use axum::response::Response;
@@ -66,10 +67,48 @@ where
     }
 }
 
-pub async fn lookup_lid_xml(Path(_lid): Path<SaldoOrLemmaId>) -> impl IntoResponse {
+pub async fn lookup_lid_xml<S: SblexService>(
+    State(state): State<AppState<S>>,
+    Path(_lid): Path<SaldoOrLemmaId>,
+) -> impl IntoResponse {
     Xml("<r></r>")
 }
 
-pub async fn lookup_lid_html(Path(_lid): Path<SaldoOrLemmaId>) -> impl IntoResponse {
-    Html("<r></r>")
+pub async fn lookup_lid_html<S: SblexService>(
+    State(state): State<AppState<S>>,
+    Path(lid): Path<SaldoOrLemmaId>,
+) -> Result<Html<String>, ApiError> {
+    match lid {
+        SaldoOrLemmaId::SaldoId(lid) => match state.sblex_service.lookup_lexeme(lid.as_str())? {
+            Some(lexeme) => {
+                // let lexeme_template = SaldoLidLexemeTemplate {};
+                // Ok(Html(lexeme_template.render().unwrap()))
+                todo!();
+            }
+            None => Err(ApiError::NotFound(format!(
+                "There is no lexeme '{}'",
+                lid.as_str()
+            ))),
+        },
+        SaldoOrLemmaId::LemmaId(lid) => match state.sblex_service.lookup_lemma(lid.as_str())? {
+            Some(lemma) => {
+                // let lemma_template = SaldoTableTemplate {};
+                // Ok(Html(lemma_template.render().unwrap()))
+                todo!();
+            }
+            None => Err(ApiError::NotFound(format!(
+                "There is no lemma '{}'",
+                lid.as_str()
+            ))),
+        },
+    }
 }
+
+//
+// #[derive(askama::Template)]
+// #[template(path = "saldo_table.html")]
+// struct SaldoTableTemplate {}
+//
+// #[derive(askama::Template)]
+// #[template(path = "saldo_lid_lexeme.html")]
+// struct SaldoLidLexemeTemplate {}
