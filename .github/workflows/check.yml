@@ -59,7 +59,7 @@ jobs:
           toolchain: ${{ matrix.toolchain }}
           components: clippy
       - name: cargo clippy
-        uses: auguwu/clippy-action@1.4.0
+        uses: auguwu/clippy-action@94a9ff2f6920180b89e5c03d121d0af04a9d3e03 # v1.4.0
         with:
           token: ${{secrets.GITHUB_TOKEN}}
   doc:
