@@ -29,6 +29,7 @@ jobs:
       - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493 # v5.0.0
         with:
           submodules: true
+          persist-credentials: false
       - name: Install ${{ matrix.toolchain }}
         uses: dtolnay/rust-toolchain@master
         with:
@@ -72,6 +73,7 @@ jobs:
       - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493 # v5.0.0
         with:
           submodules: true
+          persist-credentials: false
       - name: Install stable
         uses: dtolnay/rust-toolchain@stable
       - name: Install nightly for -Zminimal-versions
@@ -100,6 +102,7 @@ jobs:
       - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493 # v5.0.0
         with:
           submodules: true
+          persist-credentials: false
       - name: Install stable
         uses: dtolnay/rust-toolchain@stable
       - name: cargo generate-lockfile
@@ -135,6 +138,7 @@ jobs:
       - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493 # v5.0.0
         with:
           submodules: true
+          persist-credentials: false
       - name: Install stable
         uses: dtolnay/rust-toolchain@stable
         with:

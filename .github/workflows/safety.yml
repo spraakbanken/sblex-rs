@@ -22,6 +22,7 @@ jobs:
       - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493 # v5.0.0
         with:
           submodules: true
+          persist-credentials: false
       - name: Install nightly
         uses: dtolnay/rust-toolchain@nightly
       - run: |
@@ -58,6 +59,7 @@ jobs:
       - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493 # v5.0.0
         with:
           submodules: true
+          persist-credentials: false
       - run: |
           echo "NIGHTLY=nightly-$(curl -s https://rust-lang.github.io/rustup-components-history/x86_64-unknown-linux-gnu/miri)" >> $GITHUB_ENV
       - name: Install ${{ env.NIGHTLY }}
@@ -75,6 +77,7 @@ jobs:
       - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493 # v5.0.0
         with:
           submodules: true
+          persist-credentials: false
       - name: Install stable
         uses: dtolnay/rust-toolchain@stable
       - name: cargo test --test loom
