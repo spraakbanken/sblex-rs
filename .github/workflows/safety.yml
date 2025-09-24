@@ -24,7 +24,9 @@ jobs:
           submodules: true
           persist-credentials: false
       - name: Install nightly
-        uses: dtolnay/rust-toolchain@nightly
+        uses: dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921 # master
+        with:
+          toolchain: nightly
       - run: |
           # to get the symbolizer for debug symbol resolution
           sudo apt install llvm
@@ -63,7 +65,7 @@ jobs:
       - run: |
           echo "NIGHTLY=nightly-$(curl -s https://rust-lang.github.io/rustup-components-history/x86_64-unknown-linux-gnu/miri)" >> $GITHUB_ENV
       - name: Install ${{ env.NIGHTLY }}
-        uses: dtolnay/rust-toolchain@master
+        uses: dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921 # master
         with:
           toolchain: ${{ env.NIGHTLY }}
           components: miri
@@ -79,7 +81,9 @@ jobs:
           submodules: true
           persist-credentials: false
       - name: Install stable
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921 # master
+        with:
+          toolchain: stable
       - name: cargo test --test loom
         run: cargo test --release --test loom
         env:

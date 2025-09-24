@@ -24,7 +24,9 @@ jobs:
           submodules: true
           persist-credentials: false
       - name: Install stable
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921 # master
+        with:
+          toolchain: stable
       - name: rustup target add ${{ matrix.target }}
         run: rustup target add ${{ matrix.target }}
       - name: cargo check

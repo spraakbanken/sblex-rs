@@ -31,8 +31,9 @@ jobs:
           submodules: true
           persist-credentials: false
       - name: Install stable
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921 # master
         with:
+          toolchain: stable
           components: rustfmt
       - name: cargo fmt --check
         run: cargo fmt --check
@@ -53,7 +54,7 @@ jobs:
           submodules: true
           persist-credentials: false
       - name: Install ${{ matrix.toolchain }}
-        uses: dtolnay/rust-toolchain@master
+        uses: dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921 # master
         with:
           toolchain: ${{ matrix.toolchain }}
           components: clippy
@@ -73,7 +74,9 @@ jobs:
           submodules: true
           persist-credentials: false
       - name: Install nightly
-        uses: dtolnay/rust-toolchain@nightly
+        uses: dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921 # master
+        with:
+          toolchain: nightly
       - name: cargo doc
         run: cargo doc --no-deps --all-features
         env:
@@ -89,7 +92,9 @@ jobs:
           submodules: true
           persist-credentials: false
       - name: Install stable
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921 # master
+        with:
+          toolchain: stable
       - name: cargo install cargo-hack
         uses: taiki-e/install-action@cargo-hack
       # intentionally no target specifier; see https://github.com/jonhoo/rust-ci-conf/pull/4
@@ -111,7 +116,7 @@ jobs:
           submodules: true
           persist-credentials: false
       - name: Install ${{ matrix.msrv }}
-        uses: dtolnay/rust-toolchain@master
+        uses: dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921 # master
         with:
           toolchain: ${{ matrix.msrv }}
       - name: cargo +${{ matrix.msrv }} check
