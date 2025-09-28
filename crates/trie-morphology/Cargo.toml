@@ -1,8 +1,8 @@
 [package]
-name = "trie-morphology"
-version = "0.1.0"
-edition = "2021"
+edition                = "2021"
+name                   = "trie-morphology"
 rust-version.workspace = true
+version                = "0.1.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -11,11 +11,11 @@ rust-version.workspace = true
 sblex-services = { workspace = true }
 
 # external deps
-arcstr = { workspace = true, features = ["serde"] }
-hashbrown = { workspace = true, features = ["serde"] }
-serde = { workspace = true, features = ["derive"] }
-serde_json = { workspace = true }
-tracing.workspace = true
+arcstr               = { workspace = true, features = ["serde"] }
+hashbrown            = { workspace = true, features = ["serde"] }
+serde                = { workspace = true, features = ["derive"] }
+serde_json           = { workspace = true }
+tracing.workspace    = true
 unicode-segmentation = { workspace = true }
 
 [dev-dependencies]

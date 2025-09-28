@@ -1,110 +1,111 @@
 [workspace]
+members  = ["crates/*"]
 resolver = "2"
-members = ["crates/*"]
 
-[workspace.package]
-rust-version = "1.80"
-edition = "2021"
+    [workspace.package]
+    edition      = "2021"
+    rust-version = "1.83"
 
-[workspace.dependencies]
-# local crates
-fjall-morphology = { path = "./crates/fjall-morphology" }
-fm-server = { path = "./crates/fm-server" }
-sblex-server = { path = "./crates/sblex-server" }
-sblex-services = { path = "./crates/sblex-services" }
-sblex-telemetry = { path = "./crates/sblex-telemetry" }
-trie-map = { path = "./crates/trie-map" }
-trie-morphology = { path = "./crates/trie-morphology" }
-trie-sketch = { path = "./crates/trie-sketch" }
+    [workspace.dependencies]
+    # local crates
+    fjall-morphology = { path = "./crates/fjall-morphology" }
+    fm-server        = { path = "./crates/fm-server" }
+    saldo-ws         = { path = "./crates/saldo-ws" }
+    sblex-services   = { path = "./crates/sblex-services" }
+    sblex-telemetry  = { path = "./crates/sblex-telemetry" }
+    trie-map         = { path = "./crates/trie-map" }
+    trie-morphology  = { path = "./crates/trie-morphology" }
+    trie-sketch      = { path = "./crates/trie-sketch" }
 
-# extern crates
-ahash = "0.8"
-aide = { version = "0.14", features = [
-    "axum",
-    "axum-extra",
-    "macros",
-    "redoc",
-] }
-arcstr = "1.1.5"
-async-trait = "0.1.67"
-axum = { version = "0.8.1", features = ["macros"] }
-axum-extra = "0.10"
-# axum-jsonschema = { version = "0.8.0", features = ["aide"] }
-axum-macros = "0.5"
-axum-tracing-opentelemetry = "0.25"
-bytes = "1.5"
-clap = { version = "4.4.18", features = ["derive", "cargo", "env"] }
-config = "0.15"
-dotenvy = "0.15.7"
-either = { version = "1", default-features = false }
-eyre = "0.6.11"
-futures-channel = "0.3"
-futures-util = { version = "0.3", default-features = false }
-hashbrown = "0.15"
-indexmap = "2"
-init-tracing-opentelemetry = "0.25"
-insta = { version = "1.37.0", features = ["json", "yaml"] }
-mime = "0.3.17"
-num-traits = { version = "0.2", default-features = false }
-opentelemetry = { version = "0.27", features = [
-    "trace",
-], default-features = false }
-opentelemetry-otlp = "0.27"
-opentelemetry_sdk = { version = "0.27", default-features = false, features = [
-    "rt-tokio",
-] }
-proc-macro2 = "1"
-quote = "1"
-rand = "0.8"
-rand_core = { version = "0.6", default-features = false }
-regex = "1"
-regex-automata = { version = "0.4", default-features = false }
-regex-syntax = "0.8"
-reqwest = { version = "0.12.7", features = ["json"] }
-reqwest_cookie_store = { version = "0.8.0" }
-rstest = "0.24"
-schemars = { version = "0.8.16", features = ["uuid1"] }
-serde = "1.0.184"
-serde_json = "1.0.87"
-smallvec = { version = "1", default-features = false }
-syn-dff4ba8e3ae991db = "1"
-syn-f595c2ba2a3f28df = "2"
-temp-dir = "0.1"
-time = "^0.3.35"
-time-macros = { version = "0.2", default-features = false }
-tokio = { version = "1.35", default-features = false, features = [
-    "macros",
-    "rt-multi-thread",
-    "signal",
-] }
-tower = "0.4"
-tower-http = "0.5.2"
-tracing = { version = "0.1.40", features = ["log"] }
-tracing-opentelemetry = "0.28.0"
-tracing-opentelemetry-instrumentation-sdk = "0.24"
-tracing-subscriber = { version = "0.3.18", features = [
-    "env-filter",
-    "registry",
-] }
-unicode-bidi = "0.3"
-unicode-normalization = "0.1"
-unicode-segmentation = "1.10.1"
-uuid = { version = "1.6.1", features = ["serde", "v4"] }
-getrandom = { version = "0.2", default-features = false }
-log = { version = "0.4", default-features = false }
-opentelemetry-http = { version = "0.10", default-features = false }
-opentelemetry-proto = { version = "0.4", default-features = false }
-tracing-core = "0.1"
-tracing-log = { version = "0.2", default-features = false }
+    # extern crates
+    ahash = "0.8"
+    aide = { version = "0.14", features = [
+        "axum",
+        "axum-extra",
+        "macros",
+        "redoc",
+    ] }
+    arcstr = "1.1.5"
+    async-trait = "0.1.67"
+    axum = { version = "0.8.4", features = ["macros"] }
+    axum-extra = "0.10"
+    # axum-jsonschema = { version = "0.8.0", features = ["aide"] }
+    axum-macros = "0.5"
+    axum-tracing-opentelemetry = "0.28"
+    bytes = "1.5"
+    clap = { version = "4.4.18", features = ["derive", "cargo", "env"] }
+    config = "0.15"
+    dotenvy = "0.15.7"
+    either = { version = "1", default-features = false }
+    eyre = "0.6.11"
+    futures-channel = "0.3"
+    futures-util = { version = "0.3", default-features = false }
+    getrandom = { version = "0.2", default-features = false }
+    hashbrown = "0.15"
+    indexmap = "2"
+    init-tracing-opentelemetry = "0.28.1"
+    insta = { version = "1.37.0", features = ["json", "yaml"] }
+    log = { version = "0.4", default-features = false }
+    miette = "7.6.0"
+    mime = "0.3.17"
+    num-traits = { version = "0.2", default-features = false }
+    opentelemetry = { version = "0.29.1", features = [
+        "trace",
+    ], default-features = false }
+    opentelemetry-http = { version = "0.29", default-features = false }
+    opentelemetry-otlp = "0.29"
+    opentelemetry-proto = { version = "0.29", default-features = false }
+    opentelemetry_sdk = { version = "0.29", default-features = false, features = [
+        "rt-tokio",
+    ] }
+    proc-macro2 = "1"
+    quote = "1"
+    rand = "0.8"
+    rand_core = { version = "0.6", default-features = false }
+    regex = "1"
+    regex-automata = { version = "0.4", default-features = false }
+    regex-syntax = "0.8"
+    reqwest = { version = "0.12.7", features = ["json"] }
+    reqwest_cookie_store = { version = "0.8.0" }
+    rstest = "0.24"
+    schemars = { version = "0.8.16", features = ["uuid1"] }
+    serde = "1.0.184"
+    serde_json = "1.0.87"
+    smallvec = { version = "1", default-features = false }
+    syn-dff4ba8e3ae991db = "1"
+    syn-f595c2ba2a3f28df = "2"
+    temp-dir = "0.1"
+    time = "^0.3.35"
+    time-macros = { version = "0.2", default-features = false }
+    tokio = { version = "1.35", default-features = false, features = [
+        "macros",
+        "rt-multi-thread",
+        "signal",
+    ] }
+    tower = "0.4"
+    tower-http = "0.5.2"
+    tracing = { version = "0.1.40", features = ["log"] }
+    tracing-core = "0.1"
+    tracing-log = { version = "0.2", default-features = false }
+    tracing-opentelemetry = "0.30.0"
+    tracing-opentelemetry-instrumentation-sdk = "0.28.1"
+    tracing-subscriber = { version = "0.3.18", features = [
+        "env-filter",
+        "registry",
+    ] }
+    unicode-bidi = "0.3"
+    unicode-normalization = "0.1"
+    unicode-segmentation = "1.10.1"
+    uuid = { version = "1.6.1", features = ["serde", "v4"] }
 
 [profile.dev.package]
-insta.opt-level = 3
+insta.opt-level   = 3
 similar.opt-level = 3
 
 [profile.profiling]
+debug    = true
 inherits = "release"
-debug = true
-strip = false
+strip    = false
 
 [profile.release]
 strip = true # Automatically strip symbols from the binary.

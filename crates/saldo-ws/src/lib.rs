@@ -1,3 +1,2 @@
-pub mod routes;
-pub mod startup;
+pub mod http;
 pub use sblex_telemetry as telemetry;

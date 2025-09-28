@@ -1,0 +1,18 @@
+---
+source: crates/saldo-ws/tests/saldo_ws_api/lids.rs
+expression: data
+---
+{
+  "fm": "bo..1",
+  "fp": "PRIM..1",
+  "l": [
+    "dväljas..vb.1"
+  ],
+  "lex": "dväljas..1",
+  "mf": [],
+  "path": [
+    "bo..1"
+  ],
+  "pf": [],
+  "ppath": []
+}

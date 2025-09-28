@@ -1,10 +1,14 @@
 [package]
-name = "sblex-server"
-version = "0.1.0"
-edition = "2021"
+edition                = "2021"
+name                   = "saldo-ws"
 rust-version.workspace = true
+version                = "0.1.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[[bin]]
+name = "saldo-ws"
+path = "src/bin/main.rs"
 
 [dependencies]
 # local deps
@@ -16,19 +20,22 @@ axum-tracing-opentelemetry = { workspace = true }
 dotenvy = { workspace = true }
 eyre = { workspace = true }
 init-tracing-opentelemetry = { workspace = true, features = [
-    "otlp",
-    "tracing_subscriber_ext",
+  "otlp",
+  "tracing_subscriber_ext",
 ] }
 mime = { workspace = true }
 opentelemetry.workspace = true
 reqwest = { workspace = true, features = ["json"] }
 reqwest_cookie_store = { workspace = true }
+sblex-services.workspace = true
 serde = { workspace = true, features = ["derive"] }
 serde_json = { workspace = true }
 time.workspace = true
 tokio = { workspace = true }
-tracing = { workspace = true }
+tracing.workspace = true
+askama = "0.14"
 
 [dev-dependencies]
+insta   = { workspace = true, features = ["json"] }
 reqwest = { workspace = true, features = ["json"] }
-rstest = { workspace = true }
+rstest  = { workspace = true }

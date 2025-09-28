@@ -1,0 +1,10 @@
+---
+source: crates/saldo-ws/tests/saldo_ws_api/lids.rs
+expression: data
+---
+{
+  "data": {
+    "message": "There is no lemma 'qt..vb.1'"
+  },
+  "status_code": 404
+}

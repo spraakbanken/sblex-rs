@@ -1,10 +1,10 @@
-use crate::conftest::spawn_app;
+use crate::conftest::TestApp;
 use serde_json::Value as JsonValue;
 
 #[tokio::test]
 async fn health_check_works() -> eyre::Result<()> {
     // Arrange
-    let ctx = spawn_app().await?;
+    let ctx = TestApp::spawn_app().await?;
     let client = reqwest::Client::new();
 
     // Act
@@ -17,14 +17,15 @@ async fn health_check_works() -> eyre::Result<()> {
 
     // Assert
     assert!(response.status().is_success());
-    assert_eq!(Some(15), response.content_length());
+    let data: JsonValue = response.json().await?;
+    insta::assert_json_snapshot!(data);
     Ok(())
 }
 
 #[tokio::test]
 async fn version_works() -> eyre::Result<()> {
     // Arrange
-    let ctx = spawn_app().await?;
+    let ctx = TestApp::spawn_app().await?;
     let client = reqwest::Client::new();
 
     // Act
@@ -41,6 +42,6 @@ async fn version_works() -> eyre::Result<()> {
         .json::<JsonValue>()
         .await
         .expect("Failed to parse json");
-    assert_eq!(data["version"], "26005");
+    insta::assert_json_snapshot!(data);
     Ok(())
 }

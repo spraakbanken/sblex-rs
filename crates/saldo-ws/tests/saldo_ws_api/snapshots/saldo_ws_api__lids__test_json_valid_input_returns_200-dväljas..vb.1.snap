@@ -1,0 +1,11 @@
+---
+source: crates/saldo-ws/tests/saldo_ws_api/lids.rs
+expression: data
+---
+{
+  "gf": "dväljas",
+  "l": [
+    "dväljas..1"
+  ],
+  "p": "vb_vs_dväljas"
+}

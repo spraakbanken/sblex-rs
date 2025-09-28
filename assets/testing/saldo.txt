@@ -1,0 +1,15 @@
+_1984..1	roman..1	dystopi..1	_1984..pm.1	1984	pm	pm_uwb_hemsöborna
+_1984..1	roman..1	dystopi..1	nittonhundraåttiofyra..pm.1	nittonhundraåttiofyra	pm	pm_uwb_hemsöborna
+_1984..1	roman..1	dystopi..1	Nittonhundraåttiofyra..pm.1	Nittonhundraåttiofyra	pm	pm_uwb_hemsöborna
+a..1	bokstav..1	PRIM..1	a..nn.1	a	nn	nn_vn_alfa_abc
+A..1	initial..1	PRIM..1	A..nn.1	A	nn	nn_vn_alfa_abc
+à..1	per..1	PRIM..1	á..pp.1	á	pp	pp_i_i
+à..1	per..1	PRIM..1	à..pp.1	à	pp	pp_i_i
+a..2	ton..1	PRIM..1	a..nn.1	a	nn	nn_vn_alfa_abc
+A3..1	pappersark..1	PRIM..1	a3..nna.1	a3	nna	nna_0n_hk
+A3..1	pappersark..1	PRIM..1	A3..nna.1	A3	nna	nna_0n_hk
+bo..1	leva..1	PRIM..1	bo..vb.1	bo	vb	vb_3a_sy
+dväljas..1	bo..1	PRIM..1	dväljas..vb.1	dväljas	vb	vb_vs_dväljas
+femma..4	femrumslägenhet..1	PRIM..1	femma..nn.1	femma	nn	nn_1u_kamera
+femrummare..1	femrumslägenhet..1	PRIM..1	femrummare..nn.1	femrummare	nn	nn_6u_kikare
+femrumslägenhet..1	lägenhet..1	fem..1 rum..1	femrumslägenhet..nn.1	femrumslägenhet	nn	nn_3u_salong

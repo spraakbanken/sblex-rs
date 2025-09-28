@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="sv">
+    <head>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <link
+            rel="shortcut icon"
+            href="https://svn.spraakdata.gu.se/sb-arkiv/pub/images/saldo_icon.png"
+        />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static', path='/saldo.css' ) }}"
+        />
+        <title>{{ title }}</title>
+        {% if tracking_base_url %}
+        <!-- Matomo -->
+        <script>
+            var _paq = (window._paq = window._paq || []);
+            /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+            _paq.push(["trackPageView"]);
+            _paq.push(["enableLinkTracking"]);
+            (function () {
+                var u = "{{ tracking_base_url }}";
+                _paq.push(["setTrackerUrl", u + "matomo.php"]);
+                _paq.push(["setSiteId", "{{tracking_site_id}}"]);
+                var d = document,
+                    g = d.createElement("script"),
+                    s = d.getElementsByTagName("script")[0];
+                g.async = true;
+                g.src = u + "matomo.js";
+                s.parentNode.insertBefore(g, s);
+            })();
+        </script>
+        <!-- End Matomo Code -->
+        {% endif %}
+        <script
+            src="https://unpkg.com/htmx.org@1.9.8"
+            crossorigin="anonymous"
+        ></script>
+    </head>
+
+    <body>
+        <center>
+            <p>
+                <a href="{{ url_for('fullform_lex:fl-html') }}"
+                    ><img
+                        src="https://spraakbanken.gu.se/sites/spraakbanken.gu.se/files/img/saldo/saldo.gif"
+                        align="top"
+                        alt="SALDO: gå tillbaka till startsidan"
+                /></a>
+            </p>
+        </center>
+        <div id="output_table">{% block content %}{% endblock %}</div>
+        <footer>
+            <hr />
+            <ul>
+                <li>
+                    <a href="https://spraakbanken.gu.se/saldo"
+                        >SALDOs projektsida</a
+                    >
+                </li>
+                <li>
+                    <a
+                        href="https://svn.spraakdata.gu.se/repos/sblex/pub/saldo_instruktion.pdf"
+                        >dokumentation (pdf)</a
+                    >
+                </li>
+            </ul>
+        </footer>
+    </body>
+</html>
