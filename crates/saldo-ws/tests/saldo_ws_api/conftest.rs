@@ -25,4 +25,8 @@ impl TestApp {
     pub fn lid(&self, format: &str, w: &str) -> String {
         format!("{}/lid/{}/{}", self.address, format, w)
     }
+
+    pub fn ff_json(&self, w: &str) -> String {
+        format!("{}/ff/json/{}", self.address, w)
+    }
 }
