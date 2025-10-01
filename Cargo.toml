@@ -15,7 +15,6 @@ resolver = "2"
     sblex-telemetry  = { path = "./crates/sblex-telemetry" }
     trie-map         = { path = "./crates/trie-map" }
     trie-morphology  = { path = "./crates/trie-morphology" }
-    trie-sketch      = { path = "./crates/trie-sketch" }
 
     # extern crates
     ahash = "0.8"
