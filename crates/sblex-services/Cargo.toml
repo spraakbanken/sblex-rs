@@ -6,7 +6,7 @@ version                = "0.1.0"
 
 [dependencies]
 hashbrown.workspace  = true
-miette               = "7.4.0"
+miette.workspace     = true
 serde                = { workspace = true, features = ["derive"] }
 serde_json.workspace = true
 thiserror            = "2.0.10"
