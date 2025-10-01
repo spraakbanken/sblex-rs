@@ -6,7 +6,7 @@ version                = "0.1.0"
 
 [dependencies]
 fjall          = "2.5.0"
-miette         = "7.4.0"
+miette.workspace         = true
 sblex-services = { workspace = true }
 
 [dev-dependencies]
