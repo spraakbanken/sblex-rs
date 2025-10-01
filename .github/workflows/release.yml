@@ -35,6 +35,8 @@ jobs:
             os: macos-latest
           - target: x86_64-unknown-linux-musl
             os: ubuntu-latest
+          - target: x86_64-pc-windows-msvc
+            os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493 # v5.0.0
@@ -57,5 +59,8 @@ jobs:
           # Note that glob pattern is not supported yet.
           # TODO: optionally add assets
           # asset: LICENSE,README.md
+          tar: all
+          zip: windows
+          checksum: sha256,sha512
           # (required) GitHub token for uploading assets to GitHub Releases.
           token: ${{ secrets.GITHUB_TOKEN }}
