@@ -11,3 +11,5 @@ mprofile*.dat
 output*.json
 profile.json
 .env
+
+/assets/testing/morpholgy.db/

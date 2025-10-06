@@ -4,7 +4,7 @@ use axum::{
     response::IntoResponse,
     Json,
 };
-use sblex_services::{LookupError, Morphology};
+use sblex_services::{models::lookup::LookupError, ports::Morphology};
 use tracing::instrument;
 use tracing_opentelemetry_instrumentation_sdk::find_current_trace_id;
 

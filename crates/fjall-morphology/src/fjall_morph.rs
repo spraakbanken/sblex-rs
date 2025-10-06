@@ -1,7 +1,7 @@
 use std::path::Path;
 
 use fjall::{Config, Keyspace, PartitionCreateOptions, PartitionHandle, PersistMode};
-use sblex_services::{LookupError, Morphology, MorphologyBuilder};
+use sblex_services::{models::lookup::LookupError, ports::Morphology, MorphologyBuilder};
 
 #[derive(Clone)]
 pub struct FjallMorphology {
@@ -59,7 +59,7 @@ impl MorphologyBuilder for FjallMorphology {
     }
 }
 impl Morphology for FjallMorphology {
-    fn lookup(&self, fragment: &str) -> Result<Option<Vec<u8>>, sblex_services::LookupError> {
+    fn lookup(&self, fragment: &str) -> Result<Option<Vec<u8>>, LookupError> {
         Ok(self
             .saldo_morph
             .get(fragment)
