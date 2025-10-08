@@ -2,7 +2,7 @@ use std::{io, net::SocketAddr, sync::Arc, time::Duration};
 
 use axum::{routing, Router};
 use axum_tracing_opentelemetry::middleware::{OtelAxumLayer, OtelInResponseLayer};
-use sblex_services::Morphology;
+use sblex_services::ports::Morphology;
 use tokio::{net::TcpListener, signal, sync::RwLock};
 use tower_http::timeout::TimeoutLayer;
 

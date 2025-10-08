@@ -1,3 +1,5 @@
+use crate::errors::BoxDynError;
+
 use super::{
     lemma::{is_lemma_id, LemmaId},
     lexeme::{is_saldo_id, SaldoId},
@@ -27,8 +29,8 @@ impl<'de> serde::Deserialize<'de> for SaldoOrLemmaId {
         )))
     }
 }
-#[derive(Debug, thiserror::Error)]
+#[derive(Debug, thiserror::Error, miette::Diagnostic)]
 pub enum LookupError {
-    #[error("Unknown error: {0}")]
-    Unknown(String),
+    #[error("Unknown error")]
+    Unknown(#[source] BoxDynError),
 }

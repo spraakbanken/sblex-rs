@@ -1,8 +1,7 @@
-use axum::extract::rejection::QueryRejection;
+use axum::http::header;
 use axum::http::StatusCode;
 use axum::response::IntoResponse;
 use axum::Json;
-use sblex_services::models::lookup::LookupError;
 
 #[derive(Debug, Clone)]
 pub struct ApiSuccessJson<T: serde::Serialize + PartialEq>(StatusCode, Json<T>);
@@ -16,6 +15,21 @@ impl<T: serde::Serialize + PartialEq> ApiSuccessJson<T> {
 impl<T: serde::Serialize + PartialEq> IntoResponse for ApiSuccessJson<T> {
     fn into_response(self) -> axum::response::Response {
         (self.0, self.1).into_response()
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct ApiSuccessRaw<T>(StatusCode, &'static str, T);
+
+impl<T> ApiSuccessRaw<T> {
+    pub fn new(status: StatusCode, mime_type: &'static str, data: T) -> Self {
+        Self(status, mime_type, data)
+    }
+}
+
+impl<T: IntoResponse> IntoResponse for ApiSuccessRaw<T> {
+    fn into_response(self) -> axum::response::Response {
+        (self.0, [(header::CONTENT_TYPE, self.1)], self.2).into_response()
     }
 }
 

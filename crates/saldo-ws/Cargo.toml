@@ -34,6 +34,8 @@ time.workspace = true
 tokio = { workspace = true }
 tracing.workspace = true
 askama = "0.14"
+fjall-morphology.workspace = true
+config.workspace = true
 
 [dev-dependencies]
 insta   = { workspace = true, features = ["json"] }

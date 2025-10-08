@@ -1,5 +1,5 @@
 use fjall_morphology::FjallMorphology;
-use sblex_services::{morphology, Morphology, MorphologyBuilder};
+use sblex_services::{morphology, ports::Morphology, MorphologyBuilder};
 use temp_dir::TempDir;
 
 #[test]

@@ -1,0 +1,11 @@
+[package]
+name = "xtask"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+eyre.workspace = true
+fjall-morphology.workspace = true
+sblex-services.workspace = true
+xflags = "0.3.2"

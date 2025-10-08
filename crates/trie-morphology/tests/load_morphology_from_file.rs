@@ -1,4 +1,4 @@
-use sblex_services::{morphology, Morphology};
+use sblex_services::{morphology, ports::Morphology};
 use trie_morphology::{trie::TrieBuilder, TrieMorphology};
 
 #[test]

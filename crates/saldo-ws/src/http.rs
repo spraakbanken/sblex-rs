@@ -1,6 +1,7 @@
 use std::io;
 use std::sync::Arc;
 
+use crate::http::handlers::fullforms;
 use crate::http::handlers::lids;
 use crate::http::handlers::system;
 
@@ -21,6 +22,7 @@ fn app<S: SblexService>(state: AppState<S>) -> Router {
         .route("/lid/json/{lid}", get(lids::lookup_lid_json::<S>)) // request processed inside span
         .route("/lid/xml/{lid}", get(lids::lookup_lid_xml)) // request processed inside span
         .route("/lid/html/{lid}", get(lids::lookup_lid_html)) // request processed inside span
+        .route("/ff/json/{fragment}", get(fullforms::fullform_json::<S>))
         // include trace context as header into the response
         .layer(OtelInResponseLayer::default())
         // opentelemetry_tracing_layer setup `TraceLayer`,

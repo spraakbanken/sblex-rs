@@ -1,4 +1,4 @@
-use sblex_services::{LookupError, Morphology};
+use sblex_services::{models::lookup::LookupError, ports::Morphology};
 
 use crate::trie::Trie;
 
@@ -21,7 +21,7 @@ impl TrieMorphology {
 }
 
 impl Morphology for TrieMorphology {
-    fn lookup(&self, fragment: &str) -> Result<Option<Vec<u8>>, sblex_services::LookupError> {
+    fn lookup(&self, fragment: &str) -> Result<Option<Vec<u8>>, LookupError> {
         if let Some(data) = self.trie.lookup_with_state(fragment, 0) {
             let value: serde_json::Value =
                 serde_json::from_str(data).map_err(|err| LookupError::Unknown(Box::new(err)))?;
@@ -40,7 +40,7 @@ impl Morphology for TrieMorphology {
             Ok(None)
         }
     }
-    fn lookup_with_cont(&self, fragment: &str) -> Result<Vec<u8>, sblex_services::LookupError> {
+    fn lookup_with_cont(&self, fragment: &str) -> Result<Vec<u8>, LookupError> {
         if let Some(data) = self.trie.lookup_with_state(fragment, 0) {
             Ok(data.into())
         } else {
