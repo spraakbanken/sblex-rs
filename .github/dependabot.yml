@@ -7,7 +7,7 @@ updates:
   - package-ecosystem: cargo
     directory: /
     schedule:
-      interval: daily
+      interval: weekly
     ignore:
       - dependency-name: "*"
         # patch and minor updates don't matter for libraries as consumers of this library build
