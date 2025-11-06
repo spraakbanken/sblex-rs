@@ -5,7 +5,7 @@ rust-version.workspace = true
 version                = "0.1.0"
 
 [dependencies]
-fjall          = "2.5.0"
+fjall          = "2.11.2"
 miette.workspace         = true
 sblex-services = { workspace = true }
 
