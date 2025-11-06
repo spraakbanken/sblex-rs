@@ -6,11 +6,6 @@ use std::{
 
 use tracing::instrument;
 
-pub trait Morphology: Clone + Send + Sync + 'static {
-    fn lookup(&self, fragment: &str) -> Result<Option<Vec<u8>>, LookupError>;
-    fn lookup_with_cont(&self, fragment: &str) -> Result<Vec<u8>, LookupError>;
-}
-
 pub trait MorphologyBuilder {
     fn insert(&mut self, word: &str, value: String) -> Result<(), MorphologyBuilderError>;
     fn finish(&mut self) -> Result<(), MorphologyBuilderError>;
@@ -36,11 +31,6 @@ pub enum MorphologyBuilderError {
     },
     #[error("Failed to deserialize data")]
     FailedToDeserialize(#[from] serde_json::Error),
-    #[error("unknown error")]
-    Unknown(BoxDynError),
-}
-#[derive(Debug, thiserror::Error, miette::Diagnostic)]
-pub enum LookupError {
     #[error("unknown error")]
     Unknown(BoxDynError),
 }

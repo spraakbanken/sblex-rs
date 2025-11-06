@@ -1,0 +1,8 @@
+---
+source: crates/saldo-ws/tests/saldo_ws_api/fullform.rs
+expression: data
+---
+{
+  "a": [],
+  "c": "jt"
+}
