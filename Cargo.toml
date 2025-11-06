@@ -73,7 +73,7 @@ resolver = "2"
     smallvec = { version = "1", default-features = false }
     syn-dff4ba8e3ae991db = "1"
     syn-f595c2ba2a3f28df = "2"
-    temp-dir = "0.1"
+    temp-dir = "0.1.11"
     time = "^0.3.35"
     time-macros = { version = "0.2", default-features = false }
     tokio = { version = "1.44", default-features = false, features = [
