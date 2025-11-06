@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     name: ubuntu / nightly
     steps:
-      - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493 # v5.0.0
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           submodules: true
           persist-credentials: false
@@ -47,7 +47,7 @@ jobs:
     # just redo what happened in the regular test job. Unfortunately, hashFiles only works in if on
     # steps, so we repeat it.
     steps:
-      - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493 # v5.0.0
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           submodules: true
           persist-credentials: false
@@ -77,6 +77,6 @@ jobs:
     permissions: {}
     steps:
       - name: Decide whether the needed jobs succeeded or failed
-        uses: re-actors/alls-green@13b4244b312e8a314951e03958a2f91519a6a3c9 # release/v1.2.2
+        uses: re-actors/alls-green@05ac9388f0aebcb5727afa17fcccfecd6f8ec5fe # release/v1.2.2
         with:
           jobs: ${{ toJSON(needs) }}

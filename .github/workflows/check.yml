@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     name: stable / fmt
     steps:
-      - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493 # v5.0.0
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           submodules: true
           persist-credentials: false
@@ -49,7 +49,7 @@ jobs:
         # Get early warning of new lints which are regularly introduced in beta channels.
         toolchain: [stable, beta]
     steps:
-      - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493 # v5.0.0
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           submodules: true
           persist-credentials: false
@@ -69,7 +69,7 @@ jobs:
     runs-on: ubuntu-latest
     name: nightly / doc
     steps:
-      - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493 # v5.0.0
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           submodules: true
           persist-credentials: false
@@ -87,7 +87,7 @@ jobs:
     runs-on: ubuntu-latest
     name: ubuntu / stable / features
     steps:
-      - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493 # v5.0.0
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           submodules: true
           persist-credentials: false
@@ -96,7 +96,7 @@ jobs:
         with:
           toolchain: stable
       - name: cargo install cargo-hack
-        uses: taiki-e/install-action@6f69ec9970ed0c500b1b76d648e05c4c7e0e5671 # v2.62.5
+        uses: taiki-e/install-action@0005e0116e92d8489d8d96fbff83f061c79ba95a # v2.62.31
         with:
           tool: cargo-hack
       # intentionally no target specifier; see https://github.com/jonhoo/rust-ci-conf/pull/4
@@ -113,7 +113,7 @@ jobs:
         msrv: ["1.83"] # 2021 edition requires 1.56
     name: ubuntu / ${{ matrix.msrv }}
     steps:
-      - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493 # v5.0.0
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           submodules: true
           persist-credentials: false
@@ -137,6 +137,6 @@ jobs:
     permissions: {}
     steps:
       - name: Decide whether the needed jobs succeeded or failed
-        uses: re-actors/alls-green@13b4244b312e8a314951e03958a2f91519a6a3c9 # release/v1.2.2
+        uses: re-actors/alls-green@05ac9388f0aebcb5727afa17fcccfecd6f8ec5fe # release/v1.2.2
         with:
           jobs: ${{ toJSON(needs) }}
