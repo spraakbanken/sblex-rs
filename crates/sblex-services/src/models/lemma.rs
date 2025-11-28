@@ -11,6 +11,10 @@ impl Lemma {
     pub fn new(p: String, gf: String, l: Vec<String>) -> Self {
         Self { p, gf, l }
     }
+
+    pub fn into_lexemes(self) -> Vec<String> {
+        self.l
+    }
 }
 #[derive(Clone, Debug, serde::Serialize)]
 // #[serde(try_from="FromStr")]

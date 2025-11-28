@@ -2,14 +2,14 @@ use std::{fmt::Display, str::FromStr};
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash, serde::Serialize)]
 pub struct Lexeme {
-    lex: String,
-    fm: String,
-    fp: String,
-    mf: Vec<String>,
-    pf: Vec<String>,
-    l: Vec<String>,
-    path: Vec<String>,
-    ppath: Vec<Vec<String>>,
+    pub lex: String,
+    pub fm: String,
+    pub fp: String,
+    pub mf: Vec<String>,
+    pub pf: Vec<String>,
+    pub l: Vec<String>,
+    pub path: Vec<String>,
+    pub ppath: Vec<Vec<String>>,
 }
 
 impl Lexeme {
