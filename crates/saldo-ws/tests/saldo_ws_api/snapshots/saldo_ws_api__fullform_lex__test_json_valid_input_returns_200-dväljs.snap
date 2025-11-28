@@ -1,0 +1,16 @@
+---
+source: crates/saldo-ws/tests/saldo_ws_api/fullform_lex.rs
+expression: data
+---
+[
+  {
+    "fm": "bo..1",
+    "fp": [
+      "PRIM..1"
+    ],
+    "gf": "dväljas",
+    "id": "dväljas..1",
+    "l": "dväljas..vb.1",
+    "p": "vb_vs_dväljas"
+  }
+]

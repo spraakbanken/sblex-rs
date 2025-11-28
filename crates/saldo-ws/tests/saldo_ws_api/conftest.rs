@@ -47,6 +47,10 @@ impl TestApp {
     pub fn ff_json(&self, w: &str) -> String {
         format!("{}/ff/json/{}", self.address, w)
     }
+
+    pub fn fl_json(&self, w: &str) -> String {
+        format!("{}/fl/json/{}", self.address, w)
+    }
 }
 
 /// Returns the path to the root directory of `sblex-rs` project.

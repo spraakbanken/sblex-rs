@@ -36,6 +36,7 @@ where
     ) -> Result<Option<crate::models::lexeme::Lexeme>, crate::models::lookup::LookupError> {
         self.lookup_lid.get_lexeme(lid)
     }
+
     fn lookup_morph(
         &self,
         fragment: &str,
